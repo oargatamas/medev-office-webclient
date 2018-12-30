@@ -2,10 +2,12 @@
   "name": "medevsuite-core-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@material-ui/core": "^1.1.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-recaptcha": "^2.3.10",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4"
   },
