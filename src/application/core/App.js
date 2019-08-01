@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from "react-router-dom";
 import Dashboard from "../dashboard/component/dashboard/Dashboard";
+import Header from "./components/header/Header";
 
 
 
@@ -15,6 +16,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
+                <Header/>
                 <Route path="/" component={Dashboard}/>
             </BrowserRouter>
         );
