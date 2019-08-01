@@ -1,6 +1,13 @@
-import {combineReducers} from "redux";
+//import {combineReducers} from "redux";
 
 
-export const appReducer = combineReducers({
+const coreReducer = (state = {}, action) => {
+    return state;
+};
 
-});
+
+export const appReducer = coreReducer;
+
+//export const appReducer = combineReducers({
+//    coreReducer
+//});
