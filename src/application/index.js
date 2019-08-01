@@ -6,12 +6,16 @@ import registerServiceWorker from './registerServiceWorker';
 import {createStore} from "redux";
 import {appReducer} from "../reducer/appReducer";
 import {Provider} from "react-redux";
+import {ThemeProvider} from "@material-ui/styles";
+import {theme} from "../theme/appTheme";
 
 const store = createStore(appReducer);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <ThemeProvider  theme={theme}>
+            <App/>
+        </ThemeProvider>
     </Provider>
     , document.getElementById('root')
 );
