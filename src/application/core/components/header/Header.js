@@ -33,16 +33,11 @@ class Header extends Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            open : true
-        }
     }
 
 
     render() {
-        const {classes} = this.props;
-
-        let open = this.state.open;
+        const {classes, open} = this.props;
 
         return (
             <AppBar
@@ -52,7 +47,12 @@ class Header extends Component {
                 })}
             >
                 <Toolbar>
-                    <IconButton edge="start" color="inherit" className={classes.menuButton}>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        className={classes.menuButton}
+                        onClick={this.props.openNavigation}
+                    >
                         <MenuIcon/>
                     </IconButton>
                 </Toolbar>

@@ -51,8 +51,7 @@ class Navigation extends Component {
 
 
     render() {
-        let {classes} = this.props;
-        let open = this.state.open;
+        let {classes, open} = this.props;
 
         return (
             <Drawer
@@ -70,7 +69,7 @@ class Navigation extends Component {
                 }}
             >
                 <div className={classes.toolbar}>
-                    <IconButton>
+                    <IconButton onClick={this.props.closeNavigation}>
                         <ChevronLeftIcon/>
                     </IconButton>
                 </div>

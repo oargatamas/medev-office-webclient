@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from "react-router-dom";
 import Dashboard from "../dashboard/component/dashboard/Dashboard";
-import Header from "./components/header/Header";
+import Header from "./containers/header/Header";
 import {CssBaseline} from "@material-ui/core";
-import Navigation from "./components/navigation/Navigation";
+import Navigation from "./containers/navigation/Navigation";
 import {withStyles} from "@material-ui/styles";
 
 
