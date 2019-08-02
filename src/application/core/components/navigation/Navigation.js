@@ -44,9 +44,6 @@ class Navigation extends Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            open: true
-        }
     }
 
 
