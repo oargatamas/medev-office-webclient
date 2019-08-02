@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AppBar, Toolbar, IconButton} from "@material-ui/core";
+import {AppBar, Toolbar, IconButton, Typography} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {withStyles} from "@material-ui/styles";
 import {drawerWidth} from "../navigation/Navigation";
@@ -55,6 +55,9 @@ class Header extends Component {
                     >
                         <MenuIcon/>
                     </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        Medev Office {this.props.applicationTitle}
+                    </Typography>
                 </Toolbar>
             </AppBar>
         );

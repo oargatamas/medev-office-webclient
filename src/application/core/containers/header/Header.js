@@ -5,7 +5,8 @@ import {connect} from "react-redux";
 
 const mapStateToProps = (state) => {
     return{
-        open : state.coreReducer.sideDrawerOpen
+        open : state.coreReducer.sideDrawerOpen,
+        applicationTitle : state.coreReducer.currentApplication
     };
 };
 
