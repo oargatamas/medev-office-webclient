@@ -5,20 +5,20 @@ export const APP_SWITCH = "switch-application";
 
 export const openDrawerAction = () => {
     return {
-        type : OPEN_SIDE_DRAWER
+        type: OPEN_SIDE_DRAWER
     }
 };
 
 export const closeDrawerAction = () => {
     return {
-        type : CLOSE_SIDE_DRAWER
+        type: CLOSE_SIDE_DRAWER
     }
 };
 
 
 export const switchApplication = (appName) => {
     return {
-        type : APP_SWITCH,
-        currentApp : appName
+        type: APP_SWITCH,
+        currentApp: " - " + appName
     }
 };

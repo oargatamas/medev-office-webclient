@@ -1,5 +1,5 @@
 
 export const initialState = {
-    currentApplication : "-",
+    currentApplication : "",
     sideDrawerOpen : false,
 };
