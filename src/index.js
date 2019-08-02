@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 import {ThemeProvider} from "@material-ui/styles";
 import {theme} from "./application/core/theme/appTheme";
 
-const store = createStore(appReducer);
+const store = createStore(appReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
     <Provider store={store}>
