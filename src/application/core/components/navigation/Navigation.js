@@ -73,7 +73,6 @@ class Navigation extends Component {
 
                 <Divider/>
 
-
                 <List>
                     <ListItem button key={"1"}>
                         <ListItemIcon>
