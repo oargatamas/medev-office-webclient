@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import {ThemeProvider} from "@material-ui/styles";
 import {theme} from "./application/core/theme/appTheme";
 import thunk from "redux-thunk";
+import {SnackbarProvider} from "notistack";
 
 const store = createStore(
     appReducer,
@@ -20,7 +21,9 @@ const store = createStore(
 ReactDOM.render(
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <App/>
+            <SnackbarProvider maxSnack={5}>
+                <App/>
+            </SnackbarProvider>
         </ThemeProvider>
     </Provider>
     , document.getElementById('root')

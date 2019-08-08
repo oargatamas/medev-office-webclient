@@ -1,5 +1,6 @@
 
 export const initialState = {
+    IsAppStartingUp : true,
     modules : [],
     currentApplication : "",
     sideDrawerOpen : false,

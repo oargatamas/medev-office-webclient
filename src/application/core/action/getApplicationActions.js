@@ -20,7 +20,8 @@ export const requestModuleInfo = () => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Origin' : "https://office.medev.local:3000"
-        }
+        },
+        errorMsg : "Cannot load module info."
     };
     return callOfficeApi(params, receivedModuleInfo)
 };

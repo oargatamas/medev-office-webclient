@@ -6,6 +6,7 @@ import Navigation from "../../containers/navigation/Navigation";
 import {withStyles} from "@material-ui/styles";
 import DashboardContainer from "../../../dashboard/component/dashboard/DashboardContainer";
 import SplashScreen from "../../components/splashScreen/SplashScreen";
+import {withSnackbar} from "notistack";
 
 
 const styles = theme => ({
@@ -29,32 +30,35 @@ class App extends Component {
 
 
     componentDidMount() {
+        console.log(this.props);
         this.props.fetchModuleInfo();
     }
 
     render() {
-        const {classes, moduleInfo} = this.props;
+        const {classes, isStartup} = this.props;
 
-        console.log(this.props);
+        if (this.props.errorMsg) {
+            this.props.enqueueSnackbar(this.props.errorMsg,{variant:"error"});
+        }
 
         return (
             <div className={classes.root}>
                 <CssBaseline/>
-                    {!moduleInfo.length ? (
-                        <SplashScreen/>
-                    ) : (
-                        <BrowserRouter>
-                            <Header/>
-                            <Navigation/>
-                            <main className={classes.content}>
-                                <div className={classes.toolbar}/>
-                                <Route path="/" component={DashboardContainer}/>
-                            </main>
-                        </BrowserRouter>
-                    )}
+                {isStartup ? ( //Todo ez itt nem jó
+                    <SplashScreen/>
+                ) : (
+                    <BrowserRouter>
+                        <Header/>
+                        <Navigation/>
+                        <main className={classes.content}>
+                            <div className={classes.toolbar}/>
+                            <Route path="/" component={DashboardContainer}/>
+                        </main>
+                    </BrowserRouter>
+                )}
             </div>
         );
     }
 }
 
-export default withStyles(styles, {withTheme: true})(App);
+export default withSnackbar(withStyles(styles, {withTheme: true})(App));

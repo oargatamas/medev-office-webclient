@@ -1,5 +1,3 @@
-
-
 const OFFICE_HOST = "office.medev.local"; //Todo move it to config
 const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
 const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
@@ -26,7 +24,7 @@ export const defaultErrorAction = (error) => {
     console.log(error);
     return {
         type : FETCH_API_ERROR,
-        errorMsg : error
+        errorMsg : error.message
     }
 };
 
@@ -57,8 +55,8 @@ export const callOfficeApi = (requestParams, successAction, fetchingAction = def
             .then((response) => {
                 console.log("Parsing response");
                 if (!response.ok) {
-                    console.log(response.statusText);
-                    throw response;
+                    console.error(response.statusText);
+                    throw Error(response.status + " - " + requestParams.errorMsg);
                 }
                 return response.json()
             })

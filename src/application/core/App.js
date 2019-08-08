@@ -5,7 +5,9 @@ import App from "./components/app/App";
 
 const mapStateToProps = (state) => {
     return {
-        moduleInfo : state.coreReducer.modules
+        isStartup : state.coreReducer.IsAppStartingUp,
+        moduleInfo : state.coreReducer.modules,
+        errorMsg : state.coreReducer.errorMsg
     };
 };
 
