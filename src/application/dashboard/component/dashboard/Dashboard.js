@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Button from "@material-ui/core/Button";
 
 
 class Dashboard extends Component{
@@ -12,6 +13,7 @@ class Dashboard extends Component{
         return(
             <div>
                 <h1>Dashboard</h1>
+                <Button onClick={this.props.getAppsInfo}>Get Application Info</Button>
             </div>
         );
     }

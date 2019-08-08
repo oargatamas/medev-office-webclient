@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from "react-router-dom";
-import Dashboard from "../dashboard/component/dashboard/Dashboard";
 import Header from "./containers/header/Header";
 import {CssBaseline} from "@material-ui/core";
 import Navigation from "./containers/navigation/Navigation";
 import {withStyles} from "@material-ui/styles";
+import DashboardContainer from "../dashboard/component/dashboard/DashboardContainer";
 
 
 const styles = theme => ({
@@ -41,7 +41,7 @@ class App extends Component {
                     <Navigation/>
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Route path="/" component={Dashboard}/>
+                        <Route path="/" component={DashboardContainer}/>
                     </main>
                 </BrowserRouter>
             </div>
