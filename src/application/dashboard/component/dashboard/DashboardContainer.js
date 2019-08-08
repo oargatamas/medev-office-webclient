@@ -1,4 +1,4 @@
-import {requestAppsInfo} from "../../../core/action/getApplicationActions";
+import {requestModuleInfo} from "../../../core/action/getApplicationActions";
 import {connect} from "react-redux";
 import Dashboard from "./Dashboard";
 
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
        getAppsInfo : () => {
-           dispatch(requestAppsInfo());
+           dispatch(requestModuleInfo());
        }
     };
 };

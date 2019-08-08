@@ -1,27 +1,26 @@
 import {callOfficeApi} from "./apiCallActions";
 
-const RECEIVED_APPLICATIONS_INFO = "receivedAppsInfo";
+export const RECEIVED_MODULE_INFO = "receivedModuleInfo";
 
 
-export const receivedAppsInfo = (apps) => {
-    console.log(apps);
+export const receivedModuleInfo = (modules) => {
     return {
-        type : RECEIVED_APPLICATIONS_INFO,
-        apps : apps
+        type : RECEIVED_MODULE_INFO,
+        modules : modules
     }
 };
 
 
-export const requestAppsInfo = () => {
+export const requestModuleInfo = () => {
     let params = {
         method : "GET",
         uri : "/applications",
-        redirect_uri : ":3000/",
+        redirect_uri : "/",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Origin' : "https://office.medev.local:3000"
         }
     };
-    return callOfficeApi(params, receivedAppsInfo)
+    return callOfficeApi(params, receivedModuleInfo)
 };
