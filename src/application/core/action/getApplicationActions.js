@@ -14,7 +14,7 @@ export const receivedModuleInfo = (modules) => {
 export const requestModuleInfo = () => {
     let params = {
         method : "GET",
-        uri : "/applications",
+        uri : "/modules",
         redirect_uri : "/",
         headers: {
             'Accept': 'application/json',
