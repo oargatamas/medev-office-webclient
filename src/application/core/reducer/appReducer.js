@@ -22,7 +22,7 @@ const coreReducer = (state = initialState, action) => {
         case FETCH_API_SUCCESS :
             return Object.assign({}, state, {isFetching: false, isLoggedIn : true, IsAppStartingUp: false});
         case FETCH_API_ERROR :
-            return Object.assign({}, state, {isFetching: false, IsAppStartingUp: false, errorMsg: action.errorMsg});
+            return Object.assign({}, state, {isFetching: false, IsAppStartingUp: false, errorObject: action.error});
         default:
             return state;
     }
