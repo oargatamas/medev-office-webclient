@@ -22,15 +22,21 @@ class SplashScreen extends Component {
     }
 
     render() {
-        let {classes, startupText} = this.props;
+        let {classes, startupText, startupError} = this.props;
+
+        let isErrored = Object.keys(startupError).length > 0;
 
         return (
             <Container className={classes.container} component="main" maxWidth="xs">
                 <Box height={"100vh"} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                     <img className={classes.logo} src={medev_logo}/>
                     <br/>
-                    <Typography>{startupText}</Typography>
-                    <LinearProgress className={classes.progressBar}/>
+                    {(isErrored) ? (
+                        <Typography color={"error"}>{startupError.message}</Typography>
+                    ) : (
+                        <Typography>{startupText}</Typography>
+                    )}
+                    {(!isErrored) ? (<LinearProgress className={classes.progressBar}/>) : null}
                 </Box>
             </Container>
         );

@@ -5,7 +5,8 @@ import {executeStartup} from "../../action/startupActions";
 
 const mapStateToProps = (state) =>{
     return {
-        startupText : state.startupReducer.currentTask
+        startupText : state.startupReducer.currentTask,
+        startupError : state.startupReducer.errorObject
     }
 };
 

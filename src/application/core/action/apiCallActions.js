@@ -1,4 +1,5 @@
 import HTTPError from "../exceptions/httpErrors";
+import {changeStartUpText} from "./startupActions";
 
 const OFFICE_HOST = "office.medev.local"; //Todo move it to config
 const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
@@ -51,7 +52,8 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                 console.log("Checking authentication");
                 console.log(response);
                 if (response.status === 401) {
-                    //redirectToAuthServer(requestParams);
+                    dispatch(broadcastLoginRequired());
+                    redirectToAuthServer(requestParams);
                 }
                 return response;
             })
@@ -73,6 +75,12 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                 dispatch(errorAction(error))
             });
     }
+};
+
+const broadcastLoginRequired = () => {
+    return (dispatch) => {
+        dispatch(changeStartUpText("Login required..."));
+    };
 };
 
 
