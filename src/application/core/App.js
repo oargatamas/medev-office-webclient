@@ -1,21 +1,16 @@
 import {connect} from "react-redux";
-import {requestModuleInfo} from "./action/getApplicationActions";
 import App from "./components/app/App";
 
 
 const mapStateToProps = (state) => {
     return {
-        isStartup : state.coreReducer.IsAppStartingUp,
-        moduleInfo : state.coreReducer.modules,
+        isStartup : !state.startupReducer.IsFinished,
         errorMsg : state.coreReducer.errorMsg
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchModuleInfo : () => {
-            dispatch(requestModuleInfo());
-        }
     };
 };
 

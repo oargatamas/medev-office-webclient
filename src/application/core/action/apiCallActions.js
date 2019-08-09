@@ -20,15 +20,16 @@ export const defaultSuccessAction = () => {
     };
 };
 
-export const defaultErrorAction = (error) => {
+export const defaultErrorAction = (error, statusCode) => {
     console.log(error);
     return {
         type : FETCH_API_ERROR,
-        errorMsg : error.message
+        errorMsg : error.message,
+        errorCode : statusCode
     }
 };
 
-export const callOfficeApi = (requestParams, successAction, fetchingAction = defaultFetchingAction, errorAction = defaultErrorAction) => {
+export const callOfficeApi = (requestParams, successAction, errorAction = defaultErrorAction, fetchingAction = defaultFetchingAction) => {
 
     return (dispatch) => {
         let url = "https://" + OFFICE_API_HOST + requestParams.uri;
@@ -83,7 +84,7 @@ const redirectToAuthServer = (params) => {
 
     let url = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
 
-    window.location.replace(url);
+    window.location.href = url;
 };
 
 

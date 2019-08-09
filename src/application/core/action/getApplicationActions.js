@@ -1,4 +1,4 @@
-import {callOfficeApi} from "./apiCallActions";
+import {callOfficeApi, defaultErrorAction} from "./apiCallActions";
 
 export const RECEIVED_MODULE_INFO = "receivedModuleInfo";
 
@@ -11,7 +11,7 @@ export const receivedModuleInfo = (modules) => {
 };
 
 
-export const requestModuleInfo = () => {
+export const  requestModuleInfo = (successAction = receivedModuleInfo, errorAction = defaultErrorAction) => {
     let params = {
         method : "GET",
         uri : "/modules",
@@ -23,5 +23,5 @@ export const requestModuleInfo = () => {
         },
         errorMsg : "Cannot load module info."
     };
-    return callOfficeApi(params, receivedModuleInfo)
+    return callOfficeApi(params, successAction, errorAction)
 };

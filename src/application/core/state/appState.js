@@ -1,9 +1,8 @@
-
 export const initialState = {
-    IsAppStartingUp : true,
-    modules : [],
-    currentApplication : "",
-    sideDrawerOpen : false,
-    isFetching : false,
-    errorMsg : ""
+    modules: [],
+    currentApplication: "",
+    sideDrawerOpen: false,
+    isFetching: false,
+    errorMsg: "",
+    errorCode: 0
 };

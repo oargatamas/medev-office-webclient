@@ -5,8 +5,8 @@ import {CssBaseline} from "@material-ui/core";
 import Navigation from "../../containers/navigation/Navigation";
 import {withStyles} from "@material-ui/styles";
 import DashboardContainer from "../../../dashboard/component/dashboard/DashboardContainer";
-import SplashScreen from "../../components/splashScreen/SplashScreen";
 import {withSnackbar} from "notistack";
+import SplashScreen from "../../containers/splashScreen/SplashScreen";
 
 
 const styles = theme => ({
@@ -28,23 +28,19 @@ const styles = theme => ({
 
 class App extends Component {
 
-
-    componentDidMount() {
-        console.log(this.props);
-        this.props.fetchModuleInfo();
-    }
-
     render() {
-        const {classes, isStartup} = this.props;
+        const {classes, isStartup, loggedIn} = this.props;
 
         if (this.props.errorMsg) {
             this.props.enqueueSnackbar(this.props.errorMsg,{variant:"error"});
         }
 
+        console.log("isStartup: " + isStartup + " , isLoggedIn: " + loggedIn);
+
         return (
             <div className={classes.root}>
                 <CssBaseline/>
-                {isStartup ? ( //Todo ez itt nem jó
+                {(isStartup) ? (
                     <SplashScreen/>
                 ) : (
                     <BrowserRouter>

@@ -3,6 +3,7 @@ import {APP_SWITCH, CLOSE_SIDE_DRAWER, OPEN_SIDE_DRAWER} from "../action/sideNav
 import {initialState} from "../state/appState";
 import {FETCH_API_DATA, FETCH_API_ERROR, FETCH_API_SUCCESS} from "../action/apiCallActions";
 import {RECEIVED_MODULE_INFO} from "../action/getApplicationActions";
+import {startupReducer} from "./startupReducer";
 
 
 const coreReducer = (state = initialState, action) => {
@@ -19,7 +20,7 @@ const coreReducer = (state = initialState, action) => {
         case FETCH_API_DATA:
             return Object.assign({}, state, {isFetching: true});
         case FETCH_API_SUCCESS :
-            return Object.assign({}, state, {isFetching: false, IsAppStartingUp: false});
+            return Object.assign({}, state, {isFetching: false, isLoggedIn : true, IsAppStartingUp: false});
         case FETCH_API_ERROR :
             return Object.assign({}, state, {isFetching: false, IsAppStartingUp: false, errorMsg: action.errorMsg});
         default:
@@ -29,5 +30,5 @@ const coreReducer = (state = initialState, action) => {
 
 
 export const appReducer = combineReducers({
-    coreReducer
+    coreReducer, startupReducer
 });
