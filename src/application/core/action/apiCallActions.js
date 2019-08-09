@@ -1,3 +1,5 @@
+import HTTPError from "../exceptions/httpErrors";
+
 const OFFICE_HOST = "office.medev.local"; //Todo move it to config
 const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
 const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
@@ -20,12 +22,12 @@ export const defaultSuccessAction = () => {
     };
 };
 
-export const defaultErrorAction = (error, statusCode) => {
+export const defaultErrorAction = (error) => {
     console.log(error);
     return {
         type : FETCH_API_ERROR,
         errorMsg : error.message,
-        errorCode : statusCode
+        errorCode : error.statusCode
     }
 };
 
@@ -49,7 +51,7 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                 console.log("Checking authentication");
                 console.log(response);
                 if (response.status === 401) {
-                    redirectToAuthServer(requestParams);
+                    //redirectToAuthServer(requestParams);
                 }
                 return response;
             })
@@ -57,7 +59,7 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                 console.log("Parsing response");
                 if (!response.ok) {
                     console.error(response.statusText);
-                    throw Error(response.status + " - " + requestParams.errorMsg);
+                    throw new HTTPError(response.status, requestParams.errorMsg);
                 }
                 return response.json()
             })
