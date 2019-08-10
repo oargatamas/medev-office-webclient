@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Eras_Bold';
+    src: local('Eras_Bold'), url(./resources/font/ERASBD.TTF) format('truetype');
+}
+
+@font-face {
+    font-family: 'Eras_Demi';
+    src: local('Eras_Demi'), url(./resources/font/ERASDEMI.TTF) format('truetype');
+}

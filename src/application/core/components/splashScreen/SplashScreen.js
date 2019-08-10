@@ -6,11 +6,14 @@ import {withStyles} from "@material-ui/styles";
 
 const styles = () => ({
     logo: {
-        width: "50%",
+        width: "60%",
         align: "center"
     },
+    title: {
+        fontFamily : "Eras_Bold",
+    },
     progressBar: {
-        width: "55%",
+        width: "70%",
     }
 });
 
@@ -30,11 +33,13 @@ class SplashScreen extends Component {
             <Container className={classes.container} component="main" maxWidth="xs">
                 <Box height={"100vh"} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                     <img className={classes.logo} src={medev_logo}/>
+                    <Typography className={classes.title} color={"textSecondary"} variant={"h2"}>MEDEV</Typography>
+                    <Typography className={classes.title} color={"textSecondary"} variant={"h4"} align={"right"}>Office</Typography>
                     <br/>
                     {(isErrored) ? (
                         <Typography color={"error"}>{startupError.message}</Typography>
                     ) : (
-                        <Typography>{startupText}</Typography>
+                        <Typography color={"textSecondary"}>{startupText}</Typography>
                     )}
                     {(!isErrored) ? (<LinearProgress className={classes.progressBar}/>) : null}
                 </Box>
