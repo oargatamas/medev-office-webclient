@@ -29,13 +29,11 @@ const styles = theme => ({
 class App extends Component {
 
     render() {
-        const {classes, isStartup, loggedIn} = this.props;
+        const {classes, isStartup, errorObject} = this.props;
 
-        if (this.props.errorMsg) {
-            this.props.enqueueSnackbar(this.props.errorMsg,{variant:"error"});
+        if (Object.keys(errorObject).length > 0) {
+            this.props.enqueueSnackbar(errorObject.message,{variant:"error"});
         }
-
-        console.log("isStartup: " + isStartup + " , isLoggedIn: " + loggedIn);
 
         return (
             <div className={classes.root}>

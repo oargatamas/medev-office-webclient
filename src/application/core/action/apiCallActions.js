@@ -27,8 +27,7 @@ export const defaultErrorAction = (error) => {
     console.log(error);
     return {
         type : FETCH_API_ERROR,
-        errorMsg : error.message,
-        errorCode : error.statusCode
+        error : error
     }
 };
 
