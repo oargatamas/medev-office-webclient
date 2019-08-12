@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AppBar, Toolbar, IconButton, Typography} from "@material-ui/core";
+import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {withStyles} from "@material-ui/styles";
 import {drawerWidth} from "../navigation/Navigation";
@@ -13,7 +13,6 @@ const styles = (theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-
     },
     menuButton: {
         marginRight: 36,
