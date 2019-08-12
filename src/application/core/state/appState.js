@@ -1,7 +1,7 @@
-
 export const initialState = {
-    currentApplication : "",
-    sideDrawerOpen : false,
-    isFetching : false,
-    errorMsg : ""
+    modules: [],
+    currentApplication: "",
+    sideDrawerOpen: false,
+    isFetching: false,
+    errorObject: {},
 };

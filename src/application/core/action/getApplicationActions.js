@@ -1,27 +1,27 @@
-import {callOfficeApi} from "./apiCallActions";
+import {callOfficeApi, defaultErrorAction} from "./apiCallActions";
 
-const RECEIVED_APPLICATIONS_INFO = "receivedAppsInfo";
+export const RECEIVED_MODULE_INFO = "receivedModuleInfo";
 
 
-export const receivedAppsInfo = (apps) => {
-    console.log(apps);
+export const receivedModuleInfo = (moduleInfo) => {
     return {
-        type : RECEIVED_APPLICATIONS_INFO,
-        apps : apps
+        type : RECEIVED_MODULE_INFO,
+        modules : moduleInfo.modules
     }
 };
 
 
-export const requestAppsInfo = () => {
+export const  requestModuleInfo = (successAction = receivedModuleInfo, errorAction = defaultErrorAction) => {
     let params = {
         method : "GET",
-        uri : "/applications",
-        redirect_uri : ":3000/",
+        uri : "/modules",
+        redirect_uri : "/",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Origin' : "https://office.medev.local:3000"
-        }
+        },
+        errorMsg : "Cannot load module info."
     };
-    return callOfficeApi(params, receivedAppsInfo)
+    return callOfficeApi(params, successAction, errorAction)
 };

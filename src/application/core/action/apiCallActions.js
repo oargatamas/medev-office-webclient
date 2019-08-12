@@ -1,4 +1,5 @@
-
+import HTTPError from "../exceptions/httpErrors";
+import {changeStartUpText} from "./startupActions";
 
 const OFFICE_HOST = "office.medev.local"; //Todo move it to config
 const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
@@ -26,11 +27,11 @@ export const defaultErrorAction = (error) => {
     console.log(error);
     return {
         type : FETCH_API_ERROR,
-        errorMsg : error
+        error : error
     }
 };
 
-export const callOfficeApi = (requestParams, successAction, fetchingAction = defaultFetchingAction, errorAction = defaultErrorAction) => {
+export const callOfficeApi = (requestParams, successAction, errorAction = defaultErrorAction, fetchingAction = defaultFetchingAction) => {
 
     return (dispatch) => {
         let url = "https://" + OFFICE_API_HOST + requestParams.uri;
@@ -50,6 +51,7 @@ export const callOfficeApi = (requestParams, successAction, fetchingAction = def
                 console.log("Checking authentication");
                 console.log(response);
                 if (response.status === 401) {
+                    dispatch(broadcastLoginRequired());
                     redirectToAuthServer(requestParams);
                 }
                 return response;
@@ -57,10 +59,10 @@ export const callOfficeApi = (requestParams, successAction, fetchingAction = def
             .then((response) => {
                 console.log("Parsing response");
                 if (!response.ok) {
-                    console.log(response.statusText);
-                    throw response;
+                    console.error(response.statusText);
+                    throw new HTTPError(response.status, requestParams.errorMsg);
                 }
-                return response.json()
+                return response.json();
             })
             .then((parsedResponse) => {
                 console.log("Sending response to private component");
@@ -74,6 +76,12 @@ export const callOfficeApi = (requestParams, successAction, fetchingAction = def
     }
 };
 
+const broadcastLoginRequired = () => {
+    return (dispatch) => {
+        dispatch(changeStartUpText("Login required..."));
+    };
+};
+
 
 const redirectToAuthServer = (params) => {
     let queryParams = encodeUrlData({
@@ -83,9 +91,7 @@ const redirectToAuthServer = (params) => {
         state : "randomstring" //Todo replace it with real csrf token generation logic.
     });
 
-    let url = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
-
-    window.location.replace(url);
+    window.location.href = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
 };
 
 
