@@ -3,10 +3,10 @@ import {callOfficeApi, defaultErrorAction} from "./apiCallActions";
 export const RECEIVED_MODULE_INFO = "receivedModuleInfo";
 
 
-export const receivedModuleInfo = (modules) => {
+export const receivedModuleInfo = (moduleInfo) => {
     return {
         type : RECEIVED_MODULE_INFO,
-        modules : modules
+        modules : moduleInfo.modules
     }
 };
 

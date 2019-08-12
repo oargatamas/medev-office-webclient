@@ -62,7 +62,7 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                     console.error(response.statusText);
                     throw new HTTPError(response.status, requestParams.errorMsg);
                 }
-                return response.json()
+                return response.json();
             })
             .then((parsedResponse) => {
                 console.log("Sending response to private component");
@@ -91,9 +91,7 @@ const redirectToAuthServer = (params) => {
         state : "randomstring" //Todo replace it with real csrf token generation logic.
     });
 
-    let url = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
-
-    window.location.href = url;
+    window.location.href = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
 };
 
 
