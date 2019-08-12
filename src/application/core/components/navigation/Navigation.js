@@ -1,9 +1,18 @@
 import React, {Component} from "react";
-import {Drawer, IconButton, Divider, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Divider, Drawer, IconButton, List} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import InboxIcon from "@material-ui/icons/Inbox";
 import {withStyles} from "@material-ui/styles";
 import clsx from "clsx";
+import NavigationItem from "./item/NavigationItem";
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
+const moduleIcons = {
+    "dashboard" : <DeleteIcon/>,
+    "drive" : <InboxIcon/>
+};
+
 
 export const drawerWidth = 240;
 
@@ -42,13 +51,10 @@ const styles = (theme) => ({
 
 class Navigation extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
-
     render() {
-        let {classes, open} = this.props;
+        let {classes, open, modules, closeNavigation} = this.props;
+
+        console.log(modules.modules);
 
         return (
             <Drawer
@@ -74,12 +80,16 @@ class Navigation extends Component {
                 <Divider/>
 
                 <List>
-                    <ListItem button key={"1"}>
-                        <ListItemIcon>
-                            <InboxIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary={"semmi sem"}/>
-                    </ListItem>
+                    {modules.map((item) => (
+                            <NavigationItem
+                                key={item.name}
+                                route={"/" + item.name}
+                                text={item.name}
+                                icon={moduleIcons[item.name]}
+                                onClick={closeNavigation}
+                            />
+                        )
+                    )}
                 </List>
             </Drawer>
         );

@@ -7,7 +7,7 @@ import {startupReducer} from "./startupReducer";
 
 
 const coreReducer = (state = initialState, action) => {
-    console.log(action.type);
+    console.log(action);
     switch (action.type) {
         case OPEN_SIDE_DRAWER :
             return Object.assign({}, state, {sideDrawerOpen: true});
@@ -16,7 +16,7 @@ const coreReducer = (state = initialState, action) => {
         case APP_SWITCH :
             return Object.assign({}, state, {currentApplication: action.currentApp});
         case RECEIVED_MODULE_INFO :
-            return Object.assign({}, state, {modules: [1]});
+            return Object.assign({}, state, {modules: action.modules});
         case FETCH_API_DATA:
             return Object.assign({}, state, {isFetching: true});
         case FETCH_API_SUCCESS :
