@@ -1,24 +1,17 @@
-import React, {Component} from 'react';
-import {BrowserRouter, Route} from "react-router-dom";
-import Dashboard from "../dashboard/component/dashboard/Dashboard";
+import {connect} from "react-redux";
+import App from "./components/app/App";
 
 
+const mapStateToProps = (state) => {
+    return {
+        isStartup : !state.startupReducer.IsFinished,
+        errorObject : state.coreReducer.errorObject
+    };
+};
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+    };
+};
 
-class App extends Component {
-
-    constructor(props, context) {
-        super(props, context);
-
-    }
-
-    render() {
-        return (
-            <BrowserRouter>
-                <Route path="/" component={Dashboard}/>
-            </BrowserRouter>
-        );
-    }
-}
-
-export default App;
+export default connect(mapStateToProps,mapDispatchToProps)(App);
