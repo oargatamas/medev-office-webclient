@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/styles";
 import {DashBoardModule} from "../../../dashboard/App";
+import {DriveModule} from "../../../drive/App";
 
 const styles = (theme) => ({
     content: {
@@ -18,7 +19,7 @@ const styles = (theme) => ({
 
 const moduleRootComponents = {
     dashboard: <DashBoardModule key={"dashboard"}/>,
-    drive: <div key={"drive"}>drivesadas</div>
+    drive: <DriveModule key={"drive"}/>
 };
 
 class ModuleContainer extends Component {
