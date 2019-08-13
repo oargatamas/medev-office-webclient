@@ -3,20 +3,20 @@ import {callOfficeApi} from "../../core/action/apiCallActions";
 
 const DRIVE_API_BASE = "/drive";
 
-export const RECEIVED_ROOT_FOLDER_ID = "receivedRootFolderId";
+export const RECEIVED_ROOT_FOLDER_DATA = "receivedRootFolderId";
 
 
-export const receivedRootFolderId = (id) => {
+export const receivedRootFolderId = (folderInfo) => {
     return {
-        type: RECEIVED_ROOT_FOLDER_ID,
-        folderId: id
+        type: RECEIVED_ROOT_FOLDER_DATA,
+        folder: folderInfo
     };
 };
 
 export const requestRootFolderId = (successAction = receivedRootFolderId) => {
     let params = {
         method : "GET",
-        uri : DRIVE_API_BASE + "/folder/root",
+        uri : DRIVE_API_BASE + "/folder/root?meta=true",
         redirect_uri : DRIVE_API_BASE,
         headers: {
             'Accept': 'application/json',

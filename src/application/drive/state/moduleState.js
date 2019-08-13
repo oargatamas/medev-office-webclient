@@ -1,6 +1,6 @@
 export const initialState = {
     breadCrumbs: [],
-    rootFolderId: "",
+    rootFolder: {},
     currentFolderItems: [],
     isItemDetailsOpen: false,
 };

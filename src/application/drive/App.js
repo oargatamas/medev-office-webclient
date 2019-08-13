@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import Drive from "./components/drive/Drive";
 import {Route} from "react-router-dom";
+import Drive from "./containers/drive/Drive";
 
 
 export class DriveModule extends Component{
