@@ -4,11 +4,6 @@ import Button from "@material-ui/core/Button";
 
 class Dashboard extends Component{
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
-
     render() {
         return(
             <div>
