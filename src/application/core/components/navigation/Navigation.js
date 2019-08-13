@@ -1,16 +1,16 @@
 import React, {Component} from "react";
 import {Divider, Drawer, IconButton, List} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import InboxIcon from "@material-ui/icons/Inbox";
+import CloudIcon from "@material-ui/icons/Cloud";
 import {withStyles} from "@material-ui/styles";
 import clsx from "clsx";
 import NavigationItem from "./item/NavigationItem";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 
 const moduleIcons = {
-    "dashboard" : <DeleteIcon/>,
-    "drive" : <InboxIcon/>
+    "dashboard" : <DashboardIcon/>,
+    "drive" : <CloudIcon/>
 };
 
 
