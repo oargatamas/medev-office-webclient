@@ -4,7 +4,7 @@ import Header from "../../containers/header/Header";
 import {CssBaseline} from "@material-ui/core";
 import Navigation from "../../containers/navigation/Navigation";
 import {withStyles} from "@material-ui/styles";
-import DashboardContainer from "../../../dashboard/component/dashboard/DashboardContainer";
+import Dashboard from "../../../dashboard/container/dashboard/Dashboard";
 import {withSnackbar} from "notistack";
 import SplashScreen from "../../containers/splashScreen/SplashScreen";
 
@@ -46,7 +46,7 @@ class App extends Component {
                         <Navigation/>
                         <main className={classes.content}>
                             <div className={classes.toolbar}/>
-                            <Route path="/" component={DashboardContainer}/>
+                            <Route path="/" component={Dashboard}/>
                         </main>
                     </BrowserRouter>
                 )}

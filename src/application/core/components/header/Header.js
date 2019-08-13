@@ -30,10 +30,6 @@ const styles = (theme) => ({
 
 class Header extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
 
     render() {
         const {classes, open} = this.props;

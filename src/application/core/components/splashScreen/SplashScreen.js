@@ -32,7 +32,7 @@ class SplashScreen extends Component {
         return (
             <Container className={classes.container} component="main" maxWidth="xs">
                 <Box height={"100vh"} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-                    <img className={classes.logo} src={medev_logo}/>
+                    <img alt={"medev_office_logo"} className={classes.logo} src={medev_logo}/>
                     <Typography className={classes.title} color={"textSecondary"} variant={"h2"}>MEDEV</Typography>
                     <Typography className={classes.title} color={"textSecondary"} variant={"h4"} align={"right"}>Office</Typography>
                     <br/>
