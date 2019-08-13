@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import Header from "../../containers/header/Header";
 import {CssBaseline} from "@material-ui/core";
 import Navigation from "../../containers/navigation/Navigation";
 import {withStyles} from "@material-ui/styles";
-import Dashboard from "../../../dashboard/container/dashboard/Dashboard";
 import {withSnackbar} from "notistack";
 import SplashScreen from "../../containers/splashScreen/SplashScreen";
+import ModuleContainer from "../../containers/moduleContainer/ModuleContainer";
 
 
 const styles = theme => ({
@@ -44,10 +44,7 @@ class App extends Component {
                     <BrowserRouter>
                         <Header/>
                         <Navigation/>
-                        <main className={classes.content}>
-                            <div className={classes.toolbar}/>
-                            <Route path="/" component={Dashboard}/>
-                        </main>
+                        <ModuleContainer/>
                     </BrowserRouter>
                 )}
             </div>
