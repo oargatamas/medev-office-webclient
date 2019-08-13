@@ -4,6 +4,7 @@ import {initialState} from "../state/appState";
 import {FETCH_API_DATA, FETCH_API_ERROR, FETCH_API_SUCCESS} from "../action/apiCallActions";
 import {RECEIVED_MODULE_INFO} from "../action/getApplicationActions";
 import {startupReducer} from "./startupReducer";
+import {driveReducer} from "../../drive/reducers/driveReducer";
 
 
 const coreReducer = (state = initialState, action) => {
@@ -30,5 +31,5 @@ const coreReducer = (state = initialState, action) => {
 
 
 export const appReducer = combineReducers({
-    coreReducer, startupReducer
+    coreReducer, startupReducer, driveReducer
 });
