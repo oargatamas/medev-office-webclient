@@ -25,7 +25,7 @@ class Drive extends Component {
     }
 
     render() {
-        const {classes, isFetching} = this.props;
+        const {classes, isFetching, rootFolder, items, navigation} = this.props;
 
         return (
             <div className={classes.root}>
@@ -38,10 +38,10 @@ class Drive extends Component {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <NavigationBar/>
-                        <DriveHeader/>
+                        <NavigationBar items={navigation}/>
+                        <DriveHeader folder={rootFolder}/>
                         <Divider/>
-                        <DriveItemContainer/>
+                        <DriveItemContainer items={items}/>
                     </React.Fragment>
                 )}
             </div>
