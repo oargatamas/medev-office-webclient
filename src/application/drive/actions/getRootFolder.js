@@ -20,7 +20,7 @@ export const requestRootFolderId = (successAction = receivedRootFolderId) => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Origin' : "https://office.medev.local:3000"
+            'Origin' : "https://office.medev.local:3000" //Todo create a builder for the headers.
         },
         errorMsg : "Cannot load root folder data."
     };
