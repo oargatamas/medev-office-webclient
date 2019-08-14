@@ -1,7 +1,6 @@
 import {callOfficeApi} from "../../core/action/apiCallActions";
+import {DRIVE_API_BASE} from "./driveApi";
 
-
-const DRIVE_API_BASE = "/drive";
 
 export const RECEIVED_ROOT_FOLDER_DATA = "receivedRootFolderId";
 
