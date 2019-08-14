@@ -1,13 +1,24 @@
 import React, {Component} from "react";
+import {Box, Typography} from "@material-ui/core";
+import {withStyles} from "@material-ui/styles";
+
+
+const styles = () => ({
+    root:{},
+});
 
 
 class DriveHeader extends Component{
     render() {
+        const {classes, folder} = this.props;
+
         return(
-            <div>Drive Item Header</div>
+            <Box className={classes.root}>
+                <Typography variant={"h5"} color={"primary"}>{folder.name}</Typography>
+            </Box>
         );
     }
 }
 
 
-export default DriveHeader;
+export default withStyles(styles,{withTheme:false})(DriveHeader);
