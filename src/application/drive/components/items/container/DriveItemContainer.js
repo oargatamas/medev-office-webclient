@@ -14,7 +14,7 @@ const styles = () => ({
         display:"flex",
         flexDirection:"row",
         flexWrap: "wrap",
-        justifyContent: "space-around",
+        justifyContent: "flex-start",
     }
 });
 
