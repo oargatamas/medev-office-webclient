@@ -1,20 +1,23 @@
 import React, {Component} from "react";
-import {withStyles} from "@material-ui/core";
+import {Divider, withStyles} from "@material-ui/core";
 import NavigationBar from "../navigation/NavigationBar";
 import DriveHeader from "../header/DriveHeader";
 import DriveItemContainer from "../items/container/DriveItemContainer";
+import DriveHeaderSkeleton from "../header/DriveHeaderSkeleton";
+import NavigationBarSkeleton from "../navigation/NavigationBarSkeleton";
+import DriveItemContainerSkeleton from "../items/container/DriveItemContainerSkeleton";
 
 
 const styles = (theme) => ({
     root: {
-        display : "flex",
-        flexDirection : "column"
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: 1
     }
 });
 
 
-
-class Drive extends Component{
+class Drive extends Component {
 
 
     componentDidMount() {
@@ -22,17 +25,29 @@ class Drive extends Component{
     }
 
     render() {
-        const {classes} = this.props;
+        const {classes, isFetching} = this.props;
 
-        return(
+        return (
             <div className={classes.root}>
-                <NavigationBar/>
-                <DriveHeader/>
-                <DriveItemContainer/>
+                {(isFetching) ? (
+                    <React.Fragment>
+                        <NavigationBarSkeleton/>
+                        <DriveHeaderSkeleton/>
+                        <Divider/>
+                        <DriveItemContainerSkeleton/>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <NavigationBar/>
+                        <DriveHeader/>
+                        <Divider/>
+                        <DriveItemContainer/>
+                    </React.Fragment>
+                )}
             </div>
         );
     }
 }
 
 
-export default withStyles(styles,{withTheme:true})(Drive);
+export default withStyles(styles, {withTheme: true})(Drive);

@@ -5,6 +5,7 @@ import connect from "react-redux/es/connect/connect";
 
 const mapStateToProps = (state) => {
     return {
+        isFetching : state.coreReducer.isFetching,
         rootFolder : state.driveReducer.rootFolder,
         items : state.driveReducer.currentFolderItems,
         navigation : state.driveReducer.breadCrumbs,

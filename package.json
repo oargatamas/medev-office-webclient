@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^4.3.0",
     "@material-ui/icons": "^4.2.1",
+    "@material-ui/lab": "^4.0.0-alpha.23",
     "@material-ui/styles": "^4.3.0",
     "clsx": "^1.0.4",
     "medevcore-react": "git+https://TangoMajom@bitbucket.org/medevservices/medevcore-react.git",

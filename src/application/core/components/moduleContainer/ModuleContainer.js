@@ -5,6 +5,9 @@ import {DriveModule} from "../../../drive/App";
 
 const styles = (theme) => ({
     content: {
+        display:"flex",
+        flexDirection:"column",
+        height:"100vh",
         flexGrow: 1,
         padding: theme.spacing(3),
     },
