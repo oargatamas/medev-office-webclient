@@ -11,8 +11,8 @@ import DriveItemContainerSkeleton from "../items/container/DriveItemContainerSke
 const styles = () => ({
     root: {
         display: "flex",
-        flexDirection: "column",
-        flexGrow: 1
+        flexFlow: "column",
+        height: "100%"
     }
 });
 

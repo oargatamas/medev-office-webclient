@@ -1,12 +1,36 @@
 import React, {Component} from "react";
+import {withStyles} from "@material-ui/styles";
+import {Box} from "@material-ui/core";
+import DriveItem from "../DriveItem";
 
 
-class DriveItemContainer extends Component{
+const styles = () => ({
+    root: {
+        flex: "1 1 auto",
+        height: "100%",
+        overflow:"auto",
+    },
+    content: {
+        display:"flex",
+        flexDirection:"row",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+    }
+});
+
+class DriveItemContainer extends Component {
     render() {
-        return(
-            <div>Item Container</div>
+
+        const {classes, items} = this.props;
+
+        return (
+            <Box className={classes.root}>
+                <Box className={classes.content}>
+                    {items.map((item) => (<DriveItem item={item}/>))}
+                </Box>
+            </Box>
         );
     }
 }
 
-export default DriveItemContainer;
+export default withStyles(styles, {withTheme: false})(DriveItemContainer);

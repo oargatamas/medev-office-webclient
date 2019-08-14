@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Box, LinearProgress} from "@material-ui/core";
 import {withStyles} from "@material-ui/styles";
 
-const styles = (theme) => ({
+const styles = () => ({
     root: {
         width:"100%",
         display:"flex",
@@ -28,4 +28,4 @@ class DriveItemContainerSkeleton extends Component {
     }
 }
 
-export default withStyles(styles, {withTheme: true})(DriveItemContainerSkeleton);
+export default withStyles(styles, {withTheme: false})(DriveItemContainerSkeleton);
