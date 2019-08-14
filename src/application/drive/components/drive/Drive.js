@@ -8,7 +8,7 @@ import NavigationBarSkeleton from "../navigation/NavigationBarSkeleton";
 import DriveItemContainerSkeleton from "../items/container/DriveItemContainerSkeleton";
 
 
-const styles = (theme) => ({
+const styles = () => ({
     root: {
         display: "flex",
         flexDirection: "column",
@@ -50,4 +50,4 @@ class Drive extends Component {
 }
 
 
-export default withStyles(styles, {withTheme: true})(Drive);
+export default withStyles(styles, {withTheme: false})(Drive);
