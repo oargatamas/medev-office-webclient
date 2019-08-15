@@ -8,7 +8,7 @@ export const driveReducer = (state = initialState, action) => {
         case RECEIVED_ROOT_FOLDER_DATA :
             return Object.assign({},state,{rootFolder : action.folder, currentFolderItems : action.content});
         case RECEIVED_FOLDER_CONTENT:
-            return Object.assign({},state,{currentFolderItems : action.content});
+            return Object.assign({},state,{rootFolder : action.rootFolder, currentFolderItems : action.content});
         default :
             return state;
     }

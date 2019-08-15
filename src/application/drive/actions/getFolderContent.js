@@ -5,10 +5,11 @@ import {DRIVE_API_BASE} from "./driveApi";
 export const RECEIVED_FOLDER_CONTENT = "receivedFolderContent";
 
 
-export const receivedFolderItems = (folderContent) => {
+export const receivedFolderItems = (serverResponse) => {
     return {
         type: RECEIVED_FOLDER_CONTENT,
-        content: folderContent
+        rootFolder : serverResponse.parent,
+        content: serverResponse.content
     };
 };
 
