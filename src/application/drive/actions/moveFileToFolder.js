@@ -1,16 +1,5 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi} from "../../core/action/apiCallActions";
-
-export const ITEM_MOVEMENT_SUCCESS = "itemMovementSuccess";
-
-
-
-const receivedItemMovementResponse = (result) => {
-    return {
-        type: ITEM_MOVEMENT_SUCCESS,
-        result: result
-    };
-};
+import {callOfficeApi, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
 
 
 export const requestItemMove = (targetItem, destinationFolder) => {
@@ -23,8 +12,9 @@ export const requestItemMove = (targetItem, destinationFolder) => {
             'Content-Type': 'application/json',
             'Origin': "https://office.medev.local:3000" //Todo create a builder for the headers.
         },
-        errorMsg: "Cannot move '" + targetItem.name + "' to '" + destinationFolder.name + "'."
+        errorMsg: "Cannot move '" + targetItem.name + "' to '" + destinationFolder.name + "'.",
+        successMsg : "'" + targetItem.name + "' successfully moved to '" + destinationFolder.name + "'."
     };
 
-    return callOfficeApi(params, receivedItemMovementResponse);
+    return callOfficeApi(params, defaultSuccessWithResponse);
 };

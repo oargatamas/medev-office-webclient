@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Breadcrumbs, Link} from "@material-ui/core";
-import {Link as RouterLink} from "react-router-dom";
-
+import {Link as RouteLink} from "react-router-dom";
 
 class NavigationBar extends Component {
 
@@ -12,7 +11,7 @@ class NavigationBar extends Component {
         return (
             <Breadcrumbs>
                 {items.map((item) => (
-                    <Link component{RouterLink} to={"/drive/" + item.id}>
+                    <Link component={RouteLink} to={"/drive/" + item.id}>
                         {item.name}
                     </Link>
                 ))}
@@ -20,3 +19,5 @@ class NavigationBar extends Component {
         );
     }
 }
+
+export default NavigationBar;

@@ -5,7 +5,7 @@ import {DRIVE_API_BASE} from "./driveApi";
 export const RECEIVED_ROOT_FOLDER_DATA = "receivedRootFolderData";
 
 
-export const receivedRootFolderData = (folderInfo) => {
+const receivedRootFolderData = (folderInfo) => {
     return {
         type: RECEIVED_ROOT_FOLDER_DATA,
         folder: folderInfo.meta,

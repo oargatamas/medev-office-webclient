@@ -8,7 +8,8 @@ export const RECEIVED_FOLDER_CONTENT = "receivedFolderContent";
 export const receivedFolderItems = (serverResponse) => {
     return {
         type: RECEIVED_FOLDER_CONTENT,
-        rootFolder : serverResponse.parent,
+        rootFolder : serverResponse.meta,
+        parents : serverResponse.parents.reverse(),
         content: serverResponse.content
     };
 };

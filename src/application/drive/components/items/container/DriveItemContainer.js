@@ -19,14 +19,15 @@ const styles = () => ({
 });
 
 class DriveItemContainer extends Component {
+
     render() {
 
-        const {classes, items} = this.props;
+        const {classes, items, actions} = this.props;
 
         return (
             <Box className={classes.root}>
                 <Box className={classes.content}>
-                    {items.map((item) => (<DriveItem item={item}/>))}
+                    {items.map((item) => (<DriveItem key={item.id} item={item} actions={actions}/>))}
                 </Box>
             </Box>
         );

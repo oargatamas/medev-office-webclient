@@ -2,6 +2,7 @@ import {requestRootFolderData} from "../../actions/getRootFolder";
 import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
 import {requestFolderItems} from "../../actions/getFolderContent";
+import {requestItemMove} from "../../actions/moveFileToFolder";
 
 
 const mapStateToProps = (state) => {
@@ -16,12 +17,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestRootFolder : () => {
-            dispatch(requestRootFolderData());
-        },
-        requestFolderContent : (folderId) => {
-            dispatch(requestFolderItems(folderId));
-        },
+        actions: {
+            requestRootFolder : () => {
+                dispatch(requestRootFolderData());
+            },
+            requestFolderContent : (folder) => {
+                dispatch(requestFolderItems(folder));
+            },
+            moveItemToFolder : (target, destination) => {
+                dispatch(requestItemMove(target,destination));
+            }
+        }
     }
 };
 
