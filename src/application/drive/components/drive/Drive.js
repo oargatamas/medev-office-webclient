@@ -20,7 +20,6 @@ class Drive extends Component {
 
     componentDidMount() {
         this.props.actions.requestRootFolder();
-
     }
 
     render() {
