@@ -4,7 +4,7 @@ import NavigationBar from "../navigation/NavigationBar";
 import DriveHeader from "../header/DriveHeader";
 import DriveHeaderSkeleton from "../header/DriveHeaderSkeleton";
 import NavigationBarSkeleton from "../navigation/NavigationBarSkeleton";
-import DriveItemContainer from "../../containers/items/DriveItemContainer";
+import DriveItemContainer from "../items/container/DriveItemContainer";
 
 const styles = () => ({
     root: {
