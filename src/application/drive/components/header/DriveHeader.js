@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Box, Typography} from "@material-ui/core";
+import {Box, Divider, Typography} from "@material-ui/core";
 import {withStyles} from "@material-ui/styles";
 
 
@@ -15,9 +15,12 @@ class DriveHeader extends Component {
         const {classes, folder} = this.props;
 
         return (
-            <Box className={classes.root}>
-                <Typography variant={"h4"} color={"primary"}>{folder.name}</Typography>
-            </Box>
+            <React.Fragment>
+                <Box className={classes.root}>
+                    <Typography variant={"h4"} color={"primary"}>{folder.name}</Typography>
+                </Box>
+                <Divider/>
+            </React.Fragment>
         );
     }
 }

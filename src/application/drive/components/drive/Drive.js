@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {Divider, LinearProgress, withStyles} from "@material-ui/core";
+import {LinearProgress, withStyles} from "@material-ui/core";
 import NavigationBar from "../navigation/NavigationBar";
 import DriveHeader from "../header/DriveHeader";
-import DriveItemContainer from "../items/container/DriveItemContainer";
 import DriveHeaderSkeleton from "../header/DriveHeaderSkeleton";
 import NavigationBarSkeleton from "../navigation/NavigationBarSkeleton";
+import DriveItemContainer from "../../containers/items/DriveItemContainer";
 
 const styles = () => ({
     root: {
@@ -38,7 +38,6 @@ class Drive extends Component {
                     <React.Fragment>
                         <NavigationBar items={navigation}/>
                         <DriveHeader folder={rootFolder}/>
-                        <Divider/>
                         <DriveItemContainer items={items}/>
                     </React.Fragment>
                 )}
