@@ -1,22 +1,22 @@
 import React, {Component} from "react";
-import {withStyles} from "@material-ui/styles";
+import {Breadcrumbs, Link} from "@material-ui/core";
+import {Link as RouterLink} from "react-router-dom";
 
-
-const styles = () => ({
-    root: {
-        flex: "0 0 auto"
-    }
-});
 
 class NavigationBar extends Component {
+
+
     render() {
-        const {classes} = this.props;
+        const {items} = this.props;
 
         return (
-            <div className={classes.root}>Navigation Bar</div>
+            <Breadcrumbs>
+                {items.map((item) => (
+                    <Link component{RouterLink} to={"/drive/" + item.id}>
+                        {item.name}
+                    </Link>
+                ))}
+            </Breadcrumbs>
         );
     }
 }
-
-
-export default withStyles(styles, {withTheme: false})(NavigationBar);
