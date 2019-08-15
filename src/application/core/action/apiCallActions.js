@@ -8,6 +8,7 @@ const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
 
 export const FETCH_API_DATA = "fetchingData";
 export const FETCH_API_SUCCESS = "receivedData";
+export const FETCH_API_SUCCESS_WITH_RESPONSE = "receivedDataWithResponse";
 export const FETCH_API_ERROR = "errorReceivedData";
 
 
@@ -29,6 +30,14 @@ export const defaultErrorAction = (error) => {
         type : FETCH_API_ERROR,
         error : error
     }
+};
+
+export const defaultSuccessWithResponse = (serverResponse, message) => {
+    serverResponse.message = message;
+    return {
+        type : FETCH_API_SUCCESS,
+        response : serverResponse
+    };
 };
 
 export const callOfficeApi = (requestParams, successAction, errorAction = defaultErrorAction, fetchingAction = defaultFetchingAction) => {
@@ -67,7 +76,7 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
             .then((parsedResponse) => {
                 console.log("Sending response to private component");
                 dispatch(defaultSuccessAction());
-                dispatch(successAction(parsedResponse));
+                dispatch(successAction(parsedResponse, requestParams.successMsg));
             })
             .catch((error) => {
                 console.log(error);

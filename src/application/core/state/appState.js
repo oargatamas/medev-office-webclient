@@ -3,5 +3,6 @@ export const initialState = {
     currentApplication: "",
     sideDrawerOpen: false,
     isFetching: false,
-    errorObject: {},
+    errorObject: null,
+    successObject: null,
 };
