@@ -96,6 +96,6 @@ const redirectToAuthServer = (params) => {
 
 
 
-const encodeUrlData = (data) => {
+export const encodeUrlData = (data) => {
     return Object.keys(data).map( (key) => [key, data[key]].map(encodeURIComponent).join("=")).join("&");
 };
