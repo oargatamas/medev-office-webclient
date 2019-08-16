@@ -42,7 +42,7 @@ export const setStartUpFinished = () => {
 export const setStartUpError = (error) => {
     return {
         type: START_UP_ERROR,
-        error : (error.statusCode && error.statusCode === 401) ? {} : error
+        error : (error.statusCode && error.statusCode === 401) ? null : error
     }
 };
 
