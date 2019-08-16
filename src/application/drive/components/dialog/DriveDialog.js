@@ -18,10 +18,11 @@ class DriveDialog extends Component {
     constructor(props, context) {
         super(props, context);
         this.renderItemComponent = this.renderItemComponent.bind(this);
+        this.refreshFolder = this.refreshFolder.bind(this);
     }
 
     renderItemComponent() {
-        switch (this.props.content) {
+        switch (this.props.dialogType) {
             case CONTENT_SHOW_DETAILS:
                 return <ItemDetailsDialog {...this.props}/>;
             case CONTENT_EDIT_DETAILS:
@@ -37,11 +38,20 @@ class DriveDialog extends Component {
         }
     }
 
+    refreshFolder() {
+        const {actions, folder, fetchSuccessResponse} = this.props;
+
+        if(fetchSuccessResponse){
+            console.log("refreshing...");
+            actions.requestFolderContent(folder.id);
+        }
+    }
+
     render() {
-        const {open} = this.props;
+        const {isDialogOpen} = this.props;
 
         return (
-            <Dialog open={open} disableBackdropClick={true}>
+            <Dialog open={isDialogOpen} onExit={this.refreshFolder} disableBackdropClick={true}>
                 {this.renderItemComponent()}
             </Dialog>
         )
