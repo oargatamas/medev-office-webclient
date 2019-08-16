@@ -11,7 +11,9 @@ const mapStateToProps = (state) => {
         rootFolder : state.driveReducer.rootFolder,
         items : state.driveReducer.currentFolderItems,
         navigation : state.driveReducer.breadCrumbs,
-        detailsOpen : state.driveReducer.isItemDetailsOpen
+        isDialogOpen : state.driveReducer.isItemDialogOpen,
+        isDialogFetching : state.driveReducer.isItemDialogFetching,
+        dialogContent : state.driveReducer.itemDialogContentType,
     }
 };
 

@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Box, Divider, IconButton, Link, Typography} from "@material-ui/core";
 import {Link as RouteLink} from "react-router-dom";
 import SubDirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft";
+import CreateFolderIcon from "@material-ui/icons/CreateNewFolder";
+import UploadFileIcon from "@material-ui/icons/InsertDriveFile";
 import {withStyles} from "@material-ui/styles";
 
 
@@ -10,7 +12,8 @@ const styles = () => ({
         flex: "0 0 auto",
     },
     button:{
-        transform: "rotate(90deg)"
+        transform: "rotate(90deg)",
+        marginRight : 10,
     }
 });
 
@@ -32,6 +35,12 @@ class DriveHeader extends Component {
                         ) : (
                             <SubDirectoryArrowLeftIcon />
                         )}
+                    </IconButton>
+                    <IconButton>
+                        <CreateFolderIcon/>
+                    </IconButton>
+                    <IconButton>
+                        <UploadFileIcon/>
                     </IconButton>
                 </Box>
                 <Divider/>

@@ -5,6 +5,7 @@ import DriveHeader from "../header/DriveHeader";
 import DriveHeaderSkeleton from "../header/DriveHeaderSkeleton";
 import NavigationBarSkeleton from "../navigation/NavigationBarSkeleton";
 import DriveItemContainer from "../items/container/DriveItemContainer";
+import DriveDialog from "../dialog/DriveDialog";
 
 const styles = () => ({
     root: {
@@ -32,7 +33,7 @@ class Drive extends Component {
 
 
     render() {
-        const {classes, isFetching, rootFolder, items, navigation, actions} = this.props;
+        const {classes, isFetching, rootFolder, items, navigation, actions, isDialogOpen, dialogContent, isDialogFetching} = this.props;
 
         return (
             <div className={classes.root}>
@@ -47,6 +48,7 @@ class Drive extends Component {
                         <NavigationBar items={navigation} actions={actions}/>
                         <DriveHeader parent={navigation.slice(-1)[0]} folder={rootFolder} actions={actions}/>
                         <DriveItemContainer items={items} actions={actions}/>
+                        <DriveDialog open={isDialogOpen} isFetching={isDialogFetching} content={dialogContent} actions={actions}/>
                     </React.Fragment>
                 )}
             </div>

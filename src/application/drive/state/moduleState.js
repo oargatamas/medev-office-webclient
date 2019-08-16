@@ -2,5 +2,7 @@ export const initialState = {
     breadCrumbs: [],
     rootFolder: {},
     currentFolderItems: [],
-    isItemDetailsOpen: false,
+    isItemDialogOpen: true,
+    isItemDialogFetching : false,
+    itemDialogContentType : null
 };
