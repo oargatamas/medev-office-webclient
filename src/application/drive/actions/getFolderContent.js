@@ -27,5 +27,5 @@ export const requestFolderItems = (folderId) => {
         errorMsg: "Cannot load content folder content."
     };
 
-    return callOfficeApi(params, receivedFolderItems);
+    return callOfficeApi(params, [receivedFolderItems]);
 };

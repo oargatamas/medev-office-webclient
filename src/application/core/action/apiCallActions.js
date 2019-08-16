@@ -40,12 +40,12 @@ export const defaultSuccessWithResponse = (serverResponse, message) => {
     };
 };
 
-export const callOfficeApi = (requestParams, successAction, errorAction = defaultErrorAction, fetchingAction = defaultFetchingAction) => {
+export const callOfficeApi = (requestParams, successAction, errorAction = [defaultErrorAction], fetchingAction = [defaultFetchingAction]) => {
 
     return (dispatch) => {
         let url = "https://" + OFFICE_API_HOST + requestParams.uri;
 
-        dispatch(fetchingAction());
+        fetchingAction.forEach((action) => {dispatch(action());});
 
         fetch(url, {
             method: requestParams.method,
@@ -71,16 +71,17 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                     console.error(response.statusText);
                     throw new HTTPError(response.status, requestParams.errorMsg);
                 }
+                console.log(response);
                 return response.json();
             })
             .then((parsedResponse) => {
                 console.log("Sending response to private component");
                 dispatch(defaultSuccessAction());
-                dispatch(successAction(parsedResponse, requestParams.successMsg));
+                successAction.forEach((action) => {dispatch(action(parsedResponse, requestParams.successMsg));});
             })
             .catch((error) => {
                 console.log(error);
-                dispatch(errorAction(error))
+                errorAction.forEach((action) => {dispatch(action(error));});
             });
     }
 };

@@ -14,7 +14,7 @@ export const executeStartup = () => {
           dispatch(initStartup());
           dispatch(changeStartUpText("Start application"));
           dispatch(changeStartUpText("Loading module info"));
-          dispatch(requestModuleInfo(receiverModuleInfoAtStartup,setStartUpError));
+          dispatch(requestModuleInfo([receiverModuleInfoAtStartup],[setStartUpError]));
       }
 };
 

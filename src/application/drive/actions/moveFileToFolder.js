@@ -16,5 +16,5 @@ export const requestItemMove = (targetItem, destinationFolder) => {
         successMsg : "'" + targetItem.name + "' successfully moved to '" + destinationFolder.name + "'."
     };
 
-    return callOfficeApi(params, defaultSuccessWithResponse);
+    return callOfficeApi(params, [defaultSuccessWithResponse]);
 };

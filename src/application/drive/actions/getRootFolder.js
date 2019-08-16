@@ -13,7 +13,7 @@ const receivedRootFolderData = (folderInfo) => {
     };
 };
 
-export const requestRootFolderData = (successAction = receivedRootFolderData) => {
+export const requestRootFolderData = (successAction = [receivedRootFolderData]) => {
 
     let query = {
         meta: true,
