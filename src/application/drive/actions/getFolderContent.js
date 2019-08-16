@@ -14,17 +14,17 @@ export const receivedFolderItems = (serverResponse) => {
     };
 };
 
-export const requestFolderItems = (folder) => {
+export const requestFolderItems = (folderId) => {
     let params = {
         method: "GET",
-        uri: DRIVE_API_BASE + "/folder/" + folder.id + "/content",
+        uri: DRIVE_API_BASE + "/folder/" + folderId + "/content",
         redirect_uri: DRIVE_API_BASE,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Origin': "https://office.medev.local:3000" //Todo create a builder for the headers.
         },
-        errorMsg: "Cannot load content of '"+ folder.name +"'."
+        errorMsg: "Cannot load content folder content."
     };
 
     return callOfficeApi(params, receivedFolderItems);

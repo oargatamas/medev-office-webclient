@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Box from "@material-ui/core/Box";
+import {Box, Typography} from "@material-ui/core";
+import {Link} from "react-router-dom";
+import FolderIcon from "@material-ui/icons/Folder";
 
 const styles = (theme) => ({
     root: {
@@ -8,34 +10,38 @@ const styles = (theme) => ({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        width: 200,
-        height: 200,
         margin: theme.spacing(1),
-        backgroundColor: "lightGrey",
+    },
+    itemIcon : {
+        width: 100,
+        height: 100,
     }
 });
 
 class DriveItem extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.handleItemClick = this.handleItemClick.bind(this);
-    }
-
-    handleItemClick(){
-        const {item, actions} = this.props;
+    renderItemIcon(){
+        const {classes, item} = this.props;
 
         if(item.type === "folder"){
-            actions.requestFolderContent(item);
+            return (
+                <Link to={"/drive/"+item.id}>
+                    <FolderIcon color="primary" className={classes.itemIcon}/>
+                </Link>
+            );
         }
+        return null;
     }
 
     render() {
         const {classes, item, key} = this.props;
 
         return (
-            <Box key={key} className={classes.root} onDoubleClick={this.handleItemClick}>
+            <Box key={key} className={classes.root}>
+                {this.renderItemIcon()}
+                <Typography variant={"subtitle1"}>
                 {item.name}
+                </Typography>
             </Box>
         );
     }

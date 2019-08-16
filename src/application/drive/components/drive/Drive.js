@@ -18,12 +18,27 @@ const styles = () => ({
 class Drive extends Component {
 
 
-    componentDidMount() {
-        this.props.actions.requestRootFolder();
+
+
+    componentDidMount(){
+        console.log("componentDidMount()");
+        const {actions, match} = this.props;
+
+        if(match.params.id){
+            console.log("van id");
+            actions.requestFolderContent(match.params.id);
+        }else{
+            console.log("nincs id");
+            actions.requestRootFolder();
+        }
     }
 
+
     render() {
-        const {classes, isFetching, rootFolder, items, navigation} = this.props;
+        const {classes, isFetching, rootFolder, items, navigation, actions} = this.props;
+
+        console.log("fut a render!");
+        console.log(this.props.match);
 
         return (
             <div className={classes.root}>
@@ -35,9 +50,9 @@ class Drive extends Component {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <NavigationBar items={navigation}/>
-                        <DriveHeader folder={rootFolder}/>
-                        <DriveItemContainer items={items}/>
+                        <NavigationBar items={navigation} actions={actions}/>
+                        <DriveHeader parent={navigation.slice(-1)[0]} folder={rootFolder} actions={actions}/>
+                        <DriveItemContainer items={items} actions={actions}/>
                     </React.Fragment>
                 )}
             </div>

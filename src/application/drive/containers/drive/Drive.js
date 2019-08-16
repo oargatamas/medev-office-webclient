@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
             requestRootFolder : () => {
                 dispatch(requestRootFolderData());
             },
-            requestFolderContent : (folder) => {
-                dispatch(requestFolderItems(folder));
+            requestFolderContent : (folderId) => {
+                dispatch(requestFolderItems(folderId));
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));

@@ -3,10 +3,12 @@ import {Route} from "react-router-dom";
 import Drive from "./containers/drive/Drive";
 
 
-export class DriveModule extends Component{
+export class DriveModule extends Component {
     render() {
         return (
-            <Route path={"/drive"} component={Drive}/>
+            <React.Fragment>
+                <Route path={"/drive/:id?"} component={(props)=>(<Drive key={props.match.params.id} {...props}/>)}/>
+            </React.Fragment>
         );
     }
 }
