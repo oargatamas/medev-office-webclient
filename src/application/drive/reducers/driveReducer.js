@@ -19,7 +19,11 @@ export const driveReducer = (state = initialState, action) => {
         case DIALOG_FETCH_SUCCESS:
             return Object.assign({}, state, {isItemDialogFetching: false});
         case OPEN_DIALOG :
-            return Object.assign({}, state, {isItemDialogOpen: true, itemDialogContentType: action.contentType});
+            return Object.assign({}, state, {
+                isItemDialogOpen: true,
+                itemDialogContentType: action.contentType,
+                currentDialogItem: action.item
+            });
         case CLOSE_DIALOG:
             return Object.assign({}, state, {isItemDialogOpen: false});
         default :
