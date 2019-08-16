@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Apps';
 import {withStyles} from "@material-ui/styles";
 import {drawerWidth} from "../navigation/Navigation";
 import clsx from "clsx";

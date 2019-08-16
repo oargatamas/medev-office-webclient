@@ -35,7 +35,7 @@ export const defaultErrorAction = (error) => {
 export const defaultSuccessWithResponse = (serverResponse, message) => {
     serverResponse.message = message;
     return {
-        type : FETCH_API_SUCCESS,
+        type : FETCH_API_SUCCESS_WITH_RESPONSE,
         response : serverResponse
     };
 };
