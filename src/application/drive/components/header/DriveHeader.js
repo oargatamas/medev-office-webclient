@@ -4,6 +4,7 @@ import {Link as RouteLink} from "react-router-dom";
 import SubDirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft";
 import CreateFolderIcon from "@material-ui/icons/CreateNewFolder";
 import UploadFileIcon from "@material-ui/icons/InsertDriveFile";
+import RefreshIcon from "@material-ui/icons/Refresh";
 import {withStyles} from "@material-ui/styles";
 import {CONTENT_NEW_FOLDER, CONTENT_UPLOAD_FILE} from "../../actions/dialogActions";
 
@@ -26,6 +27,7 @@ class DriveHeader extends Component {
         super(props, context);
         this.createFolderClick = this.createFolderClick.bind(this);
         this.uploadFileClick = this.uploadFileClick.bind(this);
+        this.refreshFolderClick = this.refreshFolderClick.bind(this);
     }
 
     createFolderClick(){
@@ -34,6 +36,11 @@ class DriveHeader extends Component {
 
     uploadFileClick(){
         this.props.actions.openItemDialog(CONTENT_UPLOAD_FILE);
+    }
+
+    refreshFolderClick(){
+        const {folder} = this.props;
+        this.props.actions.requestFolderContent(folder.id);
     }
 
     render() {
@@ -51,6 +58,9 @@ class DriveHeader extends Component {
                         ) : (
                             <SubDirectoryArrowLeftIcon />
                         )}
+                    </IconButton>
+                    <IconButton onClick={this.refreshFolderClick}>
+                        <RefreshIcon/>
                     </IconButton>
                     <IconButton onClick={this.createFolderClick}>
                         <CreateFolderIcon/>
