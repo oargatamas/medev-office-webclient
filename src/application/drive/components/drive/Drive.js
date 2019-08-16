@@ -35,6 +35,8 @@ class Drive extends Component {
     render() {
         const {classes, isFetching, rootFolder, items, navigation, actions, isDialogOpen, dialogContent, isDialogFetching} = this.props;
 
+        console.log("drive render");
+
         return (
             <div className={classes.root}>
                 {(isFetching) ? (

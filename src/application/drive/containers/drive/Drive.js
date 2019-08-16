@@ -3,6 +3,7 @@ import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
 import {requestFolderItems} from "../../actions/getFolderContent";
 import {requestItemMove} from "../../actions/moveFileToFolder";
+import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 
 
 const mapStateToProps = (state) => {
@@ -25,6 +26,12 @@ const mapDispatchToProps = (dispatch) => {
             },
             requestFolderContent : (folderId) => {
                 dispatch(requestFolderItems(folderId));
+            },
+            openItemDialog:(purpose, item) =>{
+                dispatch(openItemDialog(purpose, item));
+            },
+            closeItemDialog:() => {
+                dispatch(closeItemDialog());
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));

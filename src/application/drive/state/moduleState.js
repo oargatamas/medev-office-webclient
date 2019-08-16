@@ -3,7 +3,7 @@ export const initialState = {
     rootFolder: {},
     currentFolderItems: [],
     currentDialogItem: null,
-    isItemDialogOpen: true,
+    isItemDialogOpen: false,
     isItemDialogFetching : false,
     itemDialogContentType : null
 };
