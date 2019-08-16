@@ -21,14 +21,11 @@ class Drive extends Component {
 
 
     componentDidMount(){
-        console.log("componentDidMount()");
         const {actions, match} = this.props;
 
         if(match.params.id){
-            console.log("van id");
             actions.requestFolderContent(match.params.id);
         }else{
-            console.log("nincs id");
             actions.requestRootFolder();
         }
     }
@@ -36,9 +33,6 @@ class Drive extends Component {
 
     render() {
         const {classes, isFetching, rootFolder, items, navigation, actions} = this.props;
-
-        console.log("fut a render!");
-        console.log(this.props.match);
 
         return (
             <div className={classes.root}>
