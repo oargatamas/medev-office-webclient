@@ -12,7 +12,7 @@ export const CONTENT_EDIT_DETAILS = "editDriveItemDetails";
 export const CONTENT_DELETE_ITEM = "deleteDriveItem";
 
 
-export const openItemDialog = (item,purpose) => {
+export const openItemDialog = (purpose, item) => {
     return {
         type: OPEN_DIALOG,
         contentType: purpose,
