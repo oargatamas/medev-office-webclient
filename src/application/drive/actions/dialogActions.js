@@ -7,8 +7,9 @@ export const CLOSE_DIALOG = "closeDriveDialog";
 
 export const CONTENT_NEW_FOLDER = "createNewFolderOnDrive";
 export const CONTENT_UPLOAD_FILE = "uploadFileToDrive";
-export const CONTENT_SHOW_DETAILS = "showDriveItemDetails";
+export const CONTENT_EDIT_PERMISSIONS = "editDriveItemPermissions";
 export const CONTENT_EDIT_DETAILS = "editDriveItemDetails";
+export const CONTENT_SHARE_LINK = "createDriveItemShareLink";
 export const CONTENT_DELETE_ITEM = "deleteDriveItem";
 
 
