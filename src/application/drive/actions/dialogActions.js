@@ -1,3 +1,5 @@
+import {defaultErrorAction, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
+
 export const DIALOG_FETCH_START = "DriveDialogFetchStart";
 export const DIALOG_FETCH_SUCCESS = "driveDialogFetchFinished";
 
@@ -39,3 +41,18 @@ export const finishItemDialogFetch = () => {
         type: DIALOG_FETCH_SUCCESS
     };
 };
+
+export const defaultDialogSuccessActions = [
+    defaultSuccessWithResponse,
+    finishItemDialogFetch,
+    closeItemDialog
+];
+
+export const defaultDialogErrorActions = [
+    defaultErrorAction,
+    finishItemDialogFetch
+];
+
+export const defaultDialogFetchActions = [
+    startItemDialogFetch
+];

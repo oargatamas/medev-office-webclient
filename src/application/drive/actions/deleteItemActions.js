@@ -1,6 +1,6 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi, defaultErrorAction, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
-import {closeItemDialog, finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
+import {callOfficeApi} from "../../core/action/apiCallActions";
+import {defaultDialogErrorActions, defaultDialogFetchActions, defaultDialogSuccessActions,} from "./dialogActions";
 
 export const deleteDriveItem = (itemId, type) => {
 
@@ -16,20 +16,6 @@ export const deleteDriveItem = (itemId, type) => {
         errorMsg: "Cannot delete folder."
     };
 
-    let successActions = [
-        defaultSuccessWithResponse,
-        finishItemDialogFetch,
-        closeItemDialog
-    ];
 
-    let errorActions = [
-        defaultErrorAction,
-        finishItemDialogFetch
-    ];
-
-    let fetchActions = [
-        startItemDialogFetch
-    ];
-
-    return callOfficeApi(params, successActions, errorActions, fetchActions);
+    return callOfficeApi(params, defaultDialogSuccessActions, defaultDialogErrorActions, defaultDialogFetchActions);
 };
