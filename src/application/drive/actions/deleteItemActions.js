@@ -8,11 +8,6 @@ export const deleteDriveItem = (itemId, type) => {
         method: "DELETE",
         uri: DRIVE_API_BASE + "/" + type + "/" + itemId,
         redirect_uri: DRIVE_API_BASE,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Origin': "https://office.medev.local:3000" //Todo create a builder for the headers.
-        },
         errorMsg: "Cannot delete folder."
     };
 

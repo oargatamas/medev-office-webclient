@@ -24,11 +24,6 @@ export const requestRootFolderData = (successAction = [receivedRootFolderData]) 
         method: "GET",
         uri: DRIVE_API_BASE + "/folder/root?" + encodeUrlData(query), //Todo Clean it up
         redirect_uri: DRIVE_API_BASE,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Origin': "https://office.medev.local:3000" //Todo create a builder for the headers.
-        },
         errorMsg: "Cannot load root folder data."
     };
 

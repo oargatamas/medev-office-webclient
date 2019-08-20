@@ -16,11 +16,6 @@ export const  requestModuleInfo = (successAction = [receivedModuleInfo], errorAc
         method : "GET",
         uri : "/modules",
         redirect_uri : "/",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Origin' : "https://office.medev.local:3000"
-        },
         errorMsg : "Cannot load module info."
     };
     return callOfficeApi(params, successAction, errorAction)
