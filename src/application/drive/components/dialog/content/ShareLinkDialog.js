@@ -85,7 +85,7 @@ class ShareLinkDialog extends Component {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button color={"primary"} variant={"contained"} onClick={this.handleClose}>Cancel</Button>
+                    <Button color={"default"}  onClick={this.handleClose}>Cancel</Button>
                 </DialogActions>
             </React.Fragment>
         );
