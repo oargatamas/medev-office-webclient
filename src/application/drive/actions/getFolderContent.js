@@ -19,11 +19,6 @@ export const requestFolderItems = (folderId) => {
         method: "GET",
         uri: DRIVE_API_BASE + "/folder/" + folderId + "/content",
         redirect_uri: DRIVE_API_BASE,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Origin': "https://office.medev.local:3000" //Todo create a builder for the headers.
-        },
         errorMsg: "Cannot load content folder content."
     };
 

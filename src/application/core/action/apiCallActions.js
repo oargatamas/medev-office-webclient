@@ -1,10 +1,12 @@
 import HTTPError from "../exceptions/httpErrors";
 import {changeStartUpText} from "./startupActions";
 
+
 const OFFICE_HOST = "office.medev.local"; //Todo move it to config
 const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
 const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
 
+const APPLICATION_ORIGIN = "https://" + OFFICE_HOST + ":3000";
 
 export const FETCH_API_DATA = "fetchingData";
 export const FETCH_API_SUCCESS = "receivedData";
@@ -12,31 +14,31 @@ export const FETCH_API_SUCCESS_WITH_RESPONSE = "receivedDataWithResponse";
 export const FETCH_API_ERROR = "errorReceivedData";
 
 
-export const defaultFetchingAction  = () => {
+export const defaultFetchingAction = () => {
     return {
-        type : FETCH_API_DATA
+        type: FETCH_API_DATA
     }
 };
 
 export const defaultSuccessAction = () => {
     return {
-        type : FETCH_API_SUCCESS
+        type: FETCH_API_SUCCESS
     };
 };
 
 export const defaultErrorAction = (error) => {
     console.log(error);
     return {
-        type : FETCH_API_ERROR,
-        error : error
+        type: FETCH_API_ERROR,
+        error: error
     }
 };
 
 export const defaultSuccessWithResponse = (serverResponse, message) => {
     serverResponse.message = message;
     return {
-        type : FETCH_API_SUCCESS_WITH_RESPONSE,
-        response : serverResponse
+        type: FETCH_API_SUCCESS_WITH_RESPONSE,
+        response: serverResponse
     };
 };
 
@@ -45,11 +47,13 @@ export const callOfficeApi = (requestParams, successAction, errorAction = [defau
     return (dispatch) => {
         let url = "https://" + OFFICE_API_HOST + requestParams.uri;
 
-        fetchingAction.forEach((action) => {dispatch(action());});
+        fetchingAction.forEach((action) => {
+            dispatch(action());
+        });
 
         fetch(url, {
             method: requestParams.method,
-            headers: requestParams.headers,
+            headers: {...requestParams.headers, ...getApiBaseHeaders()},
             mode: 'cors',
             cache: 'no-cache',
             redirect: 'follow',
@@ -77,11 +81,15 @@ export const callOfficeApi = (requestParams, successAction, errorAction = [defau
             .then((parsedResponse) => {
                 console.log("Sending response to private component");
                 dispatch(defaultSuccessAction());
-                successAction.forEach((action) => {dispatch(action(parsedResponse, requestParams.successMsg));});
+                successAction.forEach((action) => {
+                    dispatch(action(parsedResponse, requestParams.successMsg));
+                });
             })
             .catch((error) => {
                 console.log(error);
-                errorAction.forEach((action) => {dispatch(action(error));});
+                errorAction.forEach((action) => {
+                    dispatch(action(error));
+                });
             });
     }
 };
@@ -95,17 +103,24 @@ const broadcastLoginRequired = () => {
 
 const redirectToAuthServer = (params) => {
     let queryParams = encodeUrlData({
-        response_type : "token",
-        client_id : "hu.medev.office.clientspa",
-        redirect_uri : encodeURI("https://"+ OFFICE_HOST + params.redirect_uri),
-        state : "randomstring" //Todo replace it with real csrf token generation logic.
+        response_type: "token",
+        client_id: "hu.medev.office.clientspa",
+        redirect_uri: encodeURI("https://" + OFFICE_HOST + params.redirect_uri),
+        state: "randomstring" //Todo replace it with real csrf token generation logic.
     });
 
     window.location.href = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
 };
 
 
-
 export const encodeUrlData = (data) => {
-    return Object.keys(data).map( (key) => [key, data[key]].map(encodeURIComponent).join("=")).join("&");
+    return Object.keys(data).map((key) => [key, data[key]].map(encodeURIComponent).join("=")).join("&");
 };
+
+export const getApiBaseHeaders = () => (
+    {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Origin': APPLICATION_ORIGIN
+    }
+);
