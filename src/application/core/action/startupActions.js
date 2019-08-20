@@ -14,7 +14,7 @@ export const executeStartup = () => {
           dispatch(initStartup());
           dispatch(changeStartUpText("Start application"));
           dispatch(changeStartUpText("Loading module info"));
-          dispatch(requestModuleInfo(receiverModuleInfoAtStartup,setStartUpError));
+          dispatch(requestModuleInfo([receiverModuleInfoAtStartup],[setStartUpError]));
       }
 };
 
@@ -42,9 +42,10 @@ export const setStartUpFinished = () => {
 export const setStartUpError = (error) => {
     return {
         type: START_UP_ERROR,
-        error : error.statusCode !== 401 ? error : {}
+        error : (error.statusCode && error.statusCode === 401) ? null : error
     }
 };
+
 
 export const receiverModuleInfoAtStartup = (modules) => {
     return (dispatch) =>{

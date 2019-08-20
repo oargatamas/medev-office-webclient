@@ -27,8 +27,6 @@ class SplashScreen extends Component {
     render() {
         let {classes, startupText, startupError} = this.props;
 
-        let isErrored = Object.keys(startupError).length > 0;
-
         return (
             <Container className={classes.container} component="main" maxWidth="xs">
                 <Box height={"100vh"} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -36,12 +34,12 @@ class SplashScreen extends Component {
                     <Typography className={classes.title} color={"textSecondary"} variant={"h2"}>MEDEV</Typography>
                     <Typography className={classes.title} color={"textSecondary"} variant={"h4"} align={"right"}>Office</Typography>
                     <br/>
-                    {(isErrored) ? (
+                    {(startupError) ? (
                         <Typography color={"error"}>{startupError.message}</Typography>
                     ) : (
                         <Typography color={"textSecondary"}>{startupText}</Typography>
                     )}
-                    {(!isErrored) ? (<LinearProgress className={classes.progressBar}/>) : null}
+                    {(!startupError) ? (<LinearProgress className={classes.progressBar}/>) : null}
                 </Box>
             </Container>
         );

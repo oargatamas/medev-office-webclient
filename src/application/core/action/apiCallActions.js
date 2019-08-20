@@ -8,6 +8,7 @@ const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
 
 export const FETCH_API_DATA = "fetchingData";
 export const FETCH_API_SUCCESS = "receivedData";
+export const FETCH_API_SUCCESS_WITH_RESPONSE = "receivedDataWithResponse";
 export const FETCH_API_ERROR = "errorReceivedData";
 
 
@@ -31,12 +32,20 @@ export const defaultErrorAction = (error) => {
     }
 };
 
-export const callOfficeApi = (requestParams, successAction, errorAction = defaultErrorAction, fetchingAction = defaultFetchingAction) => {
+export const defaultSuccessWithResponse = (serverResponse, message) => {
+    serverResponse.message = message;
+    return {
+        type : FETCH_API_SUCCESS_WITH_RESPONSE,
+        response : serverResponse
+    };
+};
+
+export const callOfficeApi = (requestParams, successAction, errorAction = [defaultErrorAction], fetchingAction = [defaultFetchingAction]) => {
 
     return (dispatch) => {
         let url = "https://" + OFFICE_API_HOST + requestParams.uri;
 
-        dispatch(fetchingAction());
+        fetchingAction.forEach((action) => {dispatch(action());});
 
         fetch(url, {
             method: requestParams.method,
@@ -62,16 +71,17 @@ export const callOfficeApi = (requestParams, successAction, errorAction = defaul
                     console.error(response.statusText);
                     throw new HTTPError(response.status, requestParams.errorMsg);
                 }
+                console.log(response);
                 return response.json();
             })
             .then((parsedResponse) => {
                 console.log("Sending response to private component");
                 dispatch(defaultSuccessAction());
-                dispatch(successAction(parsedResponse));
+                successAction.forEach((action) => {dispatch(action(parsedResponse, requestParams.successMsg));});
             })
             .catch((error) => {
                 console.log(error);
-                dispatch(errorAction(error))
+                errorAction.forEach((action) => {dispatch(action(error));});
             });
     }
 };
@@ -96,6 +106,6 @@ const redirectToAuthServer = (params) => {
 
 
 
-const encodeUrlData = (data) => {
+export const encodeUrlData = (data) => {
     return Object.keys(data).map( (key) => [key, data[key]].map(encodeURIComponent).join("=")).join("&");
 };

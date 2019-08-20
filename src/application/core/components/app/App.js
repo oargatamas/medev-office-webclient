@@ -31,7 +31,7 @@ class App extends Component {
     render() {
         const {classes, isStartup, errorObject} = this.props;
 
-        if (Object.keys(errorObject).length > 0) {
+        if (errorObject) {
             this.props.enqueueSnackbar(errorObject.message,{variant:"error"});
         }
 

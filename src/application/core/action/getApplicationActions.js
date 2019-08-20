@@ -11,7 +11,7 @@ export const receivedModuleInfo = (moduleInfo) => {
 };
 
 
-export const  requestModuleInfo = (successAction = receivedModuleInfo, errorAction = defaultErrorAction) => {
+export const  requestModuleInfo = (successAction = [receivedModuleInfo], errorAction = [defaultErrorAction]) => {
     let params = {
         method : "GET",
         uri : "/modules",

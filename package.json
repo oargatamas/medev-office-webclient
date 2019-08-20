@@ -6,9 +6,11 @@
   "dependencies": {
     "@material-ui/core": "^4.3.0",
     "@material-ui/icons": "^4.2.1",
+    "@material-ui/lab": "^4.0.0-alpha.23",
     "@material-ui/styles": "^4.3.0",
     "clsx": "^1.0.4",
     "medevcore-react": "git+https://TangoMajom@bitbucket.org/medevservices/medevcore-react.git",
+    "moment": "^2.24.0",
     "notistack": "^0.8.9",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -21,7 +23,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
