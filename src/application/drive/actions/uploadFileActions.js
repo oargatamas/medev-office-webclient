@@ -3,7 +3,7 @@ import {callOfficeApi} from "../../core/action/apiCallActions";
 import {defaultDialogErrorActions, defaultDialogFetchActions, defaultDialogSuccessActions} from "./dialogActions";
 
 
-export const deleteDriveItem = (folder, fileSource) => {
+export const uploadFileToFolder = (folder, fileSource) => {
 
     const uploadBody = new FormData();
     uploadBody.append("fileItem",fileSource.files[0]); //Todo consider to handle multiple files
