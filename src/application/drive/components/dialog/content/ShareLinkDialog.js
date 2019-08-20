@@ -10,6 +10,7 @@ import {withStyles} from "@material-ui/styles";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import IconButton from "@material-ui/core/IconButton";
 import {withSnackbar} from "notistack";
+import {APPLICATION_ORIGIN} from "../../../../core/action/apiCallActions";
 
 
 const styles = (theme) => ({
@@ -41,7 +42,7 @@ class ShareLinkDialog extends Component {
 
     createItemLink() {
         const {dialogItem} = this.props;
-        return dialogItem.id;
+        return APPLICATION_ORIGIN + "/drive/" + dialogItem.id;
     }
 
     copyLinkToClipboard() {

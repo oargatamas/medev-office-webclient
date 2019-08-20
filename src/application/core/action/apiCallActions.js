@@ -2,11 +2,11 @@ import HTTPError from "../exceptions/httpErrors";
 import {changeStartUpText} from "./startupActions";
 
 
-const OFFICE_HOST = "office.medev.local"; //Todo move it to config
-const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
-const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
+export const OFFICE_HOST = "office.medev.local"; //Todo move it to config
+export const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
+export const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
 
-const APPLICATION_ORIGIN = "https://" + OFFICE_HOST + ":3000";
+export const APPLICATION_ORIGIN = "https://" + OFFICE_HOST + ":3000";
 
 export const FETCH_API_DATA = "fetchingData";
 export const FETCH_API_SUCCESS = "receivedData";
