@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/styles/withStyles";
+import moment from "moment";
 
 
 const styles = (theme) => ({
@@ -15,7 +16,7 @@ const styles = (theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 200,
+        width: 220,
     },
 });
 
@@ -58,8 +59,8 @@ class ItemDetailsDialog extends Component {
 
         console.log(dialogItem);
 
-        const creationDate = new Date(dialogItem.createdAt*1000);
-        const updateDate = new Date(dialogItem.updatedAt*1000);
+        const creationDate = moment.unix(dialogItem.createdAt).format();
+        const updateDate = moment.unix(dialogItem.updatedAt).format();
 
         return (
             <React.Fragment>
@@ -102,7 +103,7 @@ class ItemDetailsDialog extends Component {
                         id="updatedAt"
                         label="Updated"
                         className={classes.textField}
-                        value={updateDate} // Todo add format!
+                        value={updateDate}
                         disabled={true}
                         margin="normal"
                     />
