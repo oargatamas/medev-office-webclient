@@ -5,9 +5,11 @@ import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 import {withStyles} from "@material-ui/styles";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import IconButton from "@material-ui/core/IconButton";
+import {withSnackbar} from "notistack";
 
 
 const styles = (theme) => ({
@@ -42,12 +44,17 @@ class ShareLinkDialog extends Component {
         return dialogItem.id;
     }
 
-    copyLinkToClipboard(){
+    copyLinkToClipboard() {
         const input = document.getElementById("drive-standard-copy-link");
 
         input.select();
         document.execCommand("copy");
-        //Todo update tooltip with the text
+        if (window.getSelection) {
+            window.getSelection().removeAllRanges();
+        } else if (document.selection) {
+            document.selection.empty();
+        }
+        this.props.enqueueSnackbar("Link copied",{variant:"info"});
     }
 
     render() {
@@ -69,9 +76,11 @@ class ShareLinkDialog extends Component {
                             }}
                             value={this.createItemLink()}
                         />
-                        <IconButton color={"default"} onClick={this.copyLinkToClipboard}>
-                            <FileCopyIcon/>
-                        </IconButton>
+                        <Tooltip title={"Copy to clipboard"} placement="top">
+                            <IconButton color={"default"} onClick={this.copyLinkToClipboard}>
+                                <FileCopyIcon/>
+                            </IconButton>
+                        </Tooltip>
                     </div>
                 </DialogContent>
                 <DialogActions>
@@ -82,4 +91,4 @@ class ShareLinkDialog extends Component {
     }
 }
 
-export default withStyles(styles, {withTheme: true})(ShareLinkDialog);
+export default withSnackbar(withStyles(styles, {withTheme: true})(ShareLinkDialog));
