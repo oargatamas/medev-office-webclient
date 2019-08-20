@@ -6,6 +6,7 @@ import {requestItemMove} from "../../actions/moveFileToFolder";
 import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
+import {saveDriveItem} from "../../actions/editDriveItemActions";
 
 
 const mapStateToProps = (state) => {
@@ -42,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
             },
             deleteItem: (itemId, itemType) => {
                 dispatch(deleteDriveItem(itemId, itemType));
+            },
+            saveItem: (item) => {
+                dispatch(saveDriveItem(item));
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));
