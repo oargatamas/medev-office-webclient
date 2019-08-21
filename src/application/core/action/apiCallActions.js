@@ -53,7 +53,7 @@ export const callOfficeApi = (requestParams, successAction, errorAction = [defau
 
         fetch(url, {
             method: requestParams.method,
-            headers: {...requestParams.headers, ...getApiBaseHeaders()},
+            headers: {...getApiBaseHeaders(), ...requestParams.headers},
             mode: 'cors',
             cache: 'no-cache',
             redirect: 'follow',
