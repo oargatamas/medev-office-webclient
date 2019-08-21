@@ -1,4 +1,4 @@
-import {requestModuleInfo} from "../../../core/action/getApplicationActions";
+import {requestModuleInfo} from "../../../core/action/getModuleInfoActions";
 import {connect} from "react-redux";
 import Dashboard from "../../component/dashboard/Dashboard";
 

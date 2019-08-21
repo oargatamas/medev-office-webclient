@@ -7,7 +7,7 @@ import {
     FETCH_API_SUCCESS,
     FETCH_API_SUCCESS_WITH_RESPONSE
 } from "../action/apiCallActions";
-import {RECEIVED_MODULE_INFO} from "../action/getApplicationActions";
+import {RECEIVED_MODULE_INFO} from "../action/getModuleInfoActions";
 import {startupReducer} from "./startupReducer";
 import {driveReducer} from "../../drive/reducers/driveReducer";
 

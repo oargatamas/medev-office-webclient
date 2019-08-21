@@ -1,4 +1,4 @@
-import {receivedModuleInfo, requestModuleInfo} from "./getApplicationActions";
+import {receivedModuleInfo, requestModuleInfo} from "./getModuleInfoActions";
 
 
 export const CHANGE_STARTUP_TEXT = "changeStartupText";
