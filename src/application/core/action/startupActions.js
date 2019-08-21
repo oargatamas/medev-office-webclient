@@ -8,13 +8,11 @@ export const INIT_STARTUP = "initStartup";
 
 
 
-
 export const executeStartup = () => {
       return (dispatch) => {
           dispatch(initStartup());
-          dispatch(changeStartUpText("Start application"));
           dispatch(changeStartUpText("Loading module info"));
-          dispatch(requestModuleInfo([receiverModuleInfoAtStartup],[setStartUpError]));
+          dispatch(requestModuleInfo([receivedModuleInfoAtStartup],[setStartUpError]));
       }
 };
 
@@ -47,7 +45,7 @@ export const setStartUpError = (error) => {
 };
 
 
-export const receiverModuleInfoAtStartup = (modules) => {
+export const receivedModuleInfoAtStartup = (modules) => {
     return (dispatch) =>{
         dispatch(changeStartUpText("Loading dashboard"));
         dispatch(receivedModuleInfo(modules));
