@@ -1,20 +1,11 @@
 import {receivedModuleInfo, requestModuleInfo} from "./getModuleInfoActions";
+import {receivedUserInfo, requestUserInfo} from "./getUserInfoActions";
 
 
 export const CHANGE_STARTUP_TEXT = "changeStartupText";
 export const START_UP_FINISHED = "startUpFinished";
 export const START_UP_ERROR = "startUpError";
 export const INIT_STARTUP = "initStartup";
-
-
-
-export const executeStartup = () => {
-      return (dispatch) => {
-          dispatch(initStartup());
-          dispatch(changeStartUpText("Loading module info"));
-          dispatch(requestModuleInfo([receivedModuleInfoAtStartup],[setStartUpError]));
-      }
-};
 
 export const initStartup = () => {
     return {
@@ -45,10 +36,30 @@ export const setStartUpError = (error) => {
 };
 
 
+
+
+export const executeStartup = () => {
+      return (dispatch) => {
+          dispatch(initStartup());
+          dispatch(changeStartUpText("Loading user info"));
+          dispatch(requestUserInfo([receivedUserInfoAtStartup],[setStartUpError]));
+          //dispatch(requestModuleInfo([receivedModuleInfoAtStartup],[setStartUpError]));
+      }
+};
+
+export const receivedUserInfoAtStartup = (userInfo) => {
+    return (dispatch) => {
+        dispatch(receivedUserInfo(userInfo));
+        dispatch(changeStartUpText("Loading module info"));
+        dispatch(requestModuleInfo([receivedModuleInfoAtStartup],[setStartUpError]));
+    };
+};
+
 export const receivedModuleInfoAtStartup = (modules) => {
     return (dispatch) =>{
-        dispatch(changeStartUpText("Loading dashboard"));
         dispatch(receivedModuleInfo(modules));
         dispatch(setStartUpFinished());
     };
 };
+
+
