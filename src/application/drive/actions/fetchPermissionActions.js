@@ -1,6 +1,5 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi} from "../../core/action/apiCallActions";
-import {defaultDialogErrorActions, defaultDialogFetchActions, defaultDialogSuccessActions} from "./dialogActions";
+import {callOfficeApi, defaultErrorAction} from "../../core/action/apiCallActions";
 
 
 export const FETCH_PERMISSIONS_SUCCESS = "drivePermissionTypesReceived";
@@ -14,7 +13,7 @@ export const receivedDrivePermissionTypes = (permissionTypes) => {
 };
 
 
-export const fetchPermissionTypes = () => {
+export const fetchPermissionTypes = (successAction = [receivedDrivePermissionTypes], errorAction = [defaultErrorAction]) => {
     let params = {
         method: "GET",
         uri: DRIVE_API_BASE + "/permission/types",
@@ -22,6 +21,5 @@ export const fetchPermissionTypes = () => {
         errorMsg: "Cannot fetch drive permission types."
     };
 
-
-    return callOfficeApi(params, defaultDialogSuccessActions, defaultDialogErrorActions, defaultDialogFetchActions);
+    return callOfficeApi(params, successAction, errorAction);
 };

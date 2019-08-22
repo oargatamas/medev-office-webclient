@@ -1,5 +1,5 @@
 import {callOfficeApi, defaultErrorAction} from "./apiCallActions";
-import {moduleInitActions, setStartUpFinished} from "./startupActions";
+import {moduleInitActions} from "./startupActions";
 
 export const RECEIVED_MODULE_INFO = "receivedModuleInfo";
 
@@ -31,6 +31,6 @@ export const initModules = (moduleInfo) => {
                 dispatch(initAction());
             }
         });
-        dispatch(setStartUpFinished());
+
     };
 };
