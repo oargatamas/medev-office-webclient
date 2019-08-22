@@ -1,11 +1,17 @@
-import {receivedModuleInfo, requestModuleInfo} from "./getModuleInfoActions";
+import {initModules, receivedModuleInfo, requestModuleInfo} from "./getModuleInfoActions";
 import {receivedUserInfo, requestUserInfo} from "./getUserInfoActions";
+import {initDrive} from "../../drive/actions/startupActions";
 
 
 export const CHANGE_STARTUP_TEXT = "changeStartupText";
 export const START_UP_FINISHED = "startUpFinished";
 export const START_UP_ERROR = "startUpError";
 export const INIT_STARTUP = "initStartup";
+
+
+export const moduleInitActions = {
+    drive: initDrive,
+};
 
 export const initStartup = () => {
     return {
@@ -36,14 +42,11 @@ export const setStartUpError = (error) => {
 };
 
 
-
-
 export const executeStartup = () => {
       return (dispatch) => {
           dispatch(initStartup());
           dispatch(changeStartUpText("Loading user info"));
           dispatch(requestUserInfo([receivedUserInfoAtStartup],[setStartUpError]));
-          //dispatch(requestModuleInfo([receivedModuleInfoAtStartup],[setStartUpError]));
       }
 };
 
@@ -58,7 +61,7 @@ export const receivedUserInfoAtStartup = (userInfo) => {
 export const receivedModuleInfoAtStartup = (modules) => {
     return (dispatch) =>{
         dispatch(receivedModuleInfo(modules));
-        dispatch(setStartUpFinished());
+        dispatch(initModules(modules));
     };
 };
 
