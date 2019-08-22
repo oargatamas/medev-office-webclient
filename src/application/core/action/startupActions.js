@@ -1,4 +1,6 @@
-import {receivedModuleInfo, requestModuleInfo} from "./getApplicationActions";
+import {initModules, receivedModuleInfo, requestModuleInfo} from "./getModuleInfoActions";
+import {receivedUserInfo, requestUserInfo} from "./getUserInfoActions";
+import {initDrive} from "../../drive/actions/startupActions";
 
 
 export const CHANGE_STARTUP_TEXT = "changeStartupText";
@@ -7,15 +9,8 @@ export const START_UP_ERROR = "startUpError";
 export const INIT_STARTUP = "initStartup";
 
 
-
-
-export const executeStartup = () => {
-      return (dispatch) => {
-          dispatch(initStartup());
-          dispatch(changeStartUpText("Start application"));
-          dispatch(changeStartUpText("Loading module info"));
-          dispatch(requestModuleInfo([receiverModuleInfoAtStartup],[setStartUpError]));
-      }
+export const moduleInitActions = {
+    drive: initDrive,
 };
 
 export const initStartup = () => {
@@ -47,10 +42,27 @@ export const setStartUpError = (error) => {
 };
 
 
-export const receiverModuleInfoAtStartup = (modules) => {
-    return (dispatch) =>{
-        dispatch(changeStartUpText("Loading dashboard"));
-        dispatch(receivedModuleInfo(modules));
-        dispatch(setStartUpFinished());
+export const executeStartup = () => {
+      return (dispatch) => {
+          dispatch(initStartup());
+          dispatch(changeStartUpText("Loading user info"));
+          dispatch(requestUserInfo([receivedUserInfoAtStartup],[setStartUpError]));
+      }
+};
+
+export const receivedUserInfoAtStartup = (userInfo) => {
+    return (dispatch) => {
+        dispatch(receivedUserInfo(userInfo));
+        dispatch(changeStartUpText("Loading module info"));
+        dispatch(requestModuleInfo([receivedModuleInfoAtStartup],[setStartUpError]));
     };
 };
+
+export const receivedModuleInfoAtStartup = (modules) => {
+    return (dispatch) =>{
+        dispatch(receivedModuleInfo(modules));
+        dispatch(initModules(modules));
+    };
+};
+
+

@@ -1,4 +1,5 @@
 export const initialState = {
+    appUsers: [],
     modules: [],
     currentApplication: "",
     sideDrawerOpen: false,
