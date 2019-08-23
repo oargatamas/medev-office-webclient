@@ -11,7 +11,7 @@ export const receivedUserInfo = (userInfo) => {
 };
 
 
-export const  requestUserInfo = (successAction = [receivedUserInfo], errorAction = [defaultErrorAction]) => {
+export const requestUserInfo = (successAction = [receivedUserInfo], errorAction = [defaultErrorAction]) => {
     let params = {
         method : "GET",
         uri : "/user/info",
@@ -20,3 +20,9 @@ export const  requestUserInfo = (successAction = [receivedUserInfo], errorAction
     };
     return callOfficeApi(params, successAction, errorAction)
 };
+
+
+export const mapUsersToOptions = (users) => users.map( user => ({
+    label: user.firstName + " " + user.lastName,
+    value: user
+}));

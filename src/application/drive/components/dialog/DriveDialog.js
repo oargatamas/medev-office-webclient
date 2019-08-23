@@ -5,7 +5,6 @@ import {
     CONTENT_EDIT_PERMISSIONS,
     CONTENT_NEW_FOLDER,
     CONTENT_SHARE_LINK,
-    CONTENT_SHOW_DETAILS,
     CONTENT_UPLOAD_FILE
 } from "../../actions/dialogActions";
 import ItemDetailsDialog from "./content/ItemDetailsDialog";
@@ -15,6 +14,15 @@ import UploadFileDialog from "./content/UploadFileDialog";
 import Dialog from "@material-ui/core/Dialog";
 import ItemPermissionDialog from "./content/ItemPermissionDialog";
 import ShareLinkDialog from "./content/ShareLinkDialog";
+import {withStyles} from "@material-ui/styles";
+
+
+const styles = () => ({
+    root: {
+        overflowY: "visible",
+    },
+});
+
 
 class DriveDialog extends Component {
 
@@ -47,21 +55,22 @@ class DriveDialog extends Component {
     refreshFolder() {
         const {actions, folder, fetchSuccessResponse} = this.props;
 
-        if(fetchSuccessResponse){
+        if (fetchSuccessResponse) {
             console.log("refreshing...");
             actions.requestFolderContent(folder.id);
         }
     }
 
     render() {
-        const {isDialogOpen} = this.props;
+        const {classes, isDialogOpen} = this.props;
 
         return (
-            <Dialog open={isDialogOpen} onExit={this.refreshFolder} disableBackdropClick={true}>
+            <Dialog className={classes.root} open={isDialogOpen} onExit={this.refreshFolder}
+                    disableBackdropClick={true}>
                 {this.renderItemComponent()}
             </Dialog>
         )
     }
 }
 
-export default DriveDialog;
+export default withStyles(styles,{withTheme:false})(DriveDialog);

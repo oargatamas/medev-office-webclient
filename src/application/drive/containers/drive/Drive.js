@@ -12,6 +12,7 @@ import {uploadFileToFolder} from "../../actions/uploadFileActions";
 
 const mapStateToProps = (state) => {
     return {
+        systemUsers: state.coreReducer.appUsers,
         isFetching : state.coreReducer.isFetching,
         folder : state.driveReducer.rootFolder,
         items : state.driveReducer.currentFolderItems,
