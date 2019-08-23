@@ -49,18 +49,18 @@ class ItemDetailsDialog extends Component {
 
     handleChange(field){
         const {item} = this.state;
+        const component = this;
         return function(e){
-            this.setState({ ...item, [field]: e.target.value });
+            component.setState({item:{...item, [field]: e.target.value }});
         };
     }
 
     render() {
-        const {classes, dialogItem} = this.props;
+        const {classes, isDialogFetching} = this.props;
+        const {item} = this.state;
 
-        console.log(dialogItem);
-
-        const creationDate = moment.unix(dialogItem.createdAt).format();
-        const updateDate = moment.unix(dialogItem.updatedAt).format();
+        const creationDate = moment.unix(item.createdAt).format();
+        const updateDate = moment.unix(item.updatedAt).format();
 
         return (
             <React.Fragment>
@@ -69,15 +69,18 @@ class ItemDetailsDialog extends Component {
                     <TextField
                         id="name"
                         label="Name"
-                        value={dialogItem.name}
+                        value={item.name}
                         className={classes.textField}
+                        disabled={isDialogFetching}
                         onChange={this.handleChange('name')}
                         margin="normal"
                     />
-                    {dialogItem.type === "file" ? ( <TextField
+                    {item.type === "file" ? ( <TextField
                         id="mimeType"
                         label="File type"
-                        value={dialogItem.mimeType}
+                        value={item.mimeType}
+                        InputProps={{readOnly:true}}
+                        disabled={isDialogFetching}
                         className={classes.textField}
                         onChange={this.handleChange('mimeType')}
                         margin="normal"
@@ -86,31 +89,34 @@ class ItemDetailsDialog extends Component {
                     <TextField
                         id="author"
                         label="Author"
-                        value={dialogItem.author}
+                        InputProps={{readOnly:true}}
+                        disabled={isDialogFetching}
+                        value={item.author}
                         className={classes.textField}
-                        disabled={true}
                         margin="normal"
                     />
                     <TextField
                         id="createdAt"
                         label="Created"
+                        InputProps={{readOnly:true}}
+                        disabled={isDialogFetching}
                         className={classes.textField}
                         value={creationDate}
-                        disabled={true}
                         margin="normal"
                     />
                     <TextField
                         id="updatedAt"
                         label="Updated"
+                        InputProps={{readOnly:true}}
+                        disabled={isDialogFetching}
                         className={classes.textField}
                         value={updateDate}
-                        disabled={true}
                         margin="normal"
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button color={"primary"} onClick={this.handleItemSave}>Save</Button>
-                    <Button color={"default"} onClick={this.handleClose}>Cancel</Button>
+                    <Button disabled={isDialogFetching} color={"primary"} onClick={this.handleItemSave}>Save</Button>
+                    <Button disabled={isDialogFetching} color={"default"} onClick={this.handleClose}>Cancel</Button>
                 </DialogActions>
             </React.Fragment>
         );

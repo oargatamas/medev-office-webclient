@@ -8,7 +8,7 @@ export const saveDriveItem = (item) => {
         method: "POST",
         uri: DRIVE_API_BASE + "/" + item.type + "/" + item.id,
         redirect_uri: DRIVE_API_BASE,
-        body: mapItemDataToRequest(item),
+        body: JSON.stringify(mapItemDataToRequest(item)),
         errorMsg: "Cannot delete folder."
     };
 

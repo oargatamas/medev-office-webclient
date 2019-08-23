@@ -7,14 +7,17 @@ import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
+import {uploadFileToFolder} from "../../actions/uploadFileActions";
 
 
 const mapStateToProps = (state) => {
     return {
+        systemUsers: state.coreReducer.appUsers,
         isFetching : state.coreReducer.isFetching,
         folder : state.driveReducer.rootFolder,
         items : state.driveReducer.currentFolderItems,
         navigation : state.driveReducer.breadCrumbs,
+        permissionTypes : state.driveReducer.permissionTypes,
         isDialogOpen : state.driveReducer.isItemDialogOpen,
         isDialogFetching : state.driveReducer.isItemDialogFetching,
         dialogType : state.driveReducer.itemDialogContentType,
@@ -46,6 +49,9 @@ const mapDispatchToProps = (dispatch) => {
             },
             saveItem: (item) => {
                 dispatch(saveDriveItem(item));
+            },
+            uploadFile: (folder, fileSource) => {
+                dispatch(uploadFileToFolder(folder, fileSource));
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));
