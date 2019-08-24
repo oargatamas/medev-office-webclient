@@ -8,6 +8,7 @@ import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
 import {uploadFileToFolder} from "../../actions/uploadFileActions";
+import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
 
 
 const mapStateToProps = (state) => {
@@ -52,6 +53,9 @@ const mapDispatchToProps = (dispatch) => {
             },
             uploadFile: (folder, fileSource) => {
                 dispatch(uploadFileToFolder(folder, fileSource));
+            },
+            updateItemPermissions: (item) => {
+                dispatch(updateItemPermissions(item))
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));
