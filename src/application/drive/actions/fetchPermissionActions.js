@@ -1,5 +1,5 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi, defaultErrorAction} from "../../core/action/apiCallActions";
+import {callOfficeApi, defaultErrorAction, getApiBaseHeaders} from "../../core/action/apiCallActions";
 
 
 export const FETCH_PERMISSIONS_SUCCESS = "drivePermissionTypesReceived";
@@ -17,7 +17,8 @@ export const fetchPermissionTypes = (successAction = [receivedDrivePermissionTyp
     let params = {
         method: "GET",
         uri: DRIVE_API_BASE + "/permission/types",
-        redirect_uri: "",
+        redirect_uri: "/",
+        headers: getApiBaseHeaders(),
         errorMsg: "Cannot fetch drive permission types."
     };
 

@@ -1,4 +1,4 @@
-import {callOfficeApi, defaultErrorAction} from "./apiCallActions";
+import {callOfficeApi, defaultErrorAction, getApiBaseHeaders} from "./apiCallActions";
 import {moduleInitActions} from "./startupActions";
 
 export const RECEIVED_MODULE_INFO = "receivedModuleInfo";
@@ -17,6 +17,7 @@ export const requestModuleInfo = (successAction = [receivedModuleInfo], errorAct
         method : "GET",
         uri : "/modules",
         redirect_uri : "/",
+        headers: getApiBaseHeaders(),
         errorMsg : "Cannot load module info."
     };
     return callOfficeApi(params, successAction, errorAction)
