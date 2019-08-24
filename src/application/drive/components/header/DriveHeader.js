@@ -14,15 +14,20 @@ import {
     CONTENT_NEW_FOLDER,
     CONTENT_UPLOAD_FILE
 } from "../../actions/dialogActions";
+import Tooltip from "@material-ui/core/Tooltip";
 
 
-const styles = () => ({
+const styles = (theme) => ({
     root: {
         flex: "0 0 auto",
     },
-    button:{
+    button: {
         transform: "rotate(90deg)",
-        marginRight : 10,
+        marginRight: 10,
+    },
+    buttonGroup: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     }
 });
 
@@ -39,27 +44,27 @@ class DriveHeader extends Component {
         this.editItemClick = this.editItemClick.bind(this);
     }
 
-    createFolderClick(){
+    createFolderClick() {
         this.props.actions.openItemDialog(CONTENT_NEW_FOLDER);
     }
 
-    uploadFileClick(){
+    uploadFileClick() {
         this.props.actions.openItemDialog(CONTENT_UPLOAD_FILE);
     }
 
-    refreshFolderClick(){
+    refreshFolderClick() {
         const {folder} = this.props;
         this.props.actions.requestFolderContent(folder.id);
     }
 
-    editPermissionsClick(){
+    editPermissionsClick() {
         const {folder} = this.props;
-        this.props.actions.openItemDialog(CONTENT_EDIT_PERMISSIONS,folder);
+        this.props.actions.openItemDialog(CONTENT_EDIT_PERMISSIONS, folder);
     }
 
-    editItemClick(){
+    editItemClick() {
         const {folder} = this.props;
-        this.props.actions.openItemDialog(CONTENT_EDIT_DETAILS,folder);
+        this.props.actions.openItemDialog(CONTENT_EDIT_DETAILS, folder);
     }
 
     render() {
@@ -69,30 +74,46 @@ class DriveHeader extends Component {
             <React.Fragment>
                 <Box className={classes.root}>
                     <Typography variant={"h4"} color={"primary"}>{folder.name}</Typography>
-                    <IconButton className={classes.button}>
-                        {(parent) ? (
-                            <Link component={RouteLink} to={"/drive/"+parent.id}>
-                                <SubDirectoryArrowLeftIcon />
-                            </Link>
-                        ) : (
-                            <SubDirectoryArrowLeftIcon />
-                        )}
-                    </IconButton>
-                    <IconButton onClick={this.refreshFolderClick}>
-                        <RefreshIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.createFolderClick}>
-                        <CreateFolderIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.uploadFileClick}>
-                        <UploadFileIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.editPermissionsClick}>
-                        <ListAltIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.editItemClick}>
-                        <EditIcon/>
-                    </IconButton>
+                    <Tooltip title="Go to parent folder" placement="bottom">
+                        <IconButton className={classes.button}>
+                            {(parent) ? (
+                                <Link component={RouteLink} to={"/drive/" + parent.id}>
+                                    <SubDirectoryArrowLeftIcon/>
+                                </Link>
+                            ) : (
+                                <SubDirectoryArrowLeftIcon/>
+                            )}
+                        </IconButton>
+                    </Tooltip>
+                    <span className={classes.buttonGroup}>
+                        <Tooltip title="Refresh folder" placement="bottom">
+                        <IconButton onClick={this.refreshFolderClick}>
+                            <RefreshIcon/>
+                        </IconButton>
+                        </Tooltip>
+                          <Tooltip title="Create folder" placement="bottom">
+                        <IconButton onClick={this.createFolderClick}>
+                            <CreateFolderIcon/>
+                        </IconButton>
+                          </Tooltip>
+                                <Tooltip title="Upload file" placement="bottom">
+                        <IconButton onClick={this.uploadFileClick}>
+                            <UploadFileIcon/>
+                        </IconButton>
+                                </Tooltip>
+                    </span>
+                    <span className={classes.buttonGroup}>
+                        <Tooltip title="Edit folder properties" placement="bottom">
+                            <IconButton onClick={this.editItemClick}>
+                                <EditIcon/>
+                            </IconButton>
+                            </Tooltip>
+                        <Tooltip title="Edit folder permissions" placement="bottom">
+                            <IconButton onClick={this.editPermissionsClick}>
+                                <ListAltIcon/>
+                            </IconButton>
+                            </Tooltip>
+                    </span>
                 </Box>
                 <Divider/>
             </React.Fragment>
@@ -101,4 +122,4 @@ class DriveHeader extends Component {
 }
 
 
-export default withStyles(styles, {withTheme: false})(DriveHeader);
+export default withStyles(styles, {withTheme: true})(DriveHeader);
