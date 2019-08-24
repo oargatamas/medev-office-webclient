@@ -49,6 +49,7 @@ class ItemPermissionDialog extends Component {
 
     constructor(props, context) {
         super(props, context);
+        this.saveChanges = this.saveChanges.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.togglePermission = this.togglePermission.bind(this);
         this.toggleEditMode = this.toggleEditMode.bind(this);
@@ -57,6 +58,14 @@ class ItemPermissionDialog extends Component {
             editing: false,
             item: this.props.dialogItem
         };
+    }
+
+    saveChanges() {
+        if (this.props.dialogItem !== this.state.item) {
+            this.props.actions.updateItemPermissions(this.state.item);
+        }else{
+            this.props.actions.closeItemDialog();
+        }
     }
 
     handleClose() {
@@ -78,7 +87,7 @@ class ItemPermissionDialog extends Component {
         }
 
         this.setState({
-            editing : state.editing,
+            editing: state.editing,
             item: {...state.item, permissions: {...state.item.permissions, [user]: newPermissions}}
         });
     }
@@ -97,7 +106,7 @@ class ItemPermissionDialog extends Component {
     };
 
     render() {
-        const {classes, permissionTypes, systemUsers} = this.props;
+        const {classes, permissionTypes, systemUsers, isDialogFetching} = this.props;
         const {editing, item} = this.state;
         const itemPermissions = item.permissions;
 
@@ -106,7 +115,7 @@ class ItemPermissionDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Item permissions</DialogTitle>
+                <DialogTitle>Permissions of {item.name}</DialogTitle>
                 <DialogContent className={classes.content}>
                     <FormGroup row>
                         <FormControlLabel
@@ -136,7 +145,7 @@ class ItemPermissionDialog extends Component {
                                             return (
                                                 <TableCell key={item} className={classes.cell} align={"center"}>
                                                     <Checkbox
-                                                        disabled={!editing}
+                                                        disabled={isDialogFetching ? isDialogFetching : !editing}
                                                         checked={hasPermission(item, userRelatedPermissions)}
                                                         inputProps={{user: user, permission: item}}
                                                         onChange={this.togglePermission}
@@ -150,7 +159,7 @@ class ItemPermissionDialog extends Component {
                         </TableBody>
                     </Table>
                     <FormGroup row>
-                        <Select isDisabled={!editing}
+                        <Select isDisabled={isDialogFetching ? isDialogFetching : !editing}
                                 className={classes.userSelect}
                                 placeholder={"Type name of the user..."}
                                 onChange={this.addNewUser}
@@ -161,8 +170,8 @@ class ItemPermissionDialog extends Component {
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button color={"primary"} onClick={this.handleClose}>Save</Button>
-                    <Button color={"default"} onClick={this.handleClose}>Cancel</Button>
+                    <Button color={"primary"} disabled={isDialogFetching} onClick={this.saveChanges}>Save</Button>
+                    <Button color={"default"} disabled={isDialogFetching} onClick={this.handleClose}>Cancel</Button>
                 </DialogActions>
             </React.Fragment>
         );
