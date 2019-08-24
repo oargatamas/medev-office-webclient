@@ -2,7 +2,7 @@ import HTTPError from "../exceptions/httpErrors";
 import {changeStartUpText} from "./startupActions";
 
 
-export const OFFICE_HOST = "office.medev.local"; //Todo move it to config
+export const OFFICE_HOST = "office.medev.local:3000"; //Todo move it to config
 export const OFFICE_API_HOST = "api.office.medev.local"; //Todo move it to config
 export const MEDEV_AUTH_HOST = "auth.medev.local"; //Todo move it to config
 
