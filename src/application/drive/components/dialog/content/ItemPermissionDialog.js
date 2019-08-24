@@ -61,7 +61,11 @@ class ItemPermissionDialog extends Component {
     }
 
     saveChanges() {
-        this.props.actions.updateItemPermissions(this.state.item);
+        if (this.props.dialogItem !== this.state.item) {
+            this.props.actions.updateItemPermissions(this.state.item);
+        }else{
+            this.props.action.closeItemDialog();
+        }
     }
 
     handleClose() {
@@ -83,7 +87,7 @@ class ItemPermissionDialog extends Component {
         }
 
         this.setState({
-            editing : state.editing,
+            editing: state.editing,
             item: {...state.item, permissions: {...state.item.permissions, [user]: newPermissions}}
         });
     }
