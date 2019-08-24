@@ -128,16 +128,3 @@ class Header extends Component {
 }
 
 export default withStyles(styles, {withTheme: true})(Header);
-
-
-/*
-<Menu
-    anchorEl={menuAnchor}
-    anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-    transformOrigin={{vertical: 'bottom', horizontal: 'right'}}
-    open={profileMenuOpen}
->
-    <MenuItem onClick={this.handleCloseProfileMenu}>Profile</MenuItem>
-    <MenuItem onClick={this.handleLogoutClick}>Log out</MenuItem>
-</Menu>
-*/
