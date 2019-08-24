@@ -4,7 +4,9 @@ import {switchApplication} from "../../../core/action/sideNavActions";
 
 
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        user : state.coreReducer.appUsers.find(user => user.loggedIn),
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
-import Button from "@material-ui/core/Button";
+import AppsIcon from '@material-ui/icons/Apps';
+import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
 
+const styles = () => ({
+    root: {
+        display: "flex",
+        flexFlow: "column",
+        height: "100%"
+    }
+});
 
-class Dashboard extends Component{
+class Dashboard extends Component {
 
 
     componentDidMount() {
@@ -10,13 +19,15 @@ class Dashboard extends Component{
     }
 
     render() {
-        return(
-            <div>
-                <h1>Dashboard</h1>
-                <Button onClick={this.props.getAppsInfo}>Get Application Info</Button>
+        const {classes, user} = this.props;
+
+        return (
+            <div className={classes.root}>
+                <Typography variant={"h5"} color={"textPrimary"} gutterBottom>Hi {user.firstName + " " + user.lastName},</Typography>
+                <Typography variant={"subtitle1"} color={"textSecondary"}>Select from one of the modules by clicking the <AppsIcon/> icon at the upper left corner.</Typography>
             </div>
         );
     }
 }
 
-export default Dashboard;
+export default withStyles(styles, {withTheme: false})(Dashboard);
