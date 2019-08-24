@@ -64,7 +64,7 @@ class ItemPermissionDialog extends Component {
         if (this.props.dialogItem !== this.state.item) {
             this.props.actions.updateItemPermissions(this.state.item);
         }else{
-            this.props.action.closeItemDialog();
+            this.props.actions.closeItemDialog();
         }
     }
 
