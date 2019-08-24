@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {Box, Link, Menu, MenuItem, Typography} from "@material-ui/core";
+import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
 import PhotoIcon from "@material-ui/icons/Photo";
 import {
@@ -71,9 +72,9 @@ class DriveItem extends Component {
 
         if (item.type === "folder") {
             return (
-                <Link to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
+                <RouterLink to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
                     <FolderIcon color="primary" className={classes.itemIcon}/>
-                </Link>
+                </RouterLink>
             );
         }
         return (
