@@ -19,6 +19,6 @@ export const closeDrawerAction = () => {
 export const switchApplication = (appName) => {
     return {
         type: APP_SWITCH,
-        currentApp: " - " + appName
+        currentApp: appName === "" ? "" : " - " + appName
     }
 };

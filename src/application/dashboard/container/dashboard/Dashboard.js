@@ -1,19 +1,19 @@
-import {requestModuleInfo} from "../../../core/action/getModuleInfoActions";
 import {connect} from "react-redux";
 import Dashboard from "../../component/dashboard/Dashboard";
+import {switchApplication} from "../../../core/action/sideNavActions";
 
 
 const mapStateToProps = (state) => {
-    return {
-
-    };
+    return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-       getAppsInfo : () => {
-           dispatch(requestModuleInfo());
-       }
+        actions: {
+            changeAppTitle: () => {
+                dispatch(switchApplication(""));
+            },
+        }
     };
 };
 

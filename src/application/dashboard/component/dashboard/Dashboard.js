@@ -4,6 +4,11 @@ import Button from "@material-ui/core/Button";
 
 class Dashboard extends Component{
 
+
+    componentDidMount() {
+        this.props.actions.changeAppTitle();
+    }
+
     render() {
         return(
             <div>
