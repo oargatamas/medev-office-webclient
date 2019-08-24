@@ -3,7 +3,7 @@ import {Box, Divider, IconButton, Link, Typography} from "@material-ui/core";
 import {Link as RouteLink} from "react-router-dom";
 import SubDirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft";
 import CreateFolderIcon from "@material-ui/icons/CreateNewFolder";
-import UploadFileIcon from "@material-ui/icons/InsertDriveFile";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import EditIcon from "@material-ui/icons/Edit";
@@ -98,7 +98,7 @@ class DriveHeader extends Component {
                           </Tooltip>
                                 <Tooltip title="Upload file" placement="bottom">
                         <IconButton onClick={this.uploadFileClick}>
-                            <UploadFileIcon/>
+                            <CloudUploadIcon/>
                         </IconButton>
                                 </Tooltip>
                     </span>

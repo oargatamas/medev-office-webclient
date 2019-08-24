@@ -3,7 +3,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {Box, Link, Menu, MenuItem, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
-import PhotoIcon from "@material-ui/icons/Photo";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
@@ -78,7 +78,7 @@ class DriveItem extends Component {
             );
         }
         return (
-            <PhotoIcon onContextMenu={this.showItemOptions} color="primary" className={classes.itemIcon}/>
+            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color="primary" className={classes.itemIcon}/>
         );
     }
 
