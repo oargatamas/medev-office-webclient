@@ -64,7 +64,7 @@ class ItemDetailsDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Item details</DialogTitle>
+                <DialogTitle>Details of {item.name}</DialogTitle>
                 <DialogContent className={classes.content}>
                     <TextField
                         id="name"
