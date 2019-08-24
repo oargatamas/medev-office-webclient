@@ -111,7 +111,7 @@ class ItemPermissionDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Item permissions</DialogTitle>
+                <DialogTitle>Permissions of {item.name}</DialogTitle>
                 <DialogContent className={classes.content}>
                     <FormGroup row>
                         <FormControlLabel

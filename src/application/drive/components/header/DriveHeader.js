@@ -5,8 +5,9 @@ import SubDirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft"
 import CreateFolderIcon from "@material-ui/icons/CreateNewFolder";
 import UploadFileIcon from "@material-ui/icons/InsertDriveFile";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import ListAltIcon from "@material-ui/icons/ListAlt";
 import {withStyles} from "@material-ui/styles";
-import {CONTENT_NEW_FOLDER, CONTENT_UPLOAD_FILE} from "../../actions/dialogActions";
+import {CONTENT_EDIT_PERMISSIONS, CONTENT_NEW_FOLDER, CONTENT_UPLOAD_FILE} from "../../actions/dialogActions";
 
 
 const styles = () => ({
@@ -28,6 +29,7 @@ class DriveHeader extends Component {
         this.createFolderClick = this.createFolderClick.bind(this);
         this.uploadFileClick = this.uploadFileClick.bind(this);
         this.refreshFolderClick = this.refreshFolderClick.bind(this);
+        this.editPermissionsClick = this.editPermissionsClick.bind(this);
     }
 
     createFolderClick(){
@@ -41,6 +43,11 @@ class DriveHeader extends Component {
     refreshFolderClick(){
         const {folder} = this.props;
         this.props.actions.requestFolderContent(folder.id);
+    }
+
+    editPermissionsClick(){
+        const {folder} = this.props;
+        this.props.actions.openItemDialog(CONTENT_EDIT_PERMISSIONS,folder);
     }
 
     render() {
@@ -67,6 +74,9 @@ class DriveHeader extends Component {
                     </IconButton>
                     <IconButton onClick={this.uploadFileClick}>
                         <UploadFileIcon/>
+                    </IconButton>
+                    <IconButton onClick={this.editPermissionsClick}>
+                        <ListAltIcon/>
                     </IconButton>
                 </Box>
                 <Divider/>
