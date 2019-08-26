@@ -18,13 +18,15 @@ class NavigationItem extends Component {
     render() {
         const {classes, route, text, icon, onClick} = this.props;
 
+        const upperCasedText = text.charAt(0).toUpperCase() + text.slice(1);
+
         return (
             <NavLink className={classes.drawerItem} to={route}>
                 <ListItem button onClick={onClick}>
                     <ListItemIcon>
                         {icon}
                     </ListItemIcon>
-                    <ListItemText primary={text}/>
+                    <ListItemText primary={upperCasedText}/>
                 </ListItem>
             </NavLink>
         );
