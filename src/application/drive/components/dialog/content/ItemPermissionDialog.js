@@ -20,15 +20,17 @@ import {mapUsersToOptions} from "../../../../core/action/getUserInfoActions";
 
 const styles = (theme) => ({
     content: {
-        minWidth: 500,
+        maxWidth: "95vw",
+        overflowX: "auto",
         overflowY: "visible",
     },
     table: {
         //minWidth: 650,
+        width:"100%",
         marginBottom: theme.spacing(1)
     },
     cell: {
-        maxWidth: 50,
+        //maxWidth: 50,
         padding: theme.spacing(1)
     },
     userSelect: {

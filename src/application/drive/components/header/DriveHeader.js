@@ -28,6 +28,9 @@ const styles = (theme) => ({
     buttonGroup: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+    },
+    folderTitle: {
+        wordWrap: "break-word",
     }
 });
 
@@ -73,7 +76,7 @@ class DriveHeader extends Component {
         return (
             <React.Fragment>
                 <Box className={classes.root}>
-                    <Typography variant={"h4"} color={"primary"}>{folder.name}</Typography>
+                    <Typography className={classes.folderTitle} variant={"h4"} color={"primary"}>{folder.name}</Typography>
                     <Tooltip title="Go to parent folder" placement="bottom">
                         <IconButton className={classes.button}>
                             {(parent) ? (
