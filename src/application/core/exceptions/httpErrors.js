@@ -1,16 +1,16 @@
 
 const errorNames = {
-    400 : "Bad Request",
-    401 : "Bad Request",
-    403 : "Forbidden",
-    404 : "Not Found",
-    500 : "Internal Server Error",
+    400 : "Bad request",
+    401 : "Invalid or expired credentials",
+    403 : "Missing permission",
+    404 : "Not found",
+    500 : "Internal server error",
 };
 
 
 class HTTPError extends Error {
     constructor(code, message, extras) {
-        super(code +  " - " + message);
+        super(message + ": " + errorNames[code]);
         if (arguments.length >= 3 && extras) {
             Object.assign(this, extras);
         }
