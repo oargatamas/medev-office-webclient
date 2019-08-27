@@ -21,12 +21,14 @@ import {mapUsersToOptions} from "../../../../core/action/getUserInfoActions";
 const styles = (theme) => ({
     content: {
         maxWidth: "95vw",
-        overflowX: "auto",
         overflowY: "visible",
+    },
+    tableContainer: {
+        overflowX: "auto",
     },
     table: {
         //minWidth: 650,
-        width:"100%",
+        width: "100%",
         marginBottom: theme.spacing(1)
     },
     cell: {
@@ -65,7 +67,7 @@ class ItemPermissionDialog extends Component {
     saveChanges() {
         if (this.props.dialogItem !== this.state.item) {
             this.props.actions.updateItemPermissions(this.state.item);
-        }else{
+        } else {
             this.props.actions.closeItemDialog();
         }
     }
@@ -125,41 +127,43 @@ class ItemPermissionDialog extends Component {
                             label="Edit permissions"
                         />
                     </FormGroup>
-                    <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell className={classes.cell}/>
-                                {permissionTypes.map((item) => (<TableCell key={item} className={classes.cell}
-                                                                           align={"center"}>{item}</TableCell>))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Object.keys(itemPermissions).map((user) => {
-                                const userData = systemUsers.find(item => item.id === user);
-                                const userRelatedPermissions = itemPermissions[user];
+                    <div className={classes.tableContainer}>
+                        <Table className={classes.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell className={classes.cell}/>
+                                    {permissionTypes.map((item) => (<TableCell key={item} className={classes.cell}
+                                                                               align={"center"}>{item}</TableCell>))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {Object.keys(itemPermissions).map((user) => {
+                                    const userData = systemUsers.find(item => item.id === user);
+                                    const userRelatedPermissions = itemPermissions[user];
 
-                                return (
-                                    <TableRow key={user}>
-                                        <TableCell align={"right"}>
-                                            {userData.firstName + " " + userData.lastName}
-                                        </TableCell>
-                                        {permissionTypes.map((item) => {
-                                            return (
-                                                <TableCell key={item} className={classes.cell} align={"center"}>
-                                                    <Checkbox
-                                                        disabled={isDialogFetching ? isDialogFetching : !editing}
-                                                        checked={hasPermission(item, userRelatedPermissions)}
-                                                        inputProps={{user: user, permission: item}}
-                                                        onChange={this.togglePermission}
-                                                    />
-                                                </TableCell>
-                                            )
-                                        })}
-                                    </TableRow>
-                                )
-                            })}
-                        </TableBody>
-                    </Table>
+                                    return (
+                                        <TableRow key={user}>
+                                            <TableCell align={"right"}>
+                                                {userData.firstName + " " + userData.lastName}
+                                            </TableCell>
+                                            {permissionTypes.map((item) => {
+                                                return (
+                                                    <TableCell key={item} className={classes.cell} align={"center"}>
+                                                        <Checkbox
+                                                            disabled={isDialogFetching ? isDialogFetching : !editing}
+                                                            checked={hasPermission(item, userRelatedPermissions)}
+                                                            inputProps={{user: user, permission: item}}
+                                                            onChange={this.togglePermission}
+                                                        />
+                                                    </TableCell>
+                                                )
+                                            })}
+                                        </TableRow>
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
+                    </div>
                     <FormGroup row>
                         <Select isDisabled={isDialogFetching ? isDialogFetching : !editing}
                                 className={classes.userSelect}
