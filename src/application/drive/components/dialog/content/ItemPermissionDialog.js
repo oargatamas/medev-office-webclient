@@ -31,9 +31,16 @@ const styles = (theme) => ({
         width: "100%",
         marginBottom: theme.spacing(1)
     },
+    headerCell:{
+        [theme.breakpoints.down('md')]: {
+            transform: "rotate(-89deg)",
+            transformOrigin: "center",
+        },
+    },
     cell: {
         //maxWidth: 50,
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+
     },
     userSelect: {
         flexGrow: 1
@@ -132,7 +139,7 @@ class ItemPermissionDialog extends Component {
                             <TableHead>
                                 <TableRow>
                                     <TableCell className={classes.cell}/>
-                                    {permissionTypes.map((item) => (<TableCell key={item} className={classes.cell}
+                                    {permissionTypes.map((item) => (<TableCell key={item} className={classes.cell + " " + classes.headerCell}
                                                                                align={"center"}>{item}</TableCell>))}
                                 </TableRow>
                             </TableHead>
