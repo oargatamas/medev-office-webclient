@@ -14,6 +14,7 @@ import {switchApplication} from "../../../core/action/sideNavActions";
 
 const mapStateToProps = (state) => {
     return {
+        user : state.coreReducer.appUsers.find(user => user.loggedIn),
         systemUsers: state.coreReducer.appUsers,
         isFetching : state.coreReducer.isFetching,
         folder : state.driveReducer.rootFolder,

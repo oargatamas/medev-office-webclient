@@ -22,12 +22,12 @@ class DriveItemContainer extends Component {
 
     render() {
 
-        const {classes, items, actions} = this.props;
+        const {classes, items, actions, user} = this.props;
 
         return (
             <Box className={classes.root}>
                 <Box className={classes.content}>
-                    {items.map((item) => (<DriveItem key={item.id} item={item} actions={actions}/>))}
+                    {items.map((item) => (<DriveItem key={item.id} item={item} actions={actions} user={user}/>))}
                 </Box>
             </Box>
         );

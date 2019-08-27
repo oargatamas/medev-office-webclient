@@ -68,17 +68,20 @@ class DriveItem extends Component {
     }
 
     renderItemIcon() {
-        const {classes, item} = this.props;
+        const {classes, item, user} = this.props;
+
+        const userCanRead = !!item.permissions[user.id].find(permission => permission.id === "read");
+        const itemColor = userCanRead ? "primary" : "disabled";
 
         if (item.type === "folder") {
             return (
                 <RouterLink to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
-                    <FolderIcon color="primary" className={classes.itemIcon}/>
+                    <FolderIcon color={itemColor} className={classes.itemIcon}/>
                 </RouterLink>
             );
         }
         return (
-            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color="primary" className={classes.itemIcon}/>
+            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color={itemColor} className={classes.itemIcon}/>
         );
     }
 
