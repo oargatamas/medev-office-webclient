@@ -35,7 +35,7 @@ class Drive extends Component {
 
 
     render() {
-        const {classes, isFetching, folder, items, navigation, actions, } = this.props;
+        const {classes, isFetching, folder, items, navigation, actions} = this.props;
 
         return (
             <div className={classes.root}>

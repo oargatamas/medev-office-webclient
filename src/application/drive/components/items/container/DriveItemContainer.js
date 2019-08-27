@@ -22,7 +22,7 @@ class DriveItemContainer extends Component {
 
     render() {
 
-        const {classes, items, actions, user} = this.props;
+        const {classes, items, actions} = this.props;
 
         return (
             <Box className={classes.root}>

@@ -69,7 +69,7 @@ class DriveItem extends Component {
 
     renderItemIcon() {
         const {classes, item} = this.props;
-        const itemColor = item.length > 0 ? "primary" : "disabled";
+        const itemColor = Object.keys(item.permissions).length > 0 ? "primary" : "disabled";
 
         if (item.type === "folder") {
             return (
