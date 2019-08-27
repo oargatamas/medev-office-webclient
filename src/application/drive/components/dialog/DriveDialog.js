@@ -46,7 +46,7 @@ class DriveDialog extends Component {
             case CONTENT_UPLOAD_FILE:
                 return <UploadFileDialog {...this.props}/>;
             case CONTENT_SHARE_LINK:
-                return <ShareLinkDialog {...this.props}/>
+                return <ShareLinkDialog {...this.props}/>;
             default:
                 return <div>{this.props.dialogType}</div>;
         }

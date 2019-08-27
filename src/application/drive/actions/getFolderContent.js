@@ -1,4 +1,4 @@
-import {callOfficeApi} from "../../core/action/apiCallActions";
+import {callOfficeApi, getApiBaseHeaders} from "../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "./driveApi";
 
 
@@ -19,6 +19,7 @@ export const requestFolderItems = (folderId) => {
         method: "GET",
         uri: DRIVE_API_BASE + "/folder/" + folderId + "/content",
         redirect_uri: DRIVE_API_BASE,
+        headers: getApiBaseHeaders(),
         errorMsg: "Cannot load content folder content."
     };
 

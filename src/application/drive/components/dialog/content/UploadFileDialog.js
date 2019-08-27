@@ -4,6 +4,9 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
+import {fileTypes} from "./fileTypeDictionary";
+import Typography from "@material-ui/core/Typography";
+import FormGroup from "@material-ui/core/FormGroup";
 
 
 class UploadFileDialog extends Component {
@@ -13,6 +16,10 @@ class UploadFileDialog extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.updateFileName = this.updateFileName.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
+        this.state = {
+            filename: "",
+            mimeType: "",
+        };
     }
 
     handleClose() {
@@ -21,38 +28,49 @@ class UploadFileDialog extends Component {
 
     updateFileName(e) {
         console.log(e.target);
-        document.getElementById("driveUploadFileNameLabel").value = e.target.files[0].name;
+        const filename = e.target.files[0].name;
+        const extension = filename.split(".").pop();
+
+        this.setState({
+            filename: filename,
+            mimeType: fileTypes.find(item => item.extension === extension).mimeType
+        });
     }
 
     uploadFile() {
         const {folder, actions} = this.props;
-        const fileInput = document.getElementById("drive-raised-button-file");
+        const fileInput = document.getElementById("drive-raised-input-file");
         actions.uploadFile(folder, fileInput);
     }
 
     render() {
+        const {isDialogFetching} = this.props;
+        const {filename, mimeType} = this.state;
+
         return (
             <React.Fragment>
                 <DialogTitle>Upload file</DialogTitle>
                 <DialogContent>
                     <input
-                        accept="*/*"
+                        accept={fileTypes.map(item => "." + item.extension).join(",")}
                         style={{display: 'none'}}
-                        id="drive-raised-button-file"
-                        multiple
+                        id="drive-raised-input-file"
                         type="file"
                         onChange={this.updateFileName}
                     />
-                    <TextField inputProps={{id: "driveUploadFileNameLabel", readOnly: true}}/>
-                    <label htmlFor="drive-raised-button-file">
-                        <Button variant="raised" component="span">
-                            Browse
-                        </Button>
-                    </label>
+                    <FormGroup row>
+                        <TextField inputProps={{readOnly: true}} value={filename}/>
+                        <label htmlFor="drive-raised-input-file">
+                            <Button variant="raised" component="span">
+                                Browse
+                            </Button>
+                        </label>
+                    </FormGroup>
+                    <Typography variant={"body1"}>{mimeType}</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button color={"primary"} onClick={this.uploadFile}>Upload</Button>
-                    <Button color={"default"} onClick={this.handleClose}>Cancel</Button>
+                    <Button color={"primary"} disabled={isDialogFetching} onClick={this.uploadFile}>Upload</Button>
+                    <Button color={"default"} disabled={isDialogFetching} onClick={this.handleClose}>Cancel</Button>
                 </DialogActions>
             </React.Fragment>
         );

@@ -1,15 +1,17 @@
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Box, Menu, MenuItem, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Box, Link, Menu, MenuItem, Typography} from "@material-ui/core";
+import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
-import PhotoIcon from "@material-ui/icons/Photo";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
     CONTENT_EDIT_PERMISSIONS,
     CONTENT_SHARE_LINK
 } from "../../actions/dialogActions";
+import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
+import {DRIVE_API_BASE} from "../../actions/driveApi";
 
 
 const styles = (theme) => ({
@@ -70,37 +72,37 @@ class DriveItem extends Component {
 
         if (item.type === "folder") {
             return (
-                <Link to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
+                <RouterLink to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
                     <FolderIcon color="primary" className={classes.itemIcon}/>
-                </Link>
+                </RouterLink>
             );
         }
         return (
-            <PhotoIcon onContextMenu={this.showItemOptions} color="primary" className={classes.itemIcon}/>
+            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color="primary" className={classes.itemIcon}/>
         );
     }
 
     handleItemEditClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_EDIT_DETAILS,item);
+        actions.openItemDialog(CONTENT_EDIT_DETAILS, item);
         this.closeMenu();
     }
 
     handleItemShareClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_SHARE_LINK,item);
+        actions.openItemDialog(CONTENT_SHARE_LINK, item);
         this.closeMenu();
     }
 
     handleItemPermissionsClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_EDIT_PERMISSIONS,item);
+        actions.openItemDialog(CONTENT_EDIT_PERMISSIONS, item);
         this.closeMenu();
     }
 
     handleItemDeleteClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_DELETE_ITEM,item);
+        actions.openItemDialog(CONTENT_DELETE_ITEM, item);
         this.closeMenu();
     }
 
@@ -122,6 +124,10 @@ class DriveItem extends Component {
                     open={menuOpen}
                     onClose={this.closeMenu}
                 >
+                    {item.type === "file" ? (
+                        <Link color={"inherit"} href={"https://" + OFFICE_API_HOST + "/" + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
+                            <MenuItem key={"download"}>Download</MenuItem>
+                        </Link>) : null}
                     <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
                     <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
                     <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>

@@ -9,6 +9,7 @@ import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
 import {uploadFileToFolder} from "../../actions/uploadFileActions";
 import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
+import {switchApplication} from "../../../core/action/sideNavActions";
 
 
 const mapStateToProps = (state) => {
@@ -30,6 +31,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: {
+            changeAppTitle: () =>{
+                dispatch(switchApplication("Drive"));
+            },
             requestRootFolder : () => {
                 dispatch(requestRootFolderData());
             },

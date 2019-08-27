@@ -1,5 +1,5 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi} from "../../core/action/apiCallActions";
+import {callOfficeApi, getApiBaseHeaders} from "../../core/action/apiCallActions";
 import {defaultDialogErrorActions, defaultDialogFetchActions, defaultDialogSuccessActions} from "./dialogActions";
 
 
@@ -8,6 +8,7 @@ export const saveDriveItem = (item) => {
         method: "POST",
         uri: DRIVE_API_BASE + "/" + item.type + "/" + item.id,
         redirect_uri: DRIVE_API_BASE,
+        headers: getApiBaseHeaders(),
         body: JSON.stringify(mapItemDataToRequest(item)),
         errorMsg: "Cannot delete folder."
     };

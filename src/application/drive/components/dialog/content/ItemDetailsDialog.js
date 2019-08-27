@@ -56,11 +56,13 @@ class ItemDetailsDialog extends Component {
     }
 
     render() {
-        const {classes, isDialogFetching} = this.props;
+        const {classes, isDialogFetching, systemUsers} = this.props;
         const {item} = this.state;
 
         const creationDate = moment.unix(item.createdAt).format();
         const updateDate = moment.unix(item.updatedAt).format();
+
+        const authorData = systemUsers.find(user => user.id === item.author);
 
         return (
             <React.Fragment>
@@ -91,7 +93,7 @@ class ItemDetailsDialog extends Component {
                         label="Author"
                         InputProps={{readOnly:true}}
                         disabled={isDialogFetching}
-                        value={item.author}
+                        value={authorData.firstName + " " + authorData.lastName}
                         className={classes.textField}
                         margin="normal"
                     />

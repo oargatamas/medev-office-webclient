@@ -3,7 +3,7 @@ import {Box, Divider, IconButton, Link, Typography} from "@material-ui/core";
 import {Link as RouteLink} from "react-router-dom";
 import SubDirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft";
 import CreateFolderIcon from "@material-ui/icons/CreateNewFolder";
-import UploadFileIcon from "@material-ui/icons/InsertDriveFile";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import EditIcon from "@material-ui/icons/Edit";
@@ -28,6 +28,9 @@ const styles = (theme) => ({
     buttonGroup: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+    },
+    folderTitle: {
+        wordWrap: "break-word",
     }
 });
 
@@ -73,7 +76,7 @@ class DriveHeader extends Component {
         return (
             <React.Fragment>
                 <Box className={classes.root}>
-                    <Typography variant={"h4"} color={"primary"}>{folder.name}</Typography>
+                    <Typography className={classes.folderTitle} variant={"h4"} color={"primary"}>{folder.name}</Typography>
                     <Tooltip title="Go to parent folder" placement="bottom">
                         <IconButton className={classes.button}>
                             {(parent) ? (
@@ -98,7 +101,7 @@ class DriveHeader extends Component {
                           </Tooltip>
                                 <Tooltip title="Upload file" placement="bottom">
                         <IconButton onClick={this.uploadFileClick}>
-                            <UploadFileIcon/>
+                            <CloudUploadIcon/>
                         </IconButton>
                                 </Tooltip>
                     </span>

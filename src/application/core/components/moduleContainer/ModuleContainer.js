@@ -2,11 +2,13 @@ import React, {Component} from "react";
 import {withStyles} from "@material-ui/styles";
 import {DashBoardModule} from "../../../dashboard/App";
 import {DriveModule} from "../../../drive/App";
+import {drawerWidth} from "../navigation/Navigation";
 
 const styles = (theme) => ({
     content: {
         display:"flex",
         flexDirection:"column",
+        width: `calc(100% - ${drawerWidth}px)`,
         height:"100vh",
         flexGrow: 1,
         padding: theme.spacing(3),

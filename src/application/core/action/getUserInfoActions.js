@@ -1,4 +1,4 @@
-import {callOfficeApi, defaultErrorAction} from "./apiCallActions";
+import {callOfficeApi, defaultErrorAction, getApiBaseHeaders} from "./apiCallActions";
 
 export const RECEIVED_USER_INFO = "receivedUserInfo";
 
@@ -16,6 +16,7 @@ export const requestUserInfo = (successAction = [receivedUserInfo], errorAction 
         method : "GET",
         uri : "/user/info",
         redirect_uri : "/",
+        headers: getApiBaseHeaders(),
         errorMsg : "Cannot load user info."
     };
     return callOfficeApi(params, successAction, errorAction)

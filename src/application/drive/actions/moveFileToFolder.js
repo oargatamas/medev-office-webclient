@@ -1,5 +1,5 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
+import {callOfficeApi, defaultSuccessWithResponse, getApiBaseHeaders} from "../../core/action/apiCallActions";
 
 
 export const requestItemMove = (targetItem, destinationFolder) => {
@@ -7,6 +7,7 @@ export const requestItemMove = (targetItem, destinationFolder) => {
         method: "GET",
         uri: DRIVE_API_BASE + "/move/" + targetItem.id + "/to/" + destinationFolder.id,
         redirect_uri: DRIVE_API_BASE,
+        headers: getApiBaseHeaders(),
         errorMsg: "Cannot move '" + targetItem.name + "' to '" + destinationFolder.name + "'.",
         successMsg : "'" + targetItem.name + "' successfully moved to '" + destinationFolder.name + "'."
     };

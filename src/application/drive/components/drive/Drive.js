@@ -24,6 +24,8 @@ class Drive extends Component {
     componentDidMount(){
         const {actions, match} = this.props;
 
+        actions.changeAppTitle();
+
         if(match.params.id){
             actions.requestFolderContent(match.params.id);
         }else{

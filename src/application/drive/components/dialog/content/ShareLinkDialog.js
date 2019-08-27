@@ -41,8 +41,13 @@ class ShareLinkDialog extends Component {
     }
 
     createItemLink() {
-        const {dialogItem} = this.props;
-        return APPLICATION_ORIGIN + "/drive/" + dialogItem.id;
+        const {folder, dialogItem} = this.props;
+
+        if(dialogItem.type === "folder"){
+            return APPLICATION_ORIGIN + "/drive/" + dialogItem.id;
+        }else{
+            return APPLICATION_ORIGIN + "/drive/" + folder.id;
+        }
     }
 
     copyLinkToClipboard() {

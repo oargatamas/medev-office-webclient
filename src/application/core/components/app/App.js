@@ -12,18 +12,8 @@ import ModuleContainer from "../../containers/moduleContainer/ModuleContainer";
 const styles = theme => ({
     root: {
         display: 'flex',
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
+        width: '100%',
+    }
 });
 
 class App extends Component {
