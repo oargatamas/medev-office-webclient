@@ -32,7 +32,7 @@ const styles = (theme) => ({
         marginBottom: theme.spacing(1)
     },
     headerCell:{
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             transform: "rotate(-89deg)",
             transformOrigin: "center",
         },
