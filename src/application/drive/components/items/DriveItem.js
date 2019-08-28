@@ -22,10 +22,20 @@ const styles = (theme) => ({
         justifyContent: "center",
         alignItems: "center",
         margin: theme.spacing(1),
+        width: 100,
+        height: 110,
+        [theme.breakpoints.down('sm')]: {
+            width:70,
+            height:80,
+        }
     },
     itemIcon: {
         width: 100,
         height: 100,
+        [theme.breakpoints.down('sm')]: {
+            width:70,
+            height:70,
+        }
     }
 });
 
@@ -116,7 +126,7 @@ class DriveItem extends Component {
             <Box key={key} className={classes.root}>
                 {this.renderItemIcon()}
                 <Typography variant={"subtitle1"}>
-                    {textEllipsis(item.name,15)}
+                    {textEllipsis(item.name,10)}
                 </Typography>
                 <Menu
                     id="long-menu"

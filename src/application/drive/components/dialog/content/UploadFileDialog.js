@@ -91,8 +91,8 @@ class UploadFileDialog extends Component {
                                 <ListItemAvatar>
                                     {renderItemStatus(item)}
                                 </ListItemAvatar>
-                                <ListItemText primary={textEllipsis(item.filename, 30)}
-                                              secondary={textEllipsis(item.mimeType, 30)}/>
+                                <ListItemText primary={textEllipsis(item.filename, 20)}
+                                              secondary={textEllipsis(item.mimeType, 20)}/>
                             </ListItem>
                         ))}
                     </List>
