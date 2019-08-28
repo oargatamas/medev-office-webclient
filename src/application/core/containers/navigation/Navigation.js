@@ -5,8 +5,8 @@ import Navigation from "../../components/navigation/Navigation";
 
 const mapStateToProps = (state) => {
     return{
-        open : state.coreReducer.sideDrawerOpen,
-        modules: state.coreReducer.modules,
+        open : state.core.sideDrawerOpen,
+        modules: state.core.modules,
     };
 };
 

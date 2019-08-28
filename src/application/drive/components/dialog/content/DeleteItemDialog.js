@@ -30,7 +30,7 @@ class DeleteItemDialog extends Component{
 
         return (
             <React.Fragment>
-                <DialogTitle>Delete {dialogItem.name}</DialogTitle>
+                <DialogTitle>Delete {dialogItem.type}</DialogTitle>
                 <DialogContent>
                     Are you sure you want to delete '{dialogItem.name}'?
                 </DialogContent>

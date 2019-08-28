@@ -16,6 +16,11 @@ import Switch from "@material-ui/core/Switch";
 import moment from "moment";
 import Select from "react-select";
 import {mapUsersToOptions} from "../../../../core/action/getUserInfoActions";
+import {withWidth} from "@material-ui/core";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 
 const styles = (theme) => ({
@@ -31,7 +36,7 @@ const styles = (theme) => ({
         width: "100%",
         marginBottom: theme.spacing(1)
     },
-    headerCell:{
+    headerCell: {
         [theme.breakpoints.down('sm')]: {
             transform: "rotate(-89deg)",
             transformOrigin: "center",
@@ -65,6 +70,7 @@ class ItemPermissionDialog extends Component {
         this.togglePermission = this.togglePermission.bind(this);
         this.toggleEditMode = this.toggleEditMode.bind(this);
         this.addNewUser = this.addNewUser.bind(this);
+        this.addNewUserMobile = this.addNewUserMobile.bind(this);
         this.state = {
             editing: false,
             item: this.props.dialogItem
@@ -108,6 +114,10 @@ class ItemPermissionDialog extends Component {
         this.setState({editing: !editing, ...item});
     }
 
+    addNewUserMobile(e) {
+        this.addNewUser(JSON.parse(e.target.value));
+    }
+
     addNewUser(selectedOption) {
         const state = this.state;
         this.setState({
@@ -117,10 +127,11 @@ class ItemPermissionDialog extends Component {
     };
 
     render() {
-        const {classes, permissionTypes, systemUsers, isDialogFetching} = this.props;
+        const {classes, width, permissionTypes, systemUsers, isDialogFetching} = this.props;
         const {editing, item} = this.state;
         const itemPermissions = item.permissions;
 
+        const uiDisabled = isDialogFetching ? isDialogFetching : !editing;
         const itemPermissionKeys = Object.keys(item.permissions);
         const userOptions = mapUsersToOptions(systemUsers).filter(item => !itemPermissionKeys.includes(item.value.id));
 
@@ -139,8 +150,9 @@ class ItemPermissionDialog extends Component {
                             <TableHead>
                                 <TableRow>
                                     <TableCell className={classes.cell}/>
-                                    {permissionTypes.map((item) => (<TableCell key={item} className={classes.cell + " " + classes.headerCell}
-                                                                               align={"center"}>{item}</TableCell>))}
+                                    {permissionTypes.map((item) => (
+                                        <TableCell key={item} className={classes.cell + " " + classes.headerCell}
+                                                   align={"center"}>{item}</TableCell>))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -157,7 +169,7 @@ class ItemPermissionDialog extends Component {
                                                 return (
                                                     <TableCell key={item} className={classes.cell} align={"center"}>
                                                         <Checkbox
-                                                            disabled={isDialogFetching ? isDialogFetching : !editing}
+                                                            disabled={uiDisabled}
                                                             checked={hasPermission(item, userRelatedPermissions)}
                                                             inputProps={{user: user, permission: item}}
                                                             onChange={this.togglePermission}
@@ -172,14 +184,31 @@ class ItemPermissionDialog extends Component {
                         </Table>
                     </div>
                     <FormGroup row>
-                        <Select isDisabled={isDialogFetching ? isDialogFetching : !editing}
-                                className={classes.userSelect}
-                                placeholder={"Type name of the user..."}
-                                onChange={this.addNewUser}
-                                isSearchable
-                                value={""}
-                                options={userOptions}
-                        />
+                        {width === "sm" ? (
+                            <FormControl>
+                                <NativeSelect
+                                    value={""}
+                                    onChange={this.addNewUserMobile}
+                                    name="userToAddPermission"
+                                    disabled={uiDisabled}
+                                >
+                                    {userOptions.map(userOption => (
+                                        <option value={JSON.stringify(userOption)}>{userOption.label}</option>
+                                    ))}
+                                </NativeSelect>
+                                <FormHelperText>Select a user from the list</FormHelperText>
+                            </FormControl>
+                        ) : (
+                            <Select isDisabled={uiDisabled}
+                                    className={classes.userSelect}
+                                    placeholder={"Type name of the user..."}
+                                    onChange={this.addNewUser}
+                                    isSearchable
+                                    value={""}
+                                    options={userOptions}
+                            />
+                        )}
+
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
@@ -191,4 +220,4 @@ class ItemPermissionDialog extends Component {
     }
 }
 
-export default withStyles(styles, {withTheme: true})(ItemPermissionDialog);
+export default withWidth()(withStyles(styles, {withTheme: true})(ItemPermissionDialog));

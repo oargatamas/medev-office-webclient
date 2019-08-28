@@ -12,6 +12,7 @@ import {
 } from "../../actions/dialogActions";
 import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
+import {textEllipsis} from "../../../utils/stringUtils";
 
 
 const styles = (theme) => ({
@@ -21,10 +22,20 @@ const styles = (theme) => ({
         justifyContent: "center",
         alignItems: "center",
         margin: theme.spacing(1),
+        width: 100,
+        height: 110,
+        [theme.breakpoints.down('sm')]: {
+            width:70,
+            height:80,
+        }
     },
     itemIcon: {
         width: 100,
         height: 100,
+        [theme.breakpoints.down('sm')]: {
+            width:70,
+            height:70,
+        }
     }
 });
 
@@ -69,16 +80,17 @@ class DriveItem extends Component {
 
     renderItemIcon() {
         const {classes, item} = this.props;
+        const itemColor = Object.keys(item.permissions).length > 0 ? "primary" : "disabled";
 
         if (item.type === "folder") {
             return (
                 <RouterLink to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
-                    <FolderIcon color="primary" className={classes.itemIcon}/>
+                    <FolderIcon color={itemColor} className={classes.itemIcon}/>
                 </RouterLink>
             );
         }
         return (
-            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color="primary" className={classes.itemIcon}/>
+            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color={itemColor} className={classes.itemIcon}/>
         );
     }
 
@@ -114,7 +126,7 @@ class DriveItem extends Component {
             <Box key={key} className={classes.root}>
                 {this.renderItemIcon()}
                 <Typography variant={"subtitle1"}>
-                    {item.name}
+                    {textEllipsis(item.name,10)}
                 </Typography>
                 <Menu
                     id="long-menu"
