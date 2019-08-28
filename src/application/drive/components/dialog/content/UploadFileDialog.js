@@ -14,6 +14,7 @@ import ErrorIcon from "@material-ui/icons/Error";
 import CheckIcon from "@material-ui/icons/Check";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {textEllipsis} from "../../../../utils/stringUtils";
+import Divider from "@material-ui/core/Divider";
 
 
 const renderItemStatus = (item) => {
@@ -36,7 +37,8 @@ class UploadFileDialog extends Component {
         super(props, context);
         this.handleClose = this.handleClose.bind(this);
         this.updateFileNames = this.updateFileNames.bind(this);
-        this.uploadFile = this.uploadFile.bind(this);
+        this.uploadFiles = this.uploadFiles.bind(this);
+        this.uploadFailedFiles = this.uploadFailedFiles.bind(this);
     }
 
     handleClose() {
@@ -51,13 +53,20 @@ class UploadFileDialog extends Component {
         this.props.actions.enqueueFilesToUpload(e.target);
     }
 
-    uploadFile() {
+    uploadFiles() {
         const {folder, actions, itemsToUpload} = this.props;
         actions.uploadFiles(folder, itemsToUpload);
     }
 
+    uploadFailedFiles() {
+        const {folder, actions, itemsToUpload} = this.props;
+        actions.uploadFiles(folder, itemsToUpload.filter(item => item.error));
+    }
+
     render() {
         const {isDialogFetching, itemsToUpload, uploadFinished} = this.props;
+
+        const hasError = itemsToUpload.filter(item => item.error).length > 0;
 
         return (
             <React.Fragment>
@@ -87,13 +96,23 @@ class UploadFileDialog extends Component {
                             </ListItem>
                         ))}
                     </List>
+                    <Divider/>
                 </DialogContent>
                 <DialogActions>
                     {uploadFinished ? (
-                        <Button color={"primary"} disabled={isDialogFetching} onClick={this.handleClose}>Close</Button>
-                    ) : (
-                        <Button color={"primary"} disabled={isDialogFetching} onClick={this.uploadFile}>Upload</Button>
-                    )}
+                            hasError ? (
+                                <Button color={"secondary"} disabled={isDialogFetching} onClick={this.uploadFailedFiles}>Retry</Button>
+                            ) : (
+                                <Button color={"primary"} disabled={isDialogFetching} onClick={this.handleClose}>Close</Button>
+                            )
+                        ) :
+                        hasError ? (
+                            <Button color={"secondary"} disabled={isDialogFetching} onClick={this.uploadFailedFiles}>Retry</Button>
+                        ) : (
+                            <Button color={"primary"} disabled={isDialogFetching} onClick={this.uploadFiles}>Upload</Button>
+                        )
+                    }
+
                     <Button color={"default"} disabled={isDialogFetching} onClick={this.handleClose}>Cancel</Button>
                 </DialogActions>
             </React.Fragment>
