@@ -6,9 +6,9 @@ import {logout} from "../../action/logoutActions";
 
 const mapStateToProps = (state) => {
     return{
-        open : state.coreReducer.sideDrawerOpen,
-        user : state.coreReducer.appUsers.find(user => user.loggedIn),
-        applicationTitle : state.coreReducer.currentApplication
+        open : state.core.sideDrawerOpen,
+        user : state.core.appUsers.find(user => user.loggedIn),
+        applicationTitle : state.core.currentApplication
     };
 };
 

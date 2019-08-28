@@ -68,7 +68,7 @@ class ShareLinkDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Share {dialogItem.name}</DialogTitle>
+                <DialogTitle>Share {dialogItem.type}</DialogTitle>
                 <DialogContent>
                     <Typography>Copy this link to send to your partner.</Typography>
                     <div className={classes.linkRow}>

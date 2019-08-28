@@ -13,7 +13,7 @@ import {driveReducer} from "../../drive/reducers/driveReducer";
 import {RECEIVED_USER_INFO} from "../action/getUserInfoActions";
 
 
-const coreReducer = (state = initialState, action) => {
+const core = (state = initialState, action) => {
     console.log(action);
     switch (action.type) {
         case OPEN_SIDE_DRAWER :
@@ -41,5 +41,7 @@ const coreReducer = (state = initialState, action) => {
 
 
 export const appReducer = combineReducers({
-    coreReducer, startupReducer, driveReducer
+    core: core,
+    startup: startupReducer,
+    driveModule: driveReducer
 });

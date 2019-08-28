@@ -10,7 +10,7 @@ const errorNames = {
 
 class HTTPError extends Error {
     constructor(code, message, extras) {
-        super(message + ": " + errorNames[code]);
+        super(message + " " + errorNames[code]);
         if (arguments.length >= 3 && extras) {
             Object.assign(this, extras);
         }

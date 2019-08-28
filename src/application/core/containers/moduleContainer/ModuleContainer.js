@@ -4,7 +4,7 @@ import ModuleContainer from "../../components/moduleContainer/ModuleContainer";
 
 const mapStateToProps = (state) => {
     return {
-        modules : state.coreReducer.modules
+        modules : state.core.modules
     };
 };
 
