@@ -7,7 +7,12 @@ import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {allFilesUploaded, changeFileUploadList, uploadFileToFolder} from "../../actions/uploadFileActions";
+import {
+    allFilesUploaded,
+    changeFileUploadList,
+    clearUploadQueue,
+    uploadFileToFolder
+} from "../../actions/uploadFileActions";
 import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
 
@@ -67,7 +72,7 @@ const mapDispatchToProps = (dispatch) => {
                 }
             },
             clearUploadList: () =>{
-                dispatch(allFilesUploaded());
+                dispatch(clearUploadQueue());
             },
             updateItemPermissions: (item) => {
                 dispatch(updateItemPermissions(item))

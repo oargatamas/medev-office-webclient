@@ -4,15 +4,12 @@ import {finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
 import {fileTypes} from "./fileTypeDictionary";
 
 
-
-
 export const UPDATE_ITEM_QUEUE = "driveSetUploadQueue";
 export const CLEAR_ITEM_QUEUE = "driveClearUploadQueue";
 export const ITEMS_UPLOADED = "driveItemsUploaded";
 export const ITEM_UPLOAD_FETCH = "driveItemUploadFetch";
 export const ITEM_UPLOAD_SUCCESS = "driveItemUploadSuccess";
 export const ITEM_UPLOAD_ERROR = "driveItemUploadError";
-
 
 
 export const changeFileUploadList = (fileSource) => {
@@ -24,11 +21,11 @@ export const changeFileUploadList = (fileSource) => {
         const extension = filename.split(".").pop();
 
         queue.push({
-            filename : filename,
+            filename: filename,
             file: fileSource.files[i],
             mimeType: fileTypes.find(item => item.extension === extension).mimeType,
-            uploading : false,
-            success : false,
+            uploading: false,
+            success: false,
         });
     }
 
@@ -76,11 +73,17 @@ export const uploadFileToFolder = (folder, file, isLast) => {
 };
 
 export const allFilesUploaded = () => {
-  return {
-      type: ITEMS_UPLOADED
-  };
+    return {
+        type: ITEMS_UPLOADED
+    };
 };
 
+
+export const clearUploadQueue = () => {
+    return {
+        type: CLEAR_ITEM_QUEUE
+    };
+};
 
 export const fileUploadingAction = (file) => {
     return () => ({

@@ -11,11 +11,11 @@ import {initialState} from "../state/uploadState";
 export const driveUploadReducer = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_ITEM_QUEUE:
-            return Object.assign({}, state, {items: action.items});
+            return Object.assign({}, state, {items: action.items, finished: false});
         case ITEMS_UPLOADED:
             return Object.assign({}, state, {finished: true});
         case CLEAR_ITEM_QUEUE:
-            return Object.assign({}, state, {items: []});
+            return Object.assign({}, state, {items: [], finished: false});
         case ITEM_UPLOAD_FETCH:
             return Object.assign({}, state, {
                 items: state.items.map(item => {
