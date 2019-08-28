@@ -7,24 +7,26 @@ import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {uploadFileToFolder} from "../../actions/uploadFileActions";
+import {allFilesUploaded, changeFileUploadList, uploadFileToFolder} from "../../actions/uploadFileActions";
 import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
 
 
 const mapStateToProps = (state) => {
     return {
-        systemUsers: state.coreReducer.appUsers,
-        isFetching : state.coreReducer.isFetching,
-        folder : state.driveReducer.rootFolder,
-        items : state.driveReducer.currentFolderItems,
-        navigation : state.driveReducer.breadCrumbs,
-        permissionTypes : state.driveReducer.permissionTypes,
-        isDialogOpen : state.driveReducer.isItemDialogOpen,
-        isDialogFetching : state.driveReducer.isItemDialogFetching,
-        dialogType : state.driveReducer.itemDialogContentType,
-        dialogItem : state.driveReducer.currentDialogItem,
-        fetchSuccessResponse: state.coreReducer.successObject
+        systemUsers: state.core.appUsers,
+        isFetching : state.core.isFetching,
+        folder : state.driveModule.drive.rootFolder,
+        items : state.driveModule.drive.currentFolderItems,
+        navigation : state.driveModule.drive.breadCrumbs,
+        permissionTypes : state.driveModule.drive.permissionTypes,
+        isDialogOpen : state.driveModule.drive.isItemDialogOpen,
+        isDialogFetching : state.driveModule.drive.isItemDialogFetching,
+        dialogType : state.driveModule.drive.itemDialogContentType,
+        dialogItem : state.driveModule.drive.currentDialogItem,
+        fetchSuccessResponse: state.core.successObject,
+        itemsToUpload: state.driveModule.uploadQueue.items,
+        uploadFinished: state.driveModule.uploadQueue.finished,
     }
 };
 
@@ -55,8 +57,17 @@ const mapDispatchToProps = (dispatch) => {
             saveItem: (item) => {
                 dispatch(saveDriveItem(item));
             },
-            uploadFile: (folder, fileSource) => {
-                dispatch(uploadFileToFolder(folder, fileSource));
+            enqueueFilesToUpload : (fileSource) => {
+                dispatch(changeFileUploadList(fileSource));
+            },
+            uploadFiles: (folder, fileSource) => {
+                console.log(fileSource);
+                for (let i = 0; i < fileSource.length; i++) {
+                    dispatch(uploadFileToFolder(folder, fileSource[i].file, i === (fileSource.length-1)));
+                }
+            },
+            clearUploadList: () =>{
+                dispatch(allFilesUploaded());
             },
             updateItemPermissions: (item) => {
                 dispatch(updateItemPermissions(item))

@@ -4,9 +4,9 @@ import App from "./components/app/App";
 
 const mapStateToProps = (state) => {
     return {
-        isStartup : !state.startupReducer.IsFinished,
-        errorObject : state.coreReducer.errorObject,
-        modules : state.coreReducer.modules,
+        isStartup : !state.startup.IsFinished,
+        errorObject : state.core.errorObject,
+        modules : state.core.modules,
     };
 };
 

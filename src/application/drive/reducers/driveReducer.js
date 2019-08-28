@@ -3,12 +3,14 @@ import {RECEIVED_ROOT_FOLDER_DATA} from "../actions/getRootFolder";
 import {RECEIVED_FOLDER_CONTENT} from "../actions/getFolderContent";
 import {CLOSE_DIALOG, DIALOG_FETCH_START, DIALOG_FETCH_SUCCESS, OPEN_DIALOG} from "../actions/dialogActions";
 import {FETCH_PERMISSIONS_SUCCESS} from "../actions/fetchPermissionActions";
+import {driveUploadReducer} from "./uploadReducer";
+import {combineReducers} from "redux";
 
 
-export const driveReducer = (state = initialState, action) => {
+export const driveBaseReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_PERMISSIONS_SUCCESS:
-            return Object.assign({},state,{permissionTypes : action.enumeration});
+            return Object.assign({}, state, {permissionTypes: action.enumeration});
         case RECEIVED_ROOT_FOLDER_DATA :
             return Object.assign({}, state, {rootFolder: action.folder, currentFolderItems: action.content});
         case RECEIVED_FOLDER_CONTENT :
@@ -33,3 +35,9 @@ export const driveReducer = (state = initialState, action) => {
             return state;
     }
 };
+
+
+export const driveReducer = combineReducers({
+    drive : driveBaseReducer,
+    uploadQueue : driveUploadReducer
+});
