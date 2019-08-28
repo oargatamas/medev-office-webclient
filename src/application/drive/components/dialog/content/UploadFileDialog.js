@@ -3,32 +3,30 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
 import {fileTypes} from "../../../actions/fileTypeDictionary";
 import FormGroup from "@material-ui/core/FormGroup";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrorIcon from "@material-ui/icons/Error";
 import CheckIcon from "@material-ui/icons/Check";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import {textEllipsis} from "../../../../utils/stringUtils";
+
 
 const renderItemStatus = (item) => {
     if (item.uploading) {
         return (<CircularProgress/>);
     }
-
     if (item.error) {
         return (<ErrorIcon color={"error"}/>);
     }
-
     if (item.success) {
-        return (<CheckIcon className={"primary"}/>);
+        return (<CheckIcon color={"primary"}/>);
     }
-
-    return <div/>;
+    return <InsertDriveFileIcon color={"disabled"}/>;
 };
 
 
@@ -43,7 +41,7 @@ class UploadFileDialog extends Component {
 
     handleClose() {
         const {actions, uploadFinished} = this.props;
-        if(uploadFinished){
+        if (uploadFinished) {
             actions.clearUploadList();
         }
         actions.closeItemDialog();
@@ -73,24 +71,22 @@ class UploadFileDialog extends Component {
                         multiple
                         onChange={this.updateFileNames}
                     />
+                    <label htmlFor="drive-raised-input-file">
+                        <Button fullWidth color="primary" variant="contained" component="span">
+                            Browse
+                        </Button>
+                    </label>
                     <List>
                         {itemsToUpload.map(item => (
                             <ListItem key={item.filename}>
                                 <ListItemAvatar>
                                     {renderItemStatus(item)}
                                 </ListItemAvatar>
-                                <ListItemText primary={item.filename} secondary={item.mimeType}/>
+                                <ListItemText primary={textEllipsis(item.filename, 30)}
+                                              secondary={textEllipsis(item.mimeType, 30)}/>
                             </ListItem>
                         ))}
                     </List>
-                    <FormGroup row>
-                        <label htmlFor="drive-raised-input-file">
-                            <Button variant="raised" component="span">
-                                Browse
-                            </Button>
-                        </label>
-                    </FormGroup>
-
                 </DialogContent>
                 <DialogActions>
                     {uploadFinished ? (

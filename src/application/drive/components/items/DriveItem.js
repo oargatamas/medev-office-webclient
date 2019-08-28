@@ -12,6 +12,7 @@ import {
 } from "../../actions/dialogActions";
 import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
+import {textEllipsis} from "../../../utils/stringUtils";
 
 
 const styles = (theme) => ({
@@ -115,7 +116,7 @@ class DriveItem extends Component {
             <Box key={key} className={classes.root}>
                 {this.renderItemIcon()}
                 <Typography variant={"subtitle1"}>
-                    {item.name}
+                    {textEllipsis(item.name,15)}
                 </Typography>
                 <Menu
                     id="long-menu"

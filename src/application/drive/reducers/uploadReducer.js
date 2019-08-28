@@ -31,7 +31,7 @@ export const driveUploadReducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 items: state.items.map(item => {
                         if (item.filename === action.filename) {
-                            return {...item, uploading: false, success: true}
+                            return {...item, uploading: false, success: true, error: false}
                         } else {
                             return item
                         }
@@ -42,7 +42,7 @@ export const driveUploadReducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 items: state.items.map(item => {
                         if (item.filename === action.filename) {
-                            return {...item, uploading: false, success: false}
+                            return {...item, uploading: false, success: false, error: true}
                         } else {
                             return item
                         }
