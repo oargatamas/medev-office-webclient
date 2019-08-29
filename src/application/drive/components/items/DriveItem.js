@@ -7,7 +7,7 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
-    CONTENT_EDIT_PERMISSIONS,
+    CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
     CONTENT_SHARE_LINK
 } from "../../actions/dialogActions";
 import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
@@ -37,6 +37,9 @@ const styles = (theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: 70,
             height: 70,
+        },
+        path: {
+            fill : "#000",
         }
     }
 });
@@ -62,6 +65,7 @@ class DriveItem extends Component {
         this.handleItemShareClick = this.handleItemShareClick.bind(this);
         this.handleItemPermissionsClick = this.handleItemPermissionsClick.bind(this);
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
+        this.handleItemMoveClick = this.handleItemMoveClick.bind(this);
         this.state = initialState;
     }
 
@@ -82,20 +86,22 @@ class DriveItem extends Component {
 
     renderItemIcon() {
         const {classes, item} = this.props;
-        const itemColor = Object.keys(item.permissions).length > 0 ? "primary" : "disabled";
+        const disabled = Object.keys(item.permissions).length === 0;
 
         if (item.type === "folder") {
             return (
                 <RouterLink to={"/drive/" + item.id}>
-                    <FolderIcon color={itemColor} className={classes.itemIcon}/>
+                    <FolderIcon color={disabled ? "disabled" : "primary"} className={classes.itemIcon}/>
                 </RouterLink>
             );
         }
         console.log(item.mimeType);
         const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
 
+        const fileIcon = disabled ? typeData.disabledIcon : typeData.icon;
+
         return (
-            <img alt={item.name} src={typeData ? typeData.icon : dataIcon} className={classes.itemIcon}/>
+            <img alt={item.name} src={fileIcon} className={classes.itemIcon}/>
         );
     }
 
@@ -120,6 +126,12 @@ class DriveItem extends Component {
     handleItemDeleteClick() {
         const {item, actions} = this.props;
         actions.openItemDialog(CONTENT_DELETE_ITEM, item);
+        this.closeMenu();
+    }
+
+    handleItemMoveClick(){
+        const {item, actions} = this.props;
+        actions.openItemDialog(CONTENT_MOVE_ITEM, item);
         this.closeMenu();
     }
 
@@ -149,6 +161,7 @@ class DriveItem extends Component {
                     <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
                     <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
                     <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
+                    <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
                     <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>
                 </Menu>
             </Box>

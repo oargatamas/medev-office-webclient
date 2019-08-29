@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">  <image id="image0" width="48" height="48" x="0" y="0"
-    xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
-AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAV1BMVEUAAAC2G7+2H8O2H8O1
-IMO2H8O2HsO2IMO2H8O3IMK1IMO1H8O2HsK2H8O5F7m2H8O4IcO4HsS2H8O2H8O2H8S1H8O1IsO2
-H8K4HMazHMa3IMO2H8P///9umAOGAAAAG3RSTlMAHKvygO13iPRgYaag1Qv3Lyv18fCtJuwkG6lu
-EkHCAAAAAWJLR0QcnARBBwAAAAd0SU1FB+MIHQoiKSaQXJUAAAC+SURBVEjH7dLbCsIwDAbg2Dld
-jx7mue//npqOipgmW0FExf8ibCFfSccAfikz1cSnzMX5NtJIQsVYJxo6LAt6OiywLiuALEpAFEUg
-iTIQBAN4wQFWsIATPBhEDUhiAuD4H7wXdF0l0KYOWAA3DXifagAIfgpYrTdbrNjEp1GgAUyqGDMO
-LL44m9tuDODqt+VDbt+vwYBh9cfkazBAkz7oD/qXXg16eX5HwF4GioDDUZpvT/R7ny/sVr0qzH9x
-rtKkbN/IVb1UAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTA4LTI5VDEwOjM0OjQxKzAzOjAw6XoT
-PgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0wOC0yOVQxMDozNDo0MSswMzowMJgnq4IAAAAASUVO
-RK5CYII=" />
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg"
+   width="400"
+   height="400"
+   viewBox="0, 0, 400,400"
+   version="1.1">
+
+
+  <g
+     id="svgg">
+    <path
+       id="path0"
+       d="M 69.138085,362.5 H 200 334.25175 L 333.824,130.146 285.923,81.74 238.022,33.333 h -81.773 c -58.825,0 -87.969351,-0.101375 -87.969351,-0.101375 M 303.54,150 H 216.667 L 214.82571,66.667 M 283.39885,300 H 124.616 l 34.41271,-41.17198 39.98741,23.12786 29.87907,-45.61935"
+       style="fill:rgb(3.137255%,47.058824%,76.470588%);fill-rule:evenodd;stroke:none"
+  />
+  </g>
 </svg>
