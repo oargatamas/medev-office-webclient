@@ -13,6 +13,8 @@ import {
 import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
+import {fileTypes} from "../../actions/fileTypeDictionary";
+import dataIcon from "../../../../resources/icons/icon-data.svg";
 
 
 const styles = (theme) => ({
@@ -25,16 +27,16 @@ const styles = (theme) => ({
         width: 100,
         height: 110,
         [theme.breakpoints.down('sm')]: {
-            width:70,
-            height:80,
+            width: 70,
+            height: 80,
         }
     },
     itemIcon: {
         width: 100,
         height: 100,
         [theme.breakpoints.down('sm')]: {
-            width:70,
-            height:70,
+            width: 70,
+            height: 70,
         }
     }
 });
@@ -84,13 +86,16 @@ class DriveItem extends Component {
 
         if (item.type === "folder") {
             return (
-                <RouterLink to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
+                <RouterLink to={"/drive/" + item.id}>
                     <FolderIcon color={itemColor} className={classes.itemIcon}/>
                 </RouterLink>
             );
         }
+        console.log(item.mimeType);
+        const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
+
         return (
-            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color={itemColor} className={classes.itemIcon}/>
+            <img alt={item.name} src={typeData ? typeData.icon : dataIcon} className={classes.itemIcon}/>
         );
     }
 
@@ -123,10 +128,10 @@ class DriveItem extends Component {
         const {menuAnchor, menuOpen} = this.state;
 
         return (
-            <Box key={key} className={classes.root}>
+            <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
                 <Typography variant={"subtitle1"}>
-                    {textEllipsis(item.name,10)}
+                    {textEllipsis(item.name, 10)}
                 </Typography>
                 <Menu
                     id="long-menu"
@@ -137,7 +142,8 @@ class DriveItem extends Component {
                     onClose={this.closeMenu}
                 >
                     {item.type === "file" ? (
-                        <Link color={"inherit"} href={"https://" + OFFICE_API_HOST + "/" + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
+                        <Link color={"inherit"}
+                              href={"https://" + OFFICE_API_HOST + "/" + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
                             <MenuItem key={"download"}>Download</MenuItem>
                         </Link>) : null}
                     <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
