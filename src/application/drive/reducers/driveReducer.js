@@ -5,12 +5,15 @@ import {CLOSE_DIALOG, DIALOG_FETCH_START, DIALOG_FETCH_SUCCESS, OPEN_DIALOG} fro
 import {FETCH_PERMISSIONS_SUCCESS} from "../actions/fetchPermissionActions";
 import {driveUploadReducer} from "./uploadReducer";
 import {combineReducers} from "redux";
+import {RECEIVED_FOLDER_TREE} from "../actions/moveFileToFolder";
 
 
 export const driveBaseReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_PERMISSIONS_SUCCESS:
             return Object.assign({}, state, {permissionTypes: action.enumeration});
+        case RECEIVED_FOLDER_TREE:
+            return Object.assign({},state, {folderTree: action.tree});
         case RECEIVED_ROOT_FOLDER_DATA :
             return Object.assign({}, state, {rootFolder: action.folder, currentFolderItems: action.content});
         case RECEIVED_FOLDER_CONTENT :
