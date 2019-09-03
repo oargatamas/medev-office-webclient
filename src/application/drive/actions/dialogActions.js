@@ -13,6 +13,7 @@ export const CONTENT_EDIT_PERMISSIONS = "editDriveItemPermissions";
 export const CONTENT_EDIT_DETAILS = "editDriveItemDetails";
 export const CONTENT_SHARE_LINK = "createDriveItemShareLink";
 export const CONTENT_DELETE_ITEM = "deleteDriveItem";
+export const CONTENT_MOVE_ITEM = "moveDriveItem";
 
 
 export const openItemDialog = (purpose, item) => {

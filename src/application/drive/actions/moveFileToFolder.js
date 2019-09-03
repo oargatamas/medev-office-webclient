@@ -1,10 +1,39 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi, defaultSuccessWithResponse, getApiBaseHeaders} from "../../core/action/apiCallActions";
+import {callOfficeApi, getApiBaseHeaders} from "../../core/action/apiCallActions";
+import {
+    defaultDialogErrorActions,
+    defaultDialogFetchActions,
+    defaultDialogSuccessActions,
+    finishItemDialogFetch
+} from "./dialogActions";
+
+
+export const RECEIVED_FOLDER_TREE = "driveFolderTreeReceived";
+
+
+export const requestFolderTree = () => {
+    let params = {
+        method: "GET",
+        uri: DRIVE_API_BASE + "/folder/tree",
+        redirect_uri: DRIVE_API_BASE,
+        headers: getApiBaseHeaders(),
+        errorMsg: "Cannot retrieve folder structure."
+    };
+
+    const successActions = [
+        receivedFolderTree,
+        finishItemDialogFetch,
+    ];
+
+    return callOfficeApi(params, successActions, defaultDialogErrorActions, defaultDialogFetchActions);
+};
+
+
 
 
 export const requestItemMove = (targetItem, destinationFolder) => {
     let params = {
-        method: "GET",
+        method: "POST",
         uri: DRIVE_API_BASE + "/move/" + targetItem.id + "/to/" + destinationFolder.id,
         redirect_uri: DRIVE_API_BASE,
         headers: getApiBaseHeaders(),
@@ -12,5 +41,13 @@ export const requestItemMove = (targetItem, destinationFolder) => {
         successMsg : "'" + targetItem.name + "' successfully moved to '" + destinationFolder.name + "'."
     };
 
-    return callOfficeApi(params, [defaultSuccessWithResponse]);
+    return callOfficeApi(params, defaultDialogSuccessActions, defaultDialogErrorActions, defaultDialogFetchActions);
+};
+
+
+export const receivedFolderTree = (serverResponse) => {
+    return {
+        type : RECEIVED_FOLDER_TREE,
+        tree : serverResponse,
+    }
 };

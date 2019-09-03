@@ -2,13 +2,12 @@ import {requestRootFolderData} from "../../actions/getRootFolder";
 import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
 import {requestFolderItems} from "../../actions/getFolderContent";
-import {requestItemMove} from "../../actions/moveFileToFolder";
+import {requestFolderTree, requestItemMove} from "../../actions/moveFileToFolder";
 import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
 import {
-    allFilesUploaded,
     changeFileUploadList,
     clearUploadQueue,
     uploadFileToFolder
@@ -21,6 +20,7 @@ const mapStateToProps = (state) => {
     return {
         systemUsers: state.core.appUsers,
         isFetching : state.core.isFetching,
+        rootFolder: state.driveModule.drive.folderTree,
         folder : state.driveModule.drive.rootFolder,
         items : state.driveModule.drive.currentFolderItems,
         navigation : state.driveModule.drive.breadCrumbs,
@@ -76,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
             },
             updateItemPermissions: (item) => {
                 dispatch(updateItemPermissions(item))
+            },
+            requestFolderTree : () =>{
+                dispatch(requestFolderTree());
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));

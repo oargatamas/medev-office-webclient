@@ -3,7 +3,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {Box, Link, Menu, MenuItem, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
@@ -14,7 +13,6 @@ import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
-import dataIcon from "../../../../resources/icons/icon-data.svg";
 
 
 const styles = (theme) => ({
@@ -95,7 +93,7 @@ class DriveItem extends Component {
                 </RouterLink>
             );
         }
-        console.log(item.mimeType);
+
         const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
 
         const fileIcon = disabled ? typeData.disabledIcon : typeData.icon;
