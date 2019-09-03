@@ -3,16 +3,16 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {Box, Link, Menu, MenuItem, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
-    CONTENT_EDIT_PERMISSIONS,
+    CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
     CONTENT_SHARE_LINK
 } from "../../actions/dialogActions";
 import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
+import {fileTypes} from "../../actions/fileTypeDictionary";
 
 
 const styles = (theme) => ({
@@ -25,16 +25,19 @@ const styles = (theme) => ({
         width: 100,
         height: 110,
         [theme.breakpoints.down('sm')]: {
-            width:70,
-            height:80,
+            width: 70,
+            height: 80,
         }
     },
     itemIcon: {
         width: 100,
         height: 100,
         [theme.breakpoints.down('sm')]: {
-            width:70,
-            height:70,
+            width: 70,
+            height: 70,
+        },
+        path: {
+            fill : "#000",
         }
     }
 });
@@ -60,6 +63,7 @@ class DriveItem extends Component {
         this.handleItemShareClick = this.handleItemShareClick.bind(this);
         this.handleItemPermissionsClick = this.handleItemPermissionsClick.bind(this);
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
+        this.handleItemMoveClick = this.handleItemMoveClick.bind(this);
         this.state = initialState;
     }
 
@@ -80,17 +84,22 @@ class DriveItem extends Component {
 
     renderItemIcon() {
         const {classes, item} = this.props;
-        const itemColor = Object.keys(item.permissions).length > 0 ? "primary" : "disabled";
+        const disabled = Object.keys(item.permissions).length === 0;
 
         if (item.type === "folder") {
             return (
-                <RouterLink to={"/drive/" + item.id} onContextMenu={this.showItemOptions}>
-                    <FolderIcon color={itemColor} className={classes.itemIcon}/>
+                <RouterLink to={"/drive/" + item.id}>
+                    <FolderIcon color={disabled ? "disabled" : "primary"} className={classes.itemIcon}/>
                 </RouterLink>
             );
         }
+
+        const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
+
+        const fileIcon = disabled ? typeData.disabledIcon : typeData.icon;
+
         return (
-            <InsertDriveFileIcon onContextMenu={this.showItemOptions} color={itemColor} className={classes.itemIcon}/>
+            <img alt={item.name} src={fileIcon} className={classes.itemIcon}/>
         );
     }
 
@@ -118,15 +127,21 @@ class DriveItem extends Component {
         this.closeMenu();
     }
 
+    handleItemMoveClick(){
+        const {item, actions} = this.props;
+        actions.openItemDialog(CONTENT_MOVE_ITEM, item);
+        this.closeMenu();
+    }
+
     render() {
         const {classes, item, key,} = this.props;
         const {menuAnchor, menuOpen} = this.state;
 
         return (
-            <Box key={key} className={classes.root}>
+            <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
                 <Typography variant={"subtitle1"}>
-                    {textEllipsis(item.name,10)}
+                    {textEllipsis(item.name, 10)}
                 </Typography>
                 <Menu
                     id="long-menu"
@@ -137,12 +152,14 @@ class DriveItem extends Component {
                     onClose={this.closeMenu}
                 >
                     {item.type === "file" ? (
-                        <Link color={"inherit"} href={"https://" + OFFICE_API_HOST + "/" + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
+                        <Link color={"inherit"}
+                              href={"https://" + OFFICE_API_HOST + "/" + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
                             <MenuItem key={"download"}>Download</MenuItem>
                         </Link>) : null}
                     <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
                     <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
                     <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
+                    <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
                     <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>
                 </Menu>
             </Box>
