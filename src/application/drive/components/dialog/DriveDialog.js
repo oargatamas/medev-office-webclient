@@ -16,7 +16,6 @@ import ItemPermissionDialog from "./content/ItemPermissionDialog";
 import ShareLinkDialog from "./content/ShareLinkDialog";
 import {withStyles} from "@material-ui/styles";
 import MoveItemDialog from "./content/MoveItemDialog";
-import {useMediaQuery} from "@material-ui/core";
 
 
 const styles = () => ({

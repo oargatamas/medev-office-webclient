@@ -18,7 +18,6 @@ import Select from "react-select";
 import {mapUsersToOptions} from "../../../../core/action/getUserInfoActions";
 import {withWidth} from "@material-ui/core";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
