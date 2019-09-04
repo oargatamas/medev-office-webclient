@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import {fileTypes} from "../../../actions/fileTypeDictionary";
-import FormGroup from "@material-ui/core/FormGroup";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";

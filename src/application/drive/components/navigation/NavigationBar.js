@@ -11,7 +11,7 @@ class NavigationBar extends Component {
         return (
             <Breadcrumbs>
                 {items.map((item) => (
-                    <Link component={RouteLink} to={"/drive/" + item.id}>
+                    <Link key={item.id} component={RouteLink} to={"/drive/" + item.id}>
                         {item.name}
                     </Link>
                 ))}

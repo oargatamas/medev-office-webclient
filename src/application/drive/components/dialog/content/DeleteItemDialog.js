@@ -3,7 +3,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import withStyles from "@material-ui/core/styles/withStyles";
 
+
+const styles = () =>({
+    content: {
+        wordBreak: "break-all",
+    }
+});
 
 class DeleteItemDialog extends Component{
 
@@ -24,14 +31,12 @@ class DeleteItemDialog extends Component{
 
     render() {
 
-        const {dialogItem, isDialogFetching} = this.props;
-
-        console.log(dialogItem);
+        const {classes, dialogItem, isDialogFetching} = this.props;
 
         return (
             <React.Fragment>
                 <DialogTitle>Delete {dialogItem.type}</DialogTitle>
-                <DialogContent>
+                <DialogContent className={classes.content}>
                     Are you sure you want to delete '{dialogItem.name}'?
                 </DialogContent>
                 <DialogActions>
@@ -43,4 +48,4 @@ class DeleteItemDialog extends Component{
     }
 }
 
-export default DeleteItemDialog;
+export default withStyles(styles,{withTheme:false})(DeleteItemDialog);
