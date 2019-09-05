@@ -12,6 +12,15 @@ export const theme = createMuiTheme({
             root: {
                 wordBreak: "break-all",
             }
+        },
+        MuiListItemText:{
+            primary:{
+                wordBreak: "break-all",
+            },
+            secondary:{
+                wordBreak: "break-all",
+                color: "green",
+            }
         }
     }
 });
