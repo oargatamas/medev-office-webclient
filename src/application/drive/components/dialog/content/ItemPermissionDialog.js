@@ -192,7 +192,7 @@ class ItemPermissionDialog extends Component {
                     </div>
 
                     <FormGroup row>
-                        {width === "xs" || width === "sm" || width === "md" ? (
+                        {width === "xs" || width === "sm"? (
                             <FormControl>
                                 <NativeSelect
                                     value={""}
@@ -200,6 +200,7 @@ class ItemPermissionDialog extends Component {
                                     name="userToAddPermission"
                                     disabled={uiDisabled}
                                 >
+                                    <option value="">{" "}</option>
                                     {userOptions.map(userOption => (
                                         <option value={JSON.stringify(userOption)}>{userOption.label}</option>
                                     ))}

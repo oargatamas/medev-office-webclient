@@ -19,14 +19,14 @@ const styles = (theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         margin: theme.spacing(1),
         width: 100,
-        height: 110,
+        //height: 110,
         [theme.breakpoints.down('sm')]: {
             width: 70,
-            height: 80,
+            //height: 80,
         }
     },
     itemIcon: {
@@ -35,10 +35,11 @@ const styles = (theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: 70,
             height: 70,
-        },
-        path: {
-            fill : "#000",
         }
+    },
+    itemText: {
+        whiteSpace: "nowrap",
+        wordBreak : "keep-all",
     }
 });
 
@@ -140,7 +141,7 @@ class DriveItem extends Component {
         return (
             <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
-                <Typography variant={"subtitle1"}>
+                <Typography className={classes.itemText} variant={"subtitle1"}>
                     {textEllipsis(item.name, 10)}
                 </Typography>
                 <Menu
