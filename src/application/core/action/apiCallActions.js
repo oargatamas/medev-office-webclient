@@ -8,6 +8,7 @@ export const OFFICE_API_HOST = config.api.host;
 export const MEDEV_AUTH_HOST = config.authServer.host;
 
 export const APPLICATION_ORIGIN = "https://" + OFFICE_HOST;
+export const API_ORIGIN = "https://" + OFFICE_API_HOST;
 
 export const FETCH_API_DATA = "fetchingData";
 export const FETCH_API_SUCCESS = "receivedData";
@@ -44,7 +45,6 @@ export const defaultSuccessWithResponse = (serverResponse, message) => {
 };
 
 export const callOfficeApi = (requestParams, successAction, errorAction = [defaultErrorAction], fetchingAction = [defaultFetchingAction]) => {
-
     return (dispatch) => {
         let url = "https://" + OFFICE_API_HOST + requestParams.uri;
 
