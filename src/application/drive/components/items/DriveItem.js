@@ -7,12 +7,13 @@ import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
     CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
-    CONTENT_SHARE_LINK
+    CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE
 } from "../../actions/dialogActions";
-import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
+import {API_ORIGIN} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
+import {getThumbnailUrl, THUMB_SMALL} from "../../actions/imageActions";
 
 
 const styles = (theme) => ({
@@ -35,12 +36,13 @@ const styles = (theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: 70,
             height: 70,
-        }
+        },
+        cursor: "pointer",
     },
     itemText: {
         whiteSpace: "nowrap",
         wordBreak : "keep-all",
-    }
+    },
 });
 
 
@@ -65,6 +67,7 @@ class DriveItem extends Component {
         this.handleItemPermissionsClick = this.handleItemPermissionsClick.bind(this);
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
         this.handleItemMoveClick = this.handleItemMoveClick.bind(this);
+        this.handleFileClick = this.handleFileClick.bind(this);
         this.state = initialState;
     }
 
@@ -98,9 +101,15 @@ class DriveItem extends Component {
         const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
 
         const fileIcon = disabled ? typeData.disabledIcon : typeData.icon;
-
+        let imageSource = fileIcon;
+        if (item.mimeType.startsWith("image")) {
+            imageSource = getThumbnailUrl(item,THUMB_SMALL);
+        }
         return (
-            <img alt={item.name} src={fileIcon} className={classes.itemIcon}/>
+            <img alt={item.name} src={imageSource} className={classes.itemIcon} onClick={this.handleFileClick}
+                 onError={(e) => {
+                     e.target.src = fileIcon
+                 }}/>
         );
     }
 
@@ -134,6 +143,16 @@ class DriveItem extends Component {
         this.closeMenu();
     }
 
+    handleFileClick() {
+        const {item, actions} = this.props;
+
+        if (item.mimeType.startsWith("image")) {
+            actions.openItemDialog(CONTENT_SHOW_IMAGE,item);
+        } else {
+            window.location.href = API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data";
+        }
+    }
+
     render() {
         const {classes, item, key,} = this.props;
         const {menuAnchor, menuOpen} = this.state;
@@ -142,7 +161,7 @@ class DriveItem extends Component {
             <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
                 <Typography className={classes.itemText} variant={"subtitle1"}>
-                    {textEllipsis(item.name, 10)}
+                    {textEllipsis(item.name, 10).replace(" ", String.fromCharCode(160))}
                 </Typography>
                 <Menu
                     id="long-menu"
@@ -154,7 +173,7 @@ class DriveItem extends Component {
                 >
                     {item.type === "file" ? (
                         <Link color={"inherit"}
-                              href={"https://" + OFFICE_API_HOST + "/" + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
+                              href={API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
                             <MenuItem key={"download"}>Download</MenuItem>
                         </Link>) : null}
                     <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
