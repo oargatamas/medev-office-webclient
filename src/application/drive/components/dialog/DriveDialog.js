@@ -4,7 +4,7 @@ import {
     CONTENT_EDIT_DETAILS,
     CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
     CONTENT_NEW_FOLDER,
-    CONTENT_SHARE_LINK,
+    CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE,
     CONTENT_UPLOAD_FILE
 } from "../../actions/dialogActions";
 import ItemDetailsDialog from "./content/ItemDetailsDialog";
@@ -16,6 +16,7 @@ import ItemPermissionDialog from "./content/ItemPermissionDialog";
 import ShareLinkDialog from "./content/ShareLinkDialog";
 import {withStyles} from "@material-ui/styles";
 import MoveItemDialog from "./content/MoveItemDialog";
+import ShowImageDialog from "./content/ShowImageDialog";
 
 
 const styles = () => ({
@@ -50,6 +51,8 @@ class DriveDialog extends Component {
                 return <ShareLinkDialog {...this.props}/>;
             case CONTENT_MOVE_ITEM:
                 return <MoveItemDialog {...this.props}/>;
+            case CONTENT_SHOW_IMAGE:
+                return <ShowImageDialog {...this.props}/>;
             default:
                 return <div>{this.props.dialogType}</div>;
         }
