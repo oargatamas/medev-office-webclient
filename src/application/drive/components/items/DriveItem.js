@@ -9,7 +9,7 @@ import {
     CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
     CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE
 } from "../../actions/dialogActions";
-import {API_ORIGIN, OFFICE_API_HOST} from "../../../core/action/apiCallActions";
+import {API_ORIGIN} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
@@ -20,14 +20,14 @@ const styles = (theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         margin: theme.spacing(1),
         width: 100,
-        height: 110,
+        //height: 110,
         [theme.breakpoints.down('sm')]: {
             width: 70,
-            height: 80,
+            //height: 80,
         }
     },
     itemIcon: {
@@ -38,7 +38,11 @@ const styles = (theme) => ({
             height: 70,
         },
         cursor: "pointer",
-    }
+    },
+    itemText: {
+        whiteSpace: "nowrap",
+        wordBreak : "keep-all",
+    },
 });
 
 
@@ -133,7 +137,7 @@ class DriveItem extends Component {
         this.closeMenu();
     }
 
-    handleItemMoveClick() {
+    handleItemMoveClick(){
         const {item, actions} = this.props;
         actions.openItemDialog(CONTENT_MOVE_ITEM, item);
         this.closeMenu();
@@ -156,7 +160,7 @@ class DriveItem extends Component {
         return (
             <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
-                <Typography variant={"subtitle1"}>
+                <Typography className={classes.itemText} variant={"subtitle1"}>
                     {textEllipsis(item.name, 10).replace(" ", String.fromCharCode(160))}
                 </Typography>
                 <Menu
