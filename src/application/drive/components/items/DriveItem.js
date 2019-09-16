@@ -144,7 +144,7 @@ class DriveItem extends Component {
             <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
                 <Typography variant={"subtitle1"}>
-                    {textEllipsis(item.name, 10)}
+                    {textEllipsis(item.name, 10).replace(" ",String.fromCharCode(160))}
                 </Typography>
                 <Menu
                     id="long-menu"
