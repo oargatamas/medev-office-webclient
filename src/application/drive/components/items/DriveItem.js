@@ -9,7 +9,7 @@ import {
     CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
     CONTENT_SHARE_LINK
 } from "../../actions/dialogActions";
-import {OFFICE_API_HOST} from "../../../core/action/apiCallActions";
+import {API_ORIGIN, OFFICE_API_HOST} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
@@ -37,7 +37,7 @@ const styles = (theme) => ({
             height: 70,
         },
         path: {
-            fill : "#000",
+            fill: "#000",
         }
     }
 });
@@ -97,9 +97,12 @@ class DriveItem extends Component {
         const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
 
         const fileIcon = disabled ? typeData.disabledIcon : typeData.icon;
-
+        let imageSource = fileIcon;
+        if (item.mimeType.startsWith("image")) {
+            imageSource = API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/thumbnail?size=small";
+        }
         return (
-            <img alt={item.name} src={fileIcon} className={classes.itemIcon}/>
+            <img alt={item.name} src={imageSource} className={classes.itemIcon} onError={(e) => {e.target.src = fileIcon}}/>
         );
     }
 
@@ -127,7 +130,7 @@ class DriveItem extends Component {
         this.closeMenu();
     }
 
-    handleItemMoveClick(){
+    handleItemMoveClick() {
         const {item, actions} = this.props;
         actions.openItemDialog(CONTENT_MOVE_ITEM, item);
         this.closeMenu();
