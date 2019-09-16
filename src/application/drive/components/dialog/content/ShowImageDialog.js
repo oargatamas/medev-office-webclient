@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {getThumbnailUrl, THUMB_LARGE, THUMB_MEDIUM} from "../../../actions/imageActions";
+import {getThumbnailUrl } from "../../../actions/imageActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import {withStyles} from "@material-ui/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = () => ({
     content : {
