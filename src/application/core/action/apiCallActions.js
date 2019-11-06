@@ -106,9 +106,10 @@ const redirectToAuthServer = (params) => {
     let queryParams = encodeUrlData({
         response_type: "token",
         client_id: "hu.medev.office.clientspa",
-        redirect_uri: encodeURI("https://" + OFFICE_HOST + params.redirect_uri),
+        redirect_uri: encodeURI("https://" + OFFICE_HOST + (params.redirect_uri != null ? params.redirect_uri : window.location.pathname)),
         state: "randomstring" //Todo replace it with real csrf token generation logic.
     });
+
 
     window.location.href = "https://" + MEDEV_AUTH_HOST + "/authorize?" + queryParams;
 };
