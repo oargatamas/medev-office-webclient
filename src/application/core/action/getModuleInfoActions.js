@@ -16,7 +16,6 @@ export const requestModuleInfo = (successAction = [receivedModuleInfo], errorAct
     let params = {
         method : "GET",
         uri : "/modules",
-        redirect_uri : "/",
         headers: getApiBaseHeaders(),
         errorMsg : "Cannot load module info."
     };

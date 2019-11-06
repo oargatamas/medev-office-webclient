@@ -7,7 +7,6 @@ export const deleteDriveItem = (itemId, type) => {
     let params = {
         method: "DELETE",
         uri: DRIVE_API_BASE + "/" + type + "/" + itemId,
-        redirect_uri: DRIVE_API_BASE,
         headers: getApiBaseHeaders(),
         errorMsg: "Cannot delete folder."
     };

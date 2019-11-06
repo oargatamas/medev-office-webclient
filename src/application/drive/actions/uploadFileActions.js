@@ -43,7 +43,6 @@ export const uploadFileToFolder = (folder, file, isLast) => {
     let params = {
         method: "POST",
         uri: DRIVE_API_BASE + "/folder/" + folder.id + "/file",
-        redirect_uri: DRIVE_API_BASE + "/" + folder.id,
         body: uploadBody,
         errorMsg: "Cannot upload " + file.name + "."
     };

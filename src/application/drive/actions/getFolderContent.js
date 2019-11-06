@@ -18,7 +18,6 @@ export const requestFolderItems = (folderId) => {
     let params = {
         method: "GET",
         uri: DRIVE_API_BASE + "/folder/" + folderId + "/content",
-        redirect_uri: DRIVE_API_BASE,
         headers: getApiBaseHeaders(),
         errorMsg: "Cannot load content folder content."
     };

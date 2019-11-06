@@ -17,7 +17,6 @@ export const fetchPermissionTypes = (successAction = [receivedDrivePermissionTyp
     let params = {
         method: "GET",
         uri: DRIVE_API_BASE + "/permission/types",
-        redirect_uri: "/",
         headers: getApiBaseHeaders(),
         errorMsg: "Cannot fetch drive permission types."
     };
