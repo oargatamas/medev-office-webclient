@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Box, Link, Menu, MenuItem, Typography} from "@material-ui/core";
+import {Box, Link, Menu, MenuItem, Typography, Tooltip} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
 import {
@@ -23,10 +23,10 @@ const styles = (theme) => ({
         justifyContent: "center",
         alignItems: "center",
         margin: theme.spacing(1),
-        //width: 80,
+        width: 100,
         height: 60,
         [theme.breakpoints.down('sm')]: {
-            //width: 60,
+            width: 80,
             height: 50,
         }
     },
@@ -34,10 +34,13 @@ const styles = (theme) => ({
         width: 50,
         height: 50,
         [theme.breakpoints.down('sm')]: {
-            width: 40,
-            height: 40,
+            width: 50,
+            height: 50,
         },
         cursor: "pointer",
+    },
+    disabled : {
+        filter: "grayscale(100%)"
     }
 });
 
@@ -82,9 +85,9 @@ class DriveItem extends Component {
         this.setState(initialState);
     }
 
-    renderItemIcon() {
+    renderItemIcon(disabled) {
         const {classes, item} = this.props;
-        const disabled = Object.keys(item.permissions).length === 0;
+
 
         if (item.type === "folder") {
             return (
@@ -96,16 +99,18 @@ class DriveItem extends Component {
 
         const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
 
-        const fileIcon = disabled ? typeData.disabledIcon : typeData.icon;
-        let imageSource = fileIcon;
+        let imageSource = typeData.icon;
         if (item.mimeType.startsWith("image")) {
-            imageSource = getThumbnailUrl(item,THUMB_SMALL);
+            imageSource = getThumbnailUrl(item, THUMB_SMALL);
         }
+
+        const iconClasses = [classes.itemIcon];
+        if (disabled){
+            iconClasses.push(classes.disabled)
+        }
+
         return (
-            <img alt={item.name} src={imageSource} className={classes.itemIcon} onClick={this.handleFileClick}
-                 onError={(e) => {
-                     e.target.src = fileIcon
-                 }}/>
+            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick} onError={(e) => {e.target.src = imageSource}}/>
         );
     }
 
@@ -143,7 +148,7 @@ class DriveItem extends Component {
         const {item, actions} = this.props;
 
         if (item.mimeType.startsWith("image")) {
-            actions.openItemDialog(CONTENT_SHOW_IMAGE,item);
+            actions.openItemDialog(CONTENT_SHOW_IMAGE, item);
         } else {
             window.location.href = API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data";
         }
@@ -152,35 +157,39 @@ class DriveItem extends Component {
     render() {
         const {classes, item, key,} = this.props;
         const {menuAnchor, menuOpen} = this.state;
+        const disabled = Object.keys(item.permissions).length === 0;
 
         return (
-            <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
-                {this.renderItemIcon()}
-                <Typography variant={"caption"}>
-                    {
-                        textEllipsis(item.name, 15,{side:"middle"}).replace(" ", String.fromCharCode(160))
-                    }
-                </Typography>
-                <Menu
-                    id="long-menu"
-                    anchorPosition={menuAnchor}
-                    anchorReference={"anchorPosition"}
-                    keepMounted
-                    open={menuOpen}
-                    onClose={this.closeMenu}
-                >
-                    {item.type === "file" ? (
-                        <Link color={"inherit"}
-                              href={API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
-                            <MenuItem key={"download"}>Download</MenuItem>
-                        </Link>) : null}
-                    <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
-                    <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
-                    <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
-                    <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
-                    <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>
-                </Menu>
-            </Box>
+            <Tooltip title={item.name}>
+                <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
+
+                    {this.renderItemIcon(disabled)}
+                    <Typography variant={"caption"} color={disabled ? "textSecondary" : "textPrimary"}>
+                        {
+                            textEllipsis(item.name, 15, {side: "middle"}).replace(" ", String.fromCharCode(160))
+                        }
+                    </Typography>
+                    <Menu
+                        id="long-menu"
+                        anchorPosition={menuAnchor}
+                        anchorReference={"anchorPosition"}
+                        keepMounted
+                        open={menuOpen}
+                        onClose={this.closeMenu}
+                    >
+                        {item.type === "file" ? (
+                            <Link color={"inherit"}
+                                  href={API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
+                                <MenuItem key={"download"}>Download</MenuItem>
+                            </Link>) : null}
+                        <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
+                        <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
+                        <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
+                        <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
+                        <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>
+                    </Menu>
+                </Box>
+            </Tooltip>
         );
     }
 }
