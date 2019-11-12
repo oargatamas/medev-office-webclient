@@ -23,19 +23,19 @@ const styles = (theme) => ({
         justifyContent: "center",
         alignItems: "center",
         margin: theme.spacing(1),
-        width: 100,
-        height: 110,
+        //width: 80,
+        height: 60,
         [theme.breakpoints.down('sm')]: {
-            width: 70,
-            height: 80,
+            //width: 60,
+            height: 50,
         }
     },
     itemIcon: {
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
         [theme.breakpoints.down('sm')]: {
-            width: 70,
-            height: 70,
+            width: 40,
+            height: 40,
         },
         cursor: "pointer",
     }
@@ -156,8 +156,10 @@ class DriveItem extends Component {
         return (
             <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
                 {this.renderItemIcon()}
-                <Typography variant={"subtitle1"}>
-                    {textEllipsis(item.name, 10).replace(" ", String.fromCharCode(160))}
+                <Typography variant={"caption"}>
+                    {
+                        textEllipsis(item.name, 15,{side:"middle"}).replace(" ", String.fromCharCode(160))
+                    }
                 </Typography>
                 <Menu
                     id="long-menu"
