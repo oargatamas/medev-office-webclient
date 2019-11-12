@@ -35,10 +35,11 @@ export const changeFileUploadList = (fileSource) => {
     }
 };
 
-export const uploadFileToFolder = (folder, file, isLast) => {
+export const uploadFileToFolder = (folder, file, isLast, inherit) => {
 
     const uploadBody = new FormData();
     uploadBody.append("fileItem", file);
+    uploadBody.append("inheritPermissions", inherit);
 
     let params = {
         method: "POST",

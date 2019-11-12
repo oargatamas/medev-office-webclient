@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import {fileTypes} from "../../../actions/fileTypeDictionary";
-import FormGroup from "@material-ui/core/FormGroup";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -15,6 +14,8 @@ import CheckIcon from "@material-ui/icons/Check";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import {textEllipsis} from "../../../../utils/stringUtils";
 import Divider from "@material-ui/core/Divider";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const renderItemStatus = (item) => {
@@ -39,6 +40,8 @@ class UploadFileDialog extends Component {
         this.updateFileNames = this.updateFileNames.bind(this);
         this.uploadFiles = this.uploadFiles.bind(this);
         this.uploadFailedFiles = this.uploadFailedFiles.bind(this);
+        this.toggleInheritFlag = this.toggleInheritFlag.bind(this);
+        this.state = {inherit : false};
     }
 
     handleClose() {
@@ -55,12 +58,16 @@ class UploadFileDialog extends Component {
 
     uploadFiles() {
         const {folder, actions, itemsToUpload} = this.props;
-        actions.uploadFiles(folder, itemsToUpload);
+        actions.uploadFiles(folder, itemsToUpload, this.state.inherit);
     }
 
     uploadFailedFiles() {
         const {folder, actions, itemsToUpload} = this.props;
-        actions.uploadFiles(folder, itemsToUpload.filter(item => item.error));
+        actions.uploadFiles(folder, itemsToUpload.filter(item => item.error), this.state.inherit);
+    }
+
+    toggleInheritFlag(){
+        this.setState({inherit : !this.state.inherit})
     }
 
     render() {
@@ -72,6 +79,12 @@ class UploadFileDialog extends Component {
             <React.Fragment>
                 <DialogTitle>Upload file</DialogTitle>
                 <DialogContent>
+                    <FormControlLabel
+                        disabled={isDialogFetching}
+                        control={<Checkbox checked={this.state.inherit} />}
+                        label="Inherit permissions from parent"
+                        onChange={this.toggleInheritFlag}
+                    />
                     <input
                         accept={fileTypes.map(item => "." + item.extension).join(",")}
                         style={{display: 'none'}}

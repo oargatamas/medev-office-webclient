@@ -65,10 +65,9 @@ const mapDispatchToProps = (dispatch) => {
             enqueueFilesToUpload : (fileSource) => {
                 dispatch(changeFileUploadList(fileSource));
             },
-            uploadFiles: (folder, fileSource) => {
-                console.log(fileSource);
+            uploadFiles: (folder, fileSource, inheritPermissions) => {
                 for (let i = 0; i < fileSource.length; i++) {
-                    dispatch(uploadFileToFolder(folder, fileSource[i].file, i === (fileSource.length-1)));
+                    dispatch(uploadFileToFolder(folder, fileSource[i].file, i === (fileSource.length-1),inheritPermissions));
                 }
             },
             clearUploadList: () =>{
