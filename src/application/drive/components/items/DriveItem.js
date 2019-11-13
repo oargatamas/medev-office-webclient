@@ -9,11 +9,12 @@ import {
     CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
     CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE
 } from "../../actions/dialogActions";
-import {API_ORIGIN, OFFICE_API_HOST} from "../../../core/action/apiCallActions";
+import {API_ORIGIN} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
 import {getThumbnailUrl, THUMB_SMALL} from "../../actions/imageActions";
+
 
 
 const styles = (theme) => ({
@@ -24,10 +25,10 @@ const styles = (theme) => ({
         alignItems: "center",
         margin: theme.spacing(1),
         width: 100,
-        height: 60,
+        //height: 60,
         [theme.breakpoints.down('sm')]: {
             width: 80,
-            height: 50,
+            //height: 50,
         }
     },
     itemIcon: {
@@ -85,35 +86,6 @@ class DriveItem extends Component {
         this.setState(initialState);
     }
 
-    renderItemIcon(disabled) {
-        const {classes, item} = this.props;
-
-
-        if (item.type === "folder") {
-            return (
-                <RouterLink to={"/drive/" + item.id}>
-                    <FolderIcon color={disabled ? "disabled" : "primary"} className={classes.itemIcon}/>
-                </RouterLink>
-            );
-        }
-
-        const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
-
-        let imageSource = typeData.icon;
-        if (item.mimeType.startsWith("image")) {
-            imageSource = getThumbnailUrl(item, THUMB_SMALL);
-        }
-
-        const iconClasses = [classes.itemIcon];
-        if (disabled){
-            iconClasses.push(classes.disabled)
-        }
-
-        return (
-            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick} onError={(e) => {e.target.src = imageSource}}/>
-        );
-    }
-
     handleItemEditClick() {
         const {item, actions} = this.props;
         actions.openItemDialog(CONTENT_EDIT_DETAILS, item);
@@ -152,6 +124,35 @@ class DriveItem extends Component {
         } else {
             window.location.href = API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data";
         }
+    }
+
+    renderItemIcon(disabled) {
+        const {classes, item} = this.props;
+
+
+        if (item.type === "folder") {
+            return (
+                <RouterLink to={"/drive/" + item.id}>
+                    <FolderIcon color={disabled ? "disabled" : "primary"} className={classes.itemIcon}/>
+                </RouterLink>
+            );
+        }
+
+        const typeData = fileTypes.find(type => type.mimeType === item.mimeType);
+
+        let imageSource = typeData.icon;
+        if (item.mimeType.startsWith("image")) {
+            imageSource = getThumbnailUrl(item, THUMB_SMALL);
+        }
+
+        const iconClasses = [classes.itemIcon];
+        if (disabled){
+            iconClasses.push(classes.disabled)
+        }
+
+        return (
+            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick} onError={(e) => {e.target.src = imageSource}}/>
+        );
     }
 
     render() {
