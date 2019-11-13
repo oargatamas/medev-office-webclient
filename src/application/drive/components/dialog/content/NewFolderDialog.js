@@ -4,6 +4,8 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 class NewFolderDialog extends Component {
@@ -12,6 +14,8 @@ class NewFolderDialog extends Component {
         super(props, context);
         this.handleClose = this.handleClose.bind(this);
         this.createFolder = this.createFolder.bind(this);
+        this.toggleInheritFlag = this.toggleInheritFlag.bind(this);
+        this.state = {inherit : false};
     }
 
     handleClose() {
@@ -25,9 +29,14 @@ class NewFolderDialog extends Component {
 
         const body = {
             folderName : form["folderName"].value,
+            inheritPermissions : this.state.inherit
         };
 
         this.props.actions.createFolder(folder.id, body);
+    }
+
+    toggleInheritFlag(){
+        this.setState({inherit : !this.state.inherit})
     }
 
     render() {
@@ -49,7 +58,12 @@ class NewFolderDialog extends Component {
                             type="text"
                             fullWidth
                         />
-
+                        <FormControlLabel
+                            control={<Checkbox checked={this.state.inheritPermissions} />}
+                            disabled={isDialogFetching}
+                            label="Inherit permissions from parent"
+                            onChange={this.toggleInheritFlag}
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button disabled={isDialogFetching} type="submit" color={"primary"}>Create</Button>
