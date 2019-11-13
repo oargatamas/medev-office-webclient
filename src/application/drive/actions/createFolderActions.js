@@ -4,6 +4,7 @@ import {defaultDialogErrorActions, defaultDialogFetchActions, defaultDialogSucce
 
 
 export const requestFolderCreation = (folderId, data) => {
+
     let params = {
         method: "POST",
         uri: DRIVE_API_BASE + "/folder/" + folderId + "/folder",
