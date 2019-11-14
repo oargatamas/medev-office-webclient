@@ -140,7 +140,6 @@ class ItemPermissionDialog extends Component {
         const itemPermissionKeys = Object.keys(item.permissions);
         const userOptions = mapUsersToOptions(systemUsers).filter(item => !itemPermissionKeys.includes(item.value.id));
 
-        console.log(width);
 
         return (
             <React.Fragment>
