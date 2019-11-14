@@ -62,7 +62,7 @@ class ItemDetailsDialog extends Component {
         const creationDate = moment.unix(item.createdAt).format();
         const updateDate = moment.unix(item.updatedAt).format();
 
-        const authorData = systemUsers.find(user => user.id === item.author);
+        const authorData = systemUsers.find(user => user.id.toString() === item.author.toString());
 
         return (
             <React.Fragment>
