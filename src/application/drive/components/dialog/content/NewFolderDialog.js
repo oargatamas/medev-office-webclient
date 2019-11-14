@@ -15,7 +15,7 @@ class NewFolderDialog extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.createFolder = this.createFolder.bind(this);
         this.toggleInheritFlag = this.toggleInheritFlag.bind(this);
-        this.state = {inherit : false};
+        this.state = {inherit : true};
     }
 
     handleClose() {

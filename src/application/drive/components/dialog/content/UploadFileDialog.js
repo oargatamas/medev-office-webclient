@@ -41,7 +41,7 @@ class UploadFileDialog extends Component {
         this.uploadFiles = this.uploadFiles.bind(this);
         this.uploadFailedFiles = this.uploadFailedFiles.bind(this);
         this.toggleInheritFlag = this.toggleInheritFlag.bind(this);
-        this.state = {inherit : false};
+        this.state = {inherit : true};
     }
 
     handleClose() {
