@@ -16,7 +16,7 @@ export const changeFileUploadList = (fileSource) => {
     let queue = [];
 
     for (let i = 0; i < fileSource.files.length; i++) {
-        console.log(fileSource.files[i]);
+
         const filename = fileSource.files[i].name;
         const extension = filename.split(".").pop();
 

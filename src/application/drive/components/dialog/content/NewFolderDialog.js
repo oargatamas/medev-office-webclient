@@ -59,7 +59,7 @@ class NewFolderDialog extends Component {
                             fullWidth
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={this.state.inheritPermissions} />}
+                            control={<Checkbox checked={this.state.inherit} />}
                             disabled={isDialogFetching}
                             label="Inherit permissions from parent"
                             onChange={this.toggleInheritFlag}
