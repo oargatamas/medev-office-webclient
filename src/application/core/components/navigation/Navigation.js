@@ -54,8 +54,6 @@ class Navigation extends Component {
     render() {
         let {classes, open, modules, closeNavigation} = this.props;
 
-        console.log(modules.modules);
-
         return (
             <Drawer
                 variant="permanent"
