@@ -18,26 +18,31 @@ import Select from "react-select";
 import {mapUsersToOptions} from "../../../../core/action/getUserInfoActions";
 import {withWidth} from "@material-ui/core";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 
 const styles = (theme) => ({
+    root: {},
     content: {
         maxWidth: "95vw",
-        overflowY: "visible",
+        overflow: "visible",
     },
     tableContainer: {
-        overflowX: "auto",
+        maxHeight: "40vh",
+        overflowY: "auto",
     },
     table: {
-        //minWidth: 650,
         width: "100%",
         marginBottom: theme.spacing(1)
     },
+    tableBody: {
+        overflow: "auto",
+    },
     headerCell: {
+        zIndex: 10,
         [theme.breakpoints.down('sm')]: {
+            zIndex: 10,
             transform: "rotate(-89deg)",
             transformOrigin: "center",
         },
@@ -48,7 +53,7 @@ const styles = (theme) => ({
 
     },
     userSelect: {
-        flexGrow: 1
+        flexGrow: 1,
     }
 });
 
@@ -135,6 +140,7 @@ class ItemPermissionDialog extends Component {
         const itemPermissionKeys = Object.keys(item.permissions);
         const userOptions = mapUsersToOptions(systemUsers).filter(item => !itemPermissionKeys.includes(item.value.id));
 
+
         return (
             <React.Fragment>
                 <DialogTitle>Permissions of {item.name}</DialogTitle>
@@ -146,23 +152,23 @@ class ItemPermissionDialog extends Component {
                         />
                     </FormGroup>
                     <div className={classes.tableContainer}>
-                        <Table className={classes.table}>
+                        <Table stickyHeader className={classes.table}>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell className={classes.cell}/>
+                                    <TableCell key={"base"} className={classes.cell}/>
                                     {permissionTypes.map((item) => (
                                         <TableCell key={item} className={classes.cell + " " + classes.headerCell}
                                                    align={"center"}>{item}</TableCell>))}
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
+                            <TableBody className={classes.tableBody}>
                                 {Object.keys(itemPermissions).map((user) => {
                                     const userData = systemUsers.find(item => item.id === user);
                                     const userRelatedPermissions = itemPermissions[user];
 
                                     return (
                                         <TableRow key={user}>
-                                            <TableCell align={"right"}>
+                                            <TableCell key={user} align={"right"}>
                                                 {userData.firstName + " " + userData.lastName}
                                             </TableCell>
                                             {permissionTypes.map((item) => {
@@ -183,8 +189,9 @@ class ItemPermissionDialog extends Component {
                             </TableBody>
                         </Table>
                     </div>
+
                     <FormGroup row>
-                        {width === "sm" ? (
+                        {width === "xs" || width === "sm"? (
                             <FormControl>
                                 <NativeSelect
                                     value={""}
@@ -192,6 +199,7 @@ class ItemPermissionDialog extends Component {
                                     name="userToAddPermission"
                                     disabled={uiDisabled}
                                 >
+                                    <option value="">{" "}</option>
                                     {userOptions.map(userOption => (
                                         <option value={JSON.stringify(userOption)}>{userOption.label}</option>
                                     ))}

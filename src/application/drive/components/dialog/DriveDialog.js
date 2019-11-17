@@ -71,7 +71,7 @@ class DriveDialog extends Component {
         const {classes, isDialogOpen} = this.props;
 
         return (
-            <Dialog className={classes.root} open={isDialogOpen} onExit={this.refreshFolder}
+            <Dialog fullWidth className={classes.root} open={isDialogOpen} onExit={this.refreshFolder}
                     disableBackdropClick={true}>
                 {this.renderItemComponent()}
             </Dialog>

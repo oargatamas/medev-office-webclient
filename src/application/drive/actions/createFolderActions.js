@@ -8,7 +8,6 @@ export const requestFolderCreation = (folderId, data) => {
     let params = {
         method: "POST",
         uri: DRIVE_API_BASE + "/folder/" + folderId + "/folder",
-        redirect_uri: DRIVE_API_BASE,
         headers: getApiBaseHeaders(),
         body: JSON.stringify(data),
         errorMsg: "Cannot create folder.",

@@ -21,15 +21,22 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
     root: {
-        minWidth: 600,
+        minWidth: 50 + "%",
+        maxWidth: 100 + "%",
         [theme.breakpoints.down('sm')]: {
-            minWidth: 350,
-        },
+            maxWidth: 100 + "%",
+        }
+    },
+    folders: {
+        width: 100 + "%",
+        overflow: "auto",
+        maxHeight: 50 + "vh",
     },
     folderSelect: {
         width: 100 + "%",
         flexGrow: 1,
-        height: 40 + "vh",
+        minHeight: 40 + "vh",
+        maxHeight: 80 + "vh",
         overflow: "auto",
     },
     folderLabel: {
@@ -66,7 +73,7 @@ class MoveItemDialog extends Component {
         actions.requestFolderTree();
     }
 
-    refreshFolderTree(){
+    refreshFolderTree() {
         const {actions} = this.props;
         actions.requestFolderTree();
     }
@@ -134,18 +141,19 @@ class MoveItemDialog extends Component {
                 </DialogTitle>
                 <DialogContent className={classes.root}>
                     <Typography variant={"body1"}>Please select a folder to move: </Typography>
-                    {!isDialogFetching && Object.keys(rootFolder).length > 0 ? (
-                        <TreeView
-                            defaultCollapseIcon={<ArrowDropDownIcon/>}
-                            defaultExpandIcon={<ArrowRightIcon/>}
-                            defaultEndIcon={<div style={{width: 24}}/>}
-                        >
-                            {this.renderFolderTree(rootFolder)}
-                        </TreeView>
-                    ) : (
-                        <LinearProgress/>
-                    )}
-                    <br/>
+                    <div className={classes.folders}>
+                        {!isDialogFetching && Object.keys(rootFolder).length > 0 ? (
+                            <TreeView
+                                defaultCollapseIcon={<ArrowDropDownIcon/>}
+                                defaultExpandIcon={<ArrowRightIcon/>}
+                                defaultEndIcon={<div style={{width: 24}}/>}
+                            >
+                                {this.renderFolderTree(rootFolder)}
+                            </TreeView>
+                        ) : (
+                            <LinearProgress/>
+                        )}
+                    </div>
                     <Divider/>
                 </DialogContent>
                 <DialogActions>

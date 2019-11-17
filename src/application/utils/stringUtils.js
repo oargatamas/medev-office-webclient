@@ -2,8 +2,6 @@ export function textEllipsis(str, targetLength, {side = "end", ellipsis = "..."}
     if (str.length > targetLength) {
         let charsToShow = targetLength - ellipsis.length;
 
-        console.log(charsToShow);
-
         switch (side) {
             case "start":
                 return ellipsis + str.slice(-charsToShow);
