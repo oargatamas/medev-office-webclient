@@ -1,11 +1,11 @@
 {
   "application": {
-    "host": "office.medev.hu"
+    "host": "office.medev.local:3000"
   },
   "api": {
-    "host": "api.office.medev.hu"
+    "host": "api.office.medev.local"
   },
   "authServer": {
-    "host": "auth.medev.hu"
+    "host": "auth.medev.local"
   }
 }

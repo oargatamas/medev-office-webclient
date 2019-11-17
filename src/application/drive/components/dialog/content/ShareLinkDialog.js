@@ -90,7 +90,7 @@ class ShareLinkDialog extends Component {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button color={"default"}  onClick={this.handleClose}>Cancel</Button>
+                    <Button color={"default"}  onClick={this.handleClose}>Close</Button>
                 </DialogActions>
             </React.Fragment>
         );
