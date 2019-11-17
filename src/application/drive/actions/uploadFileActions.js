@@ -23,7 +23,7 @@ export const changeFileUploadList = (fileSource) => {
         queue.push({
             filename: filename,
             file: fileSource.files[i],
-            mimeType: fileTypes.find(item => item.extension === extension).mimeType,
+            mimeType: fileTypes.find(item => item.extension.toLowerCase() === extension).mimeType,
             uploading: false,
             success: false,
         });
