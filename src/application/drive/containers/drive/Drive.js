@@ -76,8 +76,8 @@ const mapDispatchToProps = (dispatch) => {
             updateItemPermissions: (item) => {
                 dispatch(updateItemPermissions(item))
             },
-            requestFolderTree : () =>{
-                dispatch(requestFolderTree());
+            requestFolderTree : (rootFolder) =>{
+                dispatch(requestFolderTree(rootFolder));
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));
