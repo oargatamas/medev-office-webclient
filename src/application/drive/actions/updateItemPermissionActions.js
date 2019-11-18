@@ -9,7 +9,7 @@ export const updateItemPermissions = (item) => {
         uri: DRIVE_API_BASE + "/" + item.id + "/permission",
         headers: getApiBaseHeaders(),
         body: JSON.stringify(item.permissions),
-        errorMsg: "Cannot update item permissions."
+        errorMsg: "Cannot update permissions of '" + item.name + "'. "
     };
 
 
