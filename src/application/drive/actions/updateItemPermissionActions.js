@@ -1,9 +1,14 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi, getApiBaseHeaders} from "../../core/action/apiCallActions";
-import {defaultDialogErrorActions, defaultDialogFetchActions, defaultDialogSuccessActions} from "./dialogActions";
+import {
+    callOfficeApi,
+    defaultErrorAction,
+    defaultSuccessWithResponse,
+    getApiBaseHeaders
+} from "../../core/action/apiCallActions";
+import {closeItemDialog, finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
 
 
-export const updateItemPermissions = (item) => {
+export const updateItemPermissions = (item, isLast) => {
     const params = {
         method: "POST",
         uri: DRIVE_API_BASE + "/" + item.id + "/permission",
@@ -12,6 +17,23 @@ export const updateItemPermissions = (item) => {
         errorMsg: "Cannot update permissions of '" + item.name + "'. "
     };
 
+    const fetchActions = [
+        startItemDialogFetch
+    ];
 
-    return callOfficeApi(params, defaultDialogSuccessActions, defaultDialogErrorActions, defaultDialogFetchActions);
+    const successActions = [
+        defaultSuccessWithResponse
+    ];
+
+    const errorActions = [
+        defaultErrorAction
+    ];
+
+    if (isLast) {
+        successActions.push(finishItemDialogFetch);
+        successActions.push(closeItemDialog);
+        errorActions.push(finishItemDialogFetch);
+    }
+
+    return callOfficeApi(params, successActions, errorActions, fetchActions);
 };
