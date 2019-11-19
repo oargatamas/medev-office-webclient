@@ -7,11 +7,7 @@ import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {
-    changeFileUploadList,
-    clearUploadQueue,
-    uploadFileToFolder
-} from "../../actions/uploadFileActions";
+import {changeFileUploadList, clearUploadQueue, uploadFileToFolder} from "../../actions/uploadFileActions";
 import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
 
@@ -73,11 +69,13 @@ const mapDispatchToProps = (dispatch) => {
             clearUploadList: () =>{
                 dispatch(clearUploadQueue());
             },
-            updateItemPermissions: (item) => {
-                dispatch(updateItemPermissions(item))
+            updateItemPermissions: (items) => {
+                for (let i = 0; i < items.length; i++) {
+                    dispatch(updateItemPermissions(items[i],i === (items.length-1)))
+                }
             },
-            requestFolderTree : () =>{
-                dispatch(requestFolderTree());
+            requestFolderTree : (rootFolder, includeFiles) =>{
+                dispatch(requestFolderTree(rootFolder, includeFiles));
             },
             moveItemToFolder : (target, destination) => {
                 dispatch(requestItemMove(target,destination));

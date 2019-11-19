@@ -20,6 +20,7 @@ import {withWidth} from "@material-ui/core";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 
 const styles = (theme) => ({
@@ -66,6 +67,21 @@ const hasPermission = (permission, permissionTypes) => {
 };
 
 
+const flattenItemTree = (rootItem, flatOutput = []) => {
+    const item = Object.assign({},rootItem);
+    delete item.content;
+    delete item.permissions;
+    flatOutput.push(item);
+
+    if (rootItem.content && rootItem.content.length > 0) {
+        rootItem.content.forEach((item)=> {
+            flattenItemTree(item, flatOutput);
+        });
+    }
+    return flatOutput;
+};
+
+
 class ItemPermissionDialog extends Component {
 
     constructor(props, context) {
@@ -74,20 +90,29 @@ class ItemPermissionDialog extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.togglePermission = this.togglePermission.bind(this);
         this.toggleEditMode = this.toggleEditMode.bind(this);
+        this.toggleRecursiveUpdate = this.toggleRecursiveUpdate.bind(this);
         this.addNewUser = this.addNewUser.bind(this);
         this.addNewUserMobile = this.addNewUserMobile.bind(this);
         this.state = {
             editing: false,
+            recursive: false,
             item: this.props.dialogItem
         };
     }
 
     saveChanges() {
-        if (this.props.dialogItem !== this.state.item) {
-            this.props.actions.updateItemPermissions(this.state.item);
-        } else {
-            this.props.actions.closeItemDialog();
+        const {rootFolder} = this.props;
+        const {item, recursive} = this.state;
+
+        let items = [item];
+        if (recursive) {
+            const flattenRootFolder = flattenItemTree(rootFolder).map((descendant) => {
+                descendant.permissions = item.permissions;
+                return descendant;
+            });
+            items = items.concat(flattenRootFolder);
         }
+        this.props.actions.updateItemPermissions(items);
     }
 
     handleClose() {
@@ -115,8 +140,18 @@ class ItemPermissionDialog extends Component {
     }
 
     toggleEditMode() {
-        const {editing, item} = this.state;
-        this.setState({editing: !editing, ...item});
+        const {editing, item, recursive} = this.state;
+        this.setState({recursive: recursive, editing: !editing, ...item});
+    }
+
+    toggleRecursiveUpdate() {
+        const {actions, dialogItem} = this.props;
+        const {editing, item, recursive} = this.state;
+        this.setState({recursive: !recursive, editing: editing, ...item});
+
+        if (!recursive) {
+            actions.requestFolderTree(dialogItem, true);
+        }
     }
 
     addNewUserMobile(e) {
@@ -133,13 +168,12 @@ class ItemPermissionDialog extends Component {
 
     render() {
         const {classes, width, permissionTypes, systemUsers, isDialogFetching} = this.props;
-        const {editing, item} = this.state;
+        const {editing, item, recursive} = this.state;
         const itemPermissions = item.permissions;
 
         const uiDisabled = isDialogFetching ? isDialogFetching : !editing;
         const itemPermissionKeys = Object.keys(item.permissions);
         const userOptions = mapUsersToOptions(systemUsers).filter(item => !itemPermissionKeys.includes(item.value.id));
-
 
         return (
             <React.Fragment>
@@ -151,6 +185,17 @@ class ItemPermissionDialog extends Component {
                             label="Edit permissions"
                         />
                     </FormGroup>
+                    {
+                        item.type === "folder" ? (
+                            <FormGroup row>
+                                <FormControlLabel
+                                    control={<Checkbox checked={recursive} onChange={this.toggleRecursiveUpdate}/>}
+                                    label="Update recursively"
+                                />
+                            </FormGroup>
+                        ) : null
+                    }
+                    {isDialogFetching ? (<LinearProgress/>) : null}
                     <div className={classes.tableContainer}>
                         <Table stickyHeader className={classes.table}>
                             <TableHead>
@@ -191,10 +236,10 @@ class ItemPermissionDialog extends Component {
                     </div>
 
                     <FormGroup row>
-                        {width === "xs" || width === "sm"? (
+                        {width === "xs" || width === "sm" ? (
                             <FormControl>
                                 <NativeSelect
-                                    value={""}
+                                    value={" "}
                                     onChange={this.addNewUserMobile}
                                     name="userToAddPermission"
                                     disabled={uiDisabled}
@@ -216,7 +261,6 @@ class ItemPermissionDialog extends Component {
                                     options={userOptions}
                             />
                         )}
-
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
