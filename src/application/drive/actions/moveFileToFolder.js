@@ -11,9 +11,9 @@ import {
 export const RECEIVED_FOLDER_TREE = "driveFolderTreeReceived";
 
 
-export const requestFolderTree = (rootFolder) => {
+export const requestFolderTree = (rootFolder, includeFiles = false) => {
     const query = {
-        includeFiles: false
+        includeFiles: includeFiles
     };
 
     let params = {
