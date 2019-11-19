@@ -69,13 +69,12 @@ class MoveItemDialog extends Component {
 
 
     componentDidMount() {
-        const {actions} = this.props;
-        actions.requestFolderTree();
+        this.refreshFolderTree();
     }
 
     refreshFolderTree() {
-        const {actions} = this.props;
-        actions.requestFolderTree();
+        const {actions, folder} = this.props;
+        actions.requestFolderTree(folder);
     }
 
     handleClose() {
