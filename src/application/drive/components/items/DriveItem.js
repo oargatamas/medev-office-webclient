@@ -1,13 +1,15 @@
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Box, Link, Menu, MenuItem, Typography, Tooltip} from "@material-ui/core";
+import {Box, Link, Menu, MenuItem, Tooltip, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import FolderIcon from "@material-ui/icons/Folder";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
-    CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
-    CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE
+    CONTENT_EDIT_PERMISSIONS,
+    CONTENT_MOVE_ITEM,
+    CONTENT_SHARE_LINK,
+    CONTENT_SHOW_IMAGE
 } from "../../actions/dialogActions";
 import {API_ORIGIN} from "../../../core/action/apiCallActions";
 import {DRIVE_API_BASE} from "../../actions/driveApi";
@@ -180,11 +182,10 @@ class DriveItem extends Component {
                     open={menuOpen}
                     onClose={this.closeMenu}
                 >
-                    {item.type === "file" ? (
-                        <Link color={"inherit"}
-                              href={API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data"}>
-                            <MenuItem key={"download"}>Download</MenuItem>
-                        </Link>) : null}
+                    <Link target={"_blank"} color={"inherit"}
+                          href={API_ORIGIN + DRIVE_API_BASE + "/" + item.type + "/" + item.id + "/data"}>
+                        <MenuItem key={"download"}>Download</MenuItem>
+                    </Link>
                     <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
                     <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
                     <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>

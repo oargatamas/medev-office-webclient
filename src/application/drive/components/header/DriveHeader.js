@@ -7,6 +7,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import EditIcon from "@material-ui/icons/Edit";
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import {withStyles} from "@material-ui/styles";
 import {
     CONTENT_EDIT_DETAILS,
@@ -15,6 +16,8 @@ import {
     CONTENT_UPLOAD_FILE
 } from "../../actions/dialogActions";
 import Tooltip from "@material-ui/core/Tooltip";
+import {API_ORIGIN} from "../../../core/action/apiCallActions";
+import {DRIVE_API_BASE} from "../../actions/driveApi";
 
 
 const styles = (theme) => ({
@@ -76,7 +79,8 @@ class DriveHeader extends Component {
         return (
             <React.Fragment>
                 <Box className={classes.root}>
-                    <Typography className={classes.folderTitle} variant={"h4"} color={"primary"}>{folder.name}</Typography>
+                    <Typography className={classes.folderTitle} variant={"h4"}
+                                color={"primary"}>{folder.name}</Typography>
                     <Tooltip title="Go to parent folder" placement="bottom">
                         <IconButton className={classes.button}>
                             {(parent) ? (
@@ -115,6 +119,16 @@ class DriveHeader extends Component {
                             <IconButton onClick={this.editPermissionsClick}>
                                 <ListAltIcon/>
                             </IconButton>
+                            </Tooltip>
+                    </span>
+
+                    <span className={classes.buttonGroup}>
+                        <Tooltip title="Download folder content" placement="bottom">
+                            <Link color={"inherit"} target={"_blank"} href={API_ORIGIN + DRIVE_API_BASE + "/folder/" + folder.id + "/data"}>
+                            <IconButton>
+                                <CloudDownloadIcon/>
+                            </IconButton>
+                            </Link>
                             </Tooltip>
                     </span>
                 </Box>
