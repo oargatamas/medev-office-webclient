@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
         systemUsers: state.core.appUsers,
         isFetching : state.core.isFetching,
         rootFolder: state.driveModule.drive.folderTree,
-        folder : state.driveModule.drive.rootFolder, //Todo clean up the variable names
+        folder : state.driveModule.drive.rootFolder,
         items : state.driveModule.drive.currentFolderItems,
         navigation : state.driveModule.drive.breadCrumbs,
         permissionTypes : state.driveModule.drive.permissionTypes,
