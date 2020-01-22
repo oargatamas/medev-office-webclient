@@ -2,14 +2,13 @@ import {DRIVE_API_BASE} from "./driveApi";
 import {callOfficeApi, defaultErrorAction, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
 import {finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
 import {fileTypes} from "./fileTypeDictionary";
-
-
-export const UPDATE_ITEM_QUEUE = "driveSetUploadQueue";
-export const CLEAR_ITEM_QUEUE = "driveClearUploadQueue";
-export const ITEMS_UPLOADED = "driveItemsUploaded";
-export const ITEM_UPLOAD_FETCH = "driveItemUploadFetch";
-export const ITEM_UPLOAD_SUCCESS = "driveItemUploadSuccess";
-export const ITEM_UPLOAD_ERROR = "driveItemUploadError";
+import {
+    allItemsProcessed,
+    itemFetchFailedAction,
+    itemFetchingAction,
+    itemFetchSuccessAction,
+    UPDATE_QUEUE
+} from "./itemQueueActions";
 
 
 export const changeFileUploadList = (fileSource) => {
@@ -30,7 +29,7 @@ export const changeFileUploadList = (fileSource) => {
     }
 
     return {
-        type: UPDATE_ITEM_QUEUE,
+        type: UPDATE_QUEUE,
         items: queue,
     }
 };
@@ -50,58 +49,25 @@ export const uploadFileToFolder = (folder, file, isLast, inherit) => {
 
     const fetchActions = [
         startItemDialogFetch,
-        fileUploadingAction(file)
+        itemFetchingAction(file)
     ];
 
     const successActions = [
         defaultSuccessWithResponse,
-        fileUploadedAction(file),
+        itemFetchSuccessAction(file),
     ];
 
     const errorActions = [
         defaultErrorAction,
-        fileUploadFailed(file),
+        itemFetchFailedAction(file),
     ];
 
     if (isLast) {
         successActions.push(finishItemDialogFetch);
-        successActions.push(allFilesUploaded);
+        successActions.push(allItemsProcessed);
         errorActions.push(finishItemDialogFetch);
     }
 
     return callOfficeApi(params, successActions, errorActions, fetchActions);
 };
 
-export const allFilesUploaded = () => {
-    return {
-        type: ITEMS_UPLOADED
-    };
-};
-
-
-export const clearUploadQueue = () => {
-    return {
-        type: CLEAR_ITEM_QUEUE
-    };
-};
-
-export const fileUploadingAction = (file) => {
-    return () => ({
-        type: ITEM_UPLOAD_FETCH,
-        filename: file.name
-    });
-};
-
-export const fileUploadedAction = (file) => {
-    return () => ({
-        type: ITEM_UPLOAD_SUCCESS,
-        filename: file.name
-    });
-};
-
-export const fileUploadFailed = (file) => {
-    return () => ({
-        type: ITEM_UPLOAD_ERROR,
-        filename: file.name
-    });
-};

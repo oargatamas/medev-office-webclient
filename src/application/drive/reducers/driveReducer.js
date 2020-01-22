@@ -3,7 +3,7 @@ import {RECEIVED_ROOT_FOLDER_DATA} from "../actions/getRootFolder";
 import {RECEIVED_FOLDER_CONTENT} from "../actions/getFolderContent";
 import {CLOSE_DIALOG, DIALOG_FETCH_START, DIALOG_FETCH_SUCCESS, OPEN_DIALOG} from "../actions/dialogActions";
 import {FETCH_PERMISSIONS_SUCCESS} from "../actions/fetchPermissionActions";
-import {driveUploadReducer} from "./uploadReducer";
+import {driveItemQueueReducer} from "./itemQueueReducer";
 import {combineReducers} from "redux";
 import {RECEIVED_FOLDER_TREE} from "../actions/moveFileToFolder";
 
@@ -42,5 +42,5 @@ export const driveBaseReducer = (state = initialState, action) => {
 
 export const driveReducer = combineReducers({
     drive : driveBaseReducer,
-    uploadQueue : driveUploadReducer
+    uploadQueue : driveItemQueueReducer,
 });

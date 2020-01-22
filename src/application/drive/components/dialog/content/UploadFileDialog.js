@@ -19,7 +19,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 
 const renderItemStatus = (item) => {
-    if (item.uploading) {
+    if (item.fetching) {
         return (<CircularProgress/>);
     }
     if (item.error) {

@@ -7,9 +7,10 @@ import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
 import {deleteDriveItem} from "../../actions/deleteItemActions";
 import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {changeFileUploadList, clearUploadQueue, uploadFileToFolder} from "../../actions/uploadFileActions";
+import {changeFileUploadList, uploadFileToFolder} from "../../actions/uploadFileActions";
 import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
+import {clearItemQueue} from "../../actions/itemQueueActions";
 
 
 const mapStateToProps = (state) => {
@@ -17,7 +18,7 @@ const mapStateToProps = (state) => {
         systemUsers: state.core.appUsers,
         isFetching : state.core.isFetching,
         rootFolder: state.driveModule.drive.folderTree,
-        folder : state.driveModule.drive.rootFolder,
+        folder : state.driveModule.drive.rootFolder, //Todo clean up the variable names
         items : state.driveModule.drive.currentFolderItems,
         navigation : state.driveModule.drive.breadCrumbs,
         permissionTypes : state.driveModule.drive.permissionTypes,
@@ -26,7 +27,7 @@ const mapStateToProps = (state) => {
         dialogType : state.driveModule.drive.itemDialogContentType,
         dialogItem : state.driveModule.drive.currentDialogItem,
         fetchSuccessResponse: state.core.successObject,
-        itemsToUpload: state.driveModule.uploadQueue.items,
+        itemsToUpload: state.driveModule.uploadQueue.itemQueue,
         uploadFinished: state.driveModule.uploadQueue.finished,
     }
 };
@@ -67,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
                 }
             },
             clearUploadList: () =>{
-                dispatch(clearUploadQueue());
+                dispatch(clearItemQueue());
             },
             updateItemPermissions: (items) => {
                 for (let i = 0; i < items.length; i++) {
