@@ -152,10 +152,7 @@ class DriveItem extends Component {
         }
 
         return (
-            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick}
-                 onError={(e) => {
-                     e.target.src = imageSource
-                 }}/>
+            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick}/>
         );
     }
 
