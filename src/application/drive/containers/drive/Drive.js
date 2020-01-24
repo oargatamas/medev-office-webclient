@@ -2,15 +2,12 @@ import {requestRootFolderData} from "../../actions/getRootFolder";
 import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
 import {requestFolderItems} from "../../actions/getFolderContent";
-import {requestFolderTree, requestItemMove} from "../../actions/moveFileToFolder";
+import {requestFolderTree} from "../../actions/moveFileToFolder";
 import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
 import {requestFolderCreation} from "../../actions/createFolderActions";
-import {deleteDriveItem} from "../../actions/deleteItemActions";
-import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {changeFileUploadList, uploadFileToFolder} from "../../actions/uploadFileActions";
-import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
+import {enqueueFilesToUpload, mapItemToUploadParams,} from "../../actions/uploadFileActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
-import {clearItemQueue} from "../../actions/itemQueueActions";
+import {clearItemQueue, queueProcessor} from "../../actions/itemQueueActions";
 
 
 const mapStateToProps = (state) => {
@@ -38,49 +35,61 @@ const mapDispatchToProps = (dispatch) => {
             changeAppTitle: () =>{
                 dispatch(switchApplication("Drive"));
             },
-            requestRootFolder : () => {
-                dispatch(requestRootFolderData());
+            folder:{
+                requestRoot : () => {
+                    dispatch(requestRootFolderData());
+                },
+                requestContent : (folderId) => {
+                    dispatch(requestFolderItems(folderId));
+                },
+                requestFolderTree : (rootFolder, includeFiles) =>{
+                    dispatch(requestFolderTree(rootFolder, includeFiles));
+                },
+                create: (targetFolderId, data) => {
+                    dispatch(requestFolderCreation(targetFolderId,data))
+                },
             },
-            requestFolderContent : (folderId) => {
-                dispatch(requestFolderItems(folderId));
-            },
-            openItemDialog:(purpose, item) =>{
-                dispatch(openItemDialog(purpose, item));
-            },
-            closeItemDialog:() => {
-                dispatch(closeItemDialog());
-            },
-            createFolder: (targetFolderId, data) => {
-                dispatch(requestFolderCreation(targetFolderId,data))
-            },
-            deleteItem: (itemId, itemType) => {
-                dispatch(deleteDriveItem(itemId, itemType));
-            },
-            saveItem: (item) => {
-                dispatch(saveDriveItem(item));
-            },
-            enqueueFilesToUpload : (fileSource) => {
-                dispatch(changeFileUploadList(fileSource));
-            },
-            uploadFiles: (folder, fileSource, inheritPermissions) => {
-                for (let i = 0; i < fileSource.length; i++) {
-                    dispatch(uploadFileToFolder(folder, fileSource[i].file, i === (fileSource.length-1),inheritPermissions));
+            itemQueue: {
+                clear: () =>{
+                    dispatch(clearItemQueue());
+                },
+                enqueue: {
+                    toUpload:(items,destination) => {
+                        dispatch(enqueueFilesToUpload(items,destination));
+                    },
+                    toMove: (items) => {
+                        dispatch();
+                    },
+                    toDelete : (items) =>{
+                        dispatch();
+                    },
+                    toPermission : (items) => {
+                        dispatch();
+                    },
+                },
+                process:{
+                    toUpload:(items) => {
+                        queueProcessor(dispatch,items,mapItemToUploadParams);
+                    },
+                    toMove: (items) => {
+                        dispatch();
+                    },
+                    toDelete : (items) =>{
+                        dispatch();
+                    },
+                    toPermission : (items) => {
+                        dispatch();
+                    },
                 }
             },
-            clearUploadList: () =>{
-                dispatch(clearItemQueue());
+            dialog:{
+                open:(purpose, item) =>{
+                    dispatch(openItemDialog(purpose, item));
+                },
+                close:() => {
+                    dispatch(closeItemDialog());
+                },
             },
-            updateItemPermissions: (items) => {
-                for (let i = 0; i < items.length; i++) {
-                    dispatch(updateItemPermissions(items[i],i === (items.length-1)))
-                }
-            },
-            requestFolderTree : (rootFolder, includeFiles) =>{
-                dispatch(requestFolderTree(rootFolder, includeFiles));
-            },
-            moveItemToFolder : (target, destination) => {
-                dispatch(requestItemMove(target,destination));
-            }
         }
     }
 };
