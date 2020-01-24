@@ -16,6 +16,7 @@ import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
 import {getThumbnailUrl, THUMB_SMALL} from "../../actions/imageActions";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const styles = (theme) => ({
@@ -41,13 +42,21 @@ const styles = (theme) => ({
         },
         cursor: "pointer",
     },
+    checkbox:{
+        position:"absolute",
+        alignSelf:"flex-start",
+        backgroundColor:"white",
+        zIndex: 5000,
+    },
     disabled: {
-        filter: "grayscale(100%)"
+        filter: "grayscale(100%)",
     }
 });
 
 
 const initialState = {
+    itemHovered: false,
+    itemChecked: false,
     menuOpen: false,
     menuAnchor: {
         top: 0,
@@ -61,8 +70,11 @@ class DriveItem extends Component {
     constructor(props) {
         super(props);
         this.showItemOptions = this.showItemOptions.bind(this);
+        this.showItemCheckbox = this.showItemCheckbox.bind(this);
+        this.hideItemCheckbox = this.hideItemCheckbox.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
         this.renderItemIcon = this.renderItemIcon.bind(this);
+        this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
         this.handleItemEditClick = this.handleItemEditClick.bind(this);
         this.handleItemShareClick = this.handleItemShareClick.bind(this);
         this.handleItemPermissionsClick = this.handleItemPermissionsClick.bind(this);
@@ -75,6 +87,7 @@ class DriveItem extends Component {
     showItemOptions(e) {
         e.preventDefault();
         this.setState({
+            ...this.state,
             menuOpen: true,
             menuAnchor: {
                 left: e.clientX,
@@ -83,8 +96,29 @@ class DriveItem extends Component {
         });
     }
 
+    showItemCheckbox() {
+        this.setState({
+            ...this.state,
+            itemHovered: true,
+        })
+    }
+
+    hideItemCheckbox(){
+        this.setState({
+            ...this.state,
+            itemHovered: false,
+        })
+    }
+
     closeMenu() {
         this.setState(initialState);
+    }
+
+    handleCheckboxClick(){
+        this.setState({
+            ...this.state,
+            itemChecked: !this.state.itemChecked,
+        })
     }
 
     handleItemEditClick() {
@@ -158,11 +192,19 @@ class DriveItem extends Component {
 
     render() {
         const {classes, item, key,} = this.props;
-        const {menuAnchor, menuOpen} = this.state;
+        const {menuAnchor, menuOpen, itemHovered, itemChecked} = this.state;
         const disabled = Object.keys(item.permissions).length === 0;
 
         return (
-            <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
+            <Box key={key} className={classes.root}
+                 onContextMenu={this.showItemOptions}
+                 onMouseEnter={this.showItemCheckbox}
+                 onMouseLeave={this.hideItemCheckbox}
+            >
+                {(itemHovered || itemChecked) ? (
+                    <Checkbox  className={classes.checkbox} checked={itemChecked} onChange={this.handleCheckboxClick}/>
+                ) : null}
+
                 <Tooltip title={item.name}>
                     {this.renderItemIcon(disabled)}
                 </Tooltip>

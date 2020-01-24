@@ -42,5 +42,5 @@ export const driveBaseReducer = (state = initialState, action) => {
 
 export const driveReducer = combineReducers({
     drive : driveBaseReducer,
-    uploadQueue : driveItemQueueReducer,
+    scheduledOperations : driveItemQueueReducer,
 });

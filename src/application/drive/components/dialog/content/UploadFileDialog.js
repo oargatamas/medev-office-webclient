@@ -57,13 +57,13 @@ class UploadFileDialog extends Component {
     }
 
     uploadFiles() {
-        const {folder, actions, itemsToUpload} = this.props;
-        actions.uploadFiles(folder, itemsToUpload, this.state.inherit);
+        const {folder, actions, itemQueue} = this.props;
+        actions.uploadFiles(folder, itemQueue, this.state.inherit);
     }
 
     uploadFailedFiles() {
-        const {folder, actions, itemsToUpload} = this.props;
-        actions.uploadFiles(folder, itemsToUpload.filter(item => item.error), this.state.inherit);
+        const {folder, actions, itemQueue} = this.props;
+        actions.uploadFiles(folder, itemQueue.filter(item => item.error), this.state.inherit);
     }
 
     toggleInheritFlag(){
@@ -71,9 +71,9 @@ class UploadFileDialog extends Component {
     }
 
     render() {
-        const {isDialogFetching, itemsToUpload, uploadFinished} = this.props;
+        const {isDialogFetching, itemQueue, itemQueueFinished} = this.props;
 
-        const hasError = itemsToUpload.filter(item => item.error).length > 0;
+        const hasError = itemQueue.filter(item => item.error).length > 0;
 
         return (
             <React.Fragment>
@@ -99,7 +99,7 @@ class UploadFileDialog extends Component {
                         </Button>
                     </label>
                     <List>
-                        {itemsToUpload.map(item => (
+                        {itemQueue.map(item => (
                             <ListItem key={item.filename}>
                                 <ListItemAvatar>
                                     {renderItemStatus(item)}
@@ -112,7 +112,7 @@ class UploadFileDialog extends Component {
                     <Divider/>
                 </DialogContent>
                 <DialogActions>
-                    {uploadFinished ? (
+                    {itemQueueFinished ? (
                             hasError ? (
                                 <Button color={"secondary"} disabled={isDialogFetching} onClick={this.uploadFailedFiles}>Retry</Button>
                             ) : (

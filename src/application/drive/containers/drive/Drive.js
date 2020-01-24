@@ -27,8 +27,8 @@ const mapStateToProps = (state) => {
         dialogType : state.driveModule.drive.itemDialogContentType,
         dialogItem : state.driveModule.drive.currentDialogItem,
         fetchSuccessResponse: state.core.successObject,
-        itemsToUpload: state.driveModule.uploadQueue.itemQueue,
-        uploadFinished: state.driveModule.uploadQueue.finished,
+        itemQueue: state.driveModule.scheduledOperations.itemQueue,
+        itemQueueFinished: state.driveModule.scheduledOperations.finished,
     }
 };
 
