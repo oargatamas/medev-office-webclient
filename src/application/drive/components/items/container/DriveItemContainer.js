@@ -20,14 +20,41 @@ const styles = () => ({
 
 class DriveItemContainer extends Component {
 
-    render() {
 
-        const {classes, items, actions} = this.props;
+    constructor(props, context) {
+        super(props, context);
+        this.selectItem = this.selectItem.bind(this);
+        this.deselectItem = this.deselectItem.bind(this);
+    }
+
+    selectItem(item){
+        const {selectedItems, actions} = this.props;
+        actions.itemQueue.enqueue(selectedItems.concat([item]));
+    }
+
+    deselectItem(item){
+        const {selectedItems, actions} = this.props;
+        actions.itemQueue.enqueue(selectedItems.filter(i => i.id !== item.id));
+    }
+
+    render() {
+        const {classes, items, actions, selectedItems} = this.props;
 
         return (
             <Box className={classes.root}>
                 <Box className={classes.content}>
-                    {items.map((item) => (<DriveItem key={item.id} item={item} actions={actions}/>))}
+                    {items.map((item) => {
+                        const checked = selectedItems.filter(queueItem => queueItem.id === item.id).length > 0;
+                        return (
+                            <DriveItem
+                                key={item.id}
+                                item={item}
+                                checked={checked}
+                                actions={actions}
+                                onSelect = {this.selectItem}
+                                onDeselect={this.deselectItem}
+                            />
+                        )})}
                 </Box>
             </Box>
         );

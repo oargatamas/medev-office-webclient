@@ -35,7 +35,7 @@ class Drive extends Component {
 
 
     render() {
-        const {classes, isFetching, folder, items, navigation, actions} = this.props;
+        const {classes, isFetching, folder, items, navigation, actions, itemQueue} = this.props;
 
         return (
             <div className={classes.root}>
@@ -49,7 +49,7 @@ class Drive extends Component {
                     <React.Fragment>
                         <NavigationBar items={navigation} actions={actions}/>
                         <DriveHeader parent={navigation.slice(-1)[0]} folder={folder} actions={actions}/>
-                        <DriveItemContainer items={items} actions={actions}/>
+                        <DriveItemContainer items={items} selectedItems={itemQueue} actions={actions}/>
                         <DriveDialog {...this.props}/>
                     </React.Fragment>
                 )}
