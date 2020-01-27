@@ -1,6 +1,5 @@
 import {DRIVE_API_BASE} from "./driveApi";
 import {fileTypes} from "./fileTypeDictionary";
-import {UPDATE_QUEUE} from "./itemQueueActions";
 
 
 export const enqueueFilesToUpload = (fileSource, folder) => {
@@ -20,10 +19,7 @@ export const enqueueFilesToUpload = (fileSource, folder) => {
         });
     }
 
-    return {
-        type: UPDATE_QUEUE,
-        items: queue,
-    }
+    return queue;
 };
 
 export const mapItemToUploadParams = (item) => {

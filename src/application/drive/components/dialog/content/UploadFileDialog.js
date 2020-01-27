@@ -16,6 +16,7 @@ import {textEllipsis} from "../../../../utils/stringUtils";
 import Divider from "@material-ui/core/Divider";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import {enqueueFilesToUpload} from "../../../actions/itemUploadActions";
 
 
 const renderItemStatus = (item) => {
@@ -55,7 +56,8 @@ class UploadFileDialog extends Component {
     updateFileNames(e) {
         const {folder, actions} = this.props;
         const {inherit} = this.state;
-        actions.itemQueue.enqueue.toUpload(e.target,folder.id, inherit);
+
+        actions.itemQueue.enqueue(enqueueFilesToUpload(e.target,folder.id, inherit));
     }
 
     uploadFiles() {

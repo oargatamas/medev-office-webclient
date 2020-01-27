@@ -41,6 +41,13 @@ export const itemFetchFailedAction = (item) => {
     });
 };
 
+export const enqueueItems = (items) => {
+    return {
+        type: UPDATE_QUEUE,
+        items: items,
+    }
+};
+
 
 export const queueProcessor = (dispatch, queue, paramMapper) => {
     queue.forEach((item, index) => {

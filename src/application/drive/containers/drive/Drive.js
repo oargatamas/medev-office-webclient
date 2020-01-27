@@ -1,14 +1,14 @@
 import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
 import {requestFolderCreation, requestFolderItems, requestRootFolderData} from "../../actions/folderActions";
-import {enqueueItemsToMove, mapItemToMoveParams, requestFolderTree} from "../../actions/itemMoveActions";
+import {mapItemToMoveParams, requestFolderTree} from "../../actions/itemMoveActions";
 import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
-import {enqueueFilesToUpload, mapItemToUploadParams,} from "../../actions/itemUploadActions";
+import {mapItemToUploadParams,} from "../../actions/itemUploadActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
-import {clearItemQueue, queueProcessor} from "../../actions/itemQueueActions";
+import {clearItemQueue, enqueueItems, queueProcessor} from "../../actions/itemQueueActions";
 import {saveDriveItem} from "../../actions/itemUpdateActions";
-import {enqueueItemsToPermissionChange, mapItemToPermissionChangeParams} from "../../actions/itemPermissionActions";
-import {enqueueItemsToDelete, mapItemToDeleteParams} from "../../actions/deleteItemActions";
+import {mapItemToPermissionChangeParams} from "../../actions/itemPermissionActions";
+import {mapItemToDeleteParams} from "../../actions/deleteItemActions";
 
 
 const mapStateToProps = (state) => {
@@ -59,19 +59,8 @@ const mapDispatchToProps = (dispatch) => {
                 clear: () =>{
                     dispatch(clearItemQueue());
                 },
-                enqueue: {
-                    toUpload:(items,destination) => {
-                        dispatch(enqueueFilesToUpload(items,destination));
-                    },
-                    toMove: (items, folder) => {
-                        dispatch(enqueueItemsToMove(items, folder));
-                    },
-                    toDelete : (items) =>{
-                        dispatch(enqueueItemsToDelete(items));
-                    },
-                    toPermission : (items) => {
-                        dispatch(enqueueItemsToPermissionChange(items));
-                    },
+                enqueue:(items) => {
+                  dispatch(enqueueItems(items))
                 },
                 process:{
                     toUpload:(items) => {

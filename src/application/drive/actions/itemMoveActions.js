@@ -1,7 +1,6 @@
 import {DRIVE_API_BASE} from "./driveApi";
 import {callOfficeApi, encodeUrlData, getApiBaseHeaders} from "../../core/action/apiCallActions";
 import {defaultDialogErrorActions, defaultDialogFetchActions, finishItemDialogFetch} from "./dialogActions";
-import {UPDATE_QUEUE} from "./itemQueueActions";
 
 
 export const RECEIVED_FOLDER_TREE = "driveFolderTreeReceived";
@@ -37,7 +36,7 @@ export const receivedFolderTree = (serverResponse) => {
 
 
 export const enqueueItemsToMove = (items, targetFolder) => {
-    let queue = items.map((item) => {
+    return items.map((item) => {
         return {
             ...item,
             destination: {
@@ -48,11 +47,6 @@ export const enqueueItemsToMove = (items, targetFolder) => {
             success: false,
         }
     });
-
-    return {
-        type: UPDATE_QUEUE,
-        items: queue,
-    }
 };
 
 export const mapItemToMoveParams = (item) => {
