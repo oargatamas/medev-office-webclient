@@ -1,18 +1,13 @@
-import {requestRootFolderData} from "../../actions/getRootFolder";
 import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
-import {requestFolderItems} from "../../actions/getFolderContent";
-import {enqueueItemsToMove, mapItemToMoveParams, requestFolderTree} from "../../actions/moveFileToFolder";
+import {requestFolderCreation, requestFolderItems, requestRootFolderData} from "../../actions/folderActions";
+import {enqueueItemsToMove, mapItemToMoveParams, requestFolderTree} from "../../actions/itemMoveActions";
 import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
-import {requestFolderCreation} from "../../actions/createFolderActions";
-import {enqueueFilesToUpload, mapItemToUploadParams,} from "../../actions/uploadFileActions";
+import {enqueueFilesToUpload, mapItemToUploadParams,} from "../../actions/itemUploadActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
 import {clearItemQueue, queueProcessor} from "../../actions/itemQueueActions";
-import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {
-    enqueueItemsToPermissionChange,
-    mapItemToPermissionChangeParams
-} from "../../actions/updateItemPermissionActions";
+import {saveDriveItem} from "../../actions/itemUpdateActions";
+import {enqueueItemsToPermissionChange, mapItemToPermissionChangeParams} from "../../actions/itemPermissionActions";
 import {enqueueItemsToDelete, mapItemToDeleteParams} from "../../actions/deleteItemActions";
 
 

@@ -1,11 +1,11 @@
 import {initialState} from "../state/moduleState";
 import {RECEIVED_ROOT_FOLDER_DATA} from "../actions/getRootFolder";
-import {RECEIVED_FOLDER_CONTENT} from "../actions/getFolderContent";
+import {RECEIVED_FOLDER_CONTENT} from "../actions/folderActions";
 import {CLOSE_DIALOG, DIALOG_FETCH_START, DIALOG_FETCH_SUCCESS, OPEN_DIALOG} from "../actions/dialogActions";
 import {FETCH_PERMISSIONS_SUCCESS} from "../actions/fetchPermissionActions";
 import {driveItemQueueReducer} from "./itemQueueReducer";
 import {combineReducers} from "redux";
-import {RECEIVED_FOLDER_TREE} from "../actions/moveFileToFolder";
+import {RECEIVED_FOLDER_TREE} from "../actions/itemMoveActions";
 
 
 export const driveBaseReducer = (state = initialState, action) => {
