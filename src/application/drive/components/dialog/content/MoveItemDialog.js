@@ -1,5 +1,4 @@
-import {Component} from "react";
-import React from "react";
+import React, {Component} from "react";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -74,20 +73,20 @@ class MoveItemDialog extends Component {
 
     refreshFolderTree() {
         const {actions, folder} = this.props;
-        actions.requestFolderTree(folder);
+        actions.folder.requestFolderTree(folder);
     }
 
     handleClose() {
         this.setState({...this.state, target: null});
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     moveItem() {
-        const {actions, dialogItem, enqueueSnackbar} = this.props;
+        const {actions, itemQueue, enqueueSnackbar} = this.props;
         const {target} = this.state;
 
         if (target) {
-            actions.moveItemToFolder(dialogItem, target);
+            actions.itemQueue.process.toMove(itemQueue);
         } else {
             enqueueSnackbar("Select a folder first!", {variant: "warning"})
         }

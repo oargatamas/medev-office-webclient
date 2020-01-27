@@ -19,7 +19,7 @@ class NewFolderDialog extends Component {
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     createFolder(e) {
@@ -32,7 +32,7 @@ class NewFolderDialog extends Component {
             inheritPermissions : this.state.inherit
         };
 
-        this.props.actions.createFolder(folder.id, body);
+        this.props.actions.folder.create(folder.id, body);
     }
 
     toggleInheritFlag(){

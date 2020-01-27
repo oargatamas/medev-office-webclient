@@ -37,7 +37,7 @@ class ShareLinkDialog extends Component {
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     createItemLink() {

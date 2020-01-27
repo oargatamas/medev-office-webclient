@@ -21,12 +21,12 @@ class DeleteItemDialog extends Component{
     }
 
     handleClose(){
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     handleDeleteClick(){
-        const {dialogItem, actions} = this.props;
-        actions.deleteItem(dialogItem.id, dialogItem.type);
+        const {actions, itemQueue} = this.props;
+        actions.itemQueue.process.toDelete(itemQueue);
     }
 
     render() {

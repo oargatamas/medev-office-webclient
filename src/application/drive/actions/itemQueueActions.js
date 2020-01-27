@@ -8,14 +8,6 @@ export const QUEUE_ITEM_FETCH = "driveQueuedItemFetch";
 export const QUEUE_ITEM_SUCCESS = "driveQueuedItemSuccess";
 export const QUEUE_ITEM_ERROR = "driveQueuedItemError";
 
-
-export const updateItemQueue = (items) => {
-    return {
-        type: UPDATE_QUEUE,
-        items : items
-    }
-};
-
 export const allItemsProcessed = () => {
     return {
         type: QUEUE_PROCESSED

@@ -51,26 +51,26 @@ class DriveHeader extends Component {
     }
 
     createFolderClick() {
-        this.props.actions.openItemDialog(CONTENT_NEW_FOLDER);
+        this.props.actions.dialog.open(CONTENT_NEW_FOLDER);
     }
 
     uploadFileClick() {
-        this.props.actions.openItemDialog(CONTENT_UPLOAD_FILE);
+        this.props.actions.dialog.open(CONTENT_UPLOAD_FILE);
     }
 
     refreshFolderClick() {
         const {folder} = this.props;
-        this.props.actions.requestFolderContent(folder.id);
+        this.props.actions.folder.requestContent(folder.id);
     }
 
     editPermissionsClick() {
         const {folder} = this.props;
-        this.props.actions.openItemDialog(CONTENT_EDIT_PERMISSIONS, folder);
+        this.props.actions.dialog.open(CONTENT_EDIT_PERMISSIONS, folder);
     }
 
     editItemClick() {
         const {folder} = this.props;
-        this.props.actions.openItemDialog(CONTENT_EDIT_DETAILS, folder);
+        this.props.actions.dialog.open(CONTENT_EDIT_DETAILS, folder);
     }
 
     render() {

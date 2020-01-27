@@ -33,7 +33,7 @@ class ItemDetailsDialog extends Component {
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     handleItemSave() {
@@ -41,9 +41,9 @@ class ItemDetailsDialog extends Component {
         const {item} = this.state;
 
         if (item !== dialogItem) {
-            actions.saveItem(item);
+            actions.item.update(item);
         } else {
-            actions.closeItemDialog();
+            actions.dialog.close();
         }
     }
 

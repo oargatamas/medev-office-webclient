@@ -2,9 +2,11 @@ import React, {Component} from "react";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
-    CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
+    CONTENT_EDIT_PERMISSIONS,
+    CONTENT_MOVE_ITEM,
     CONTENT_NEW_FOLDER,
-    CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE,
+    CONTENT_SHARE_LINK,
+    CONTENT_SHOW_IMAGE,
     CONTENT_UPLOAD_FILE
 } from "../../actions/dialogActions";
 import ItemDetailsDialog from "./content/ItemDetailsDialog";
@@ -63,7 +65,7 @@ class DriveDialog extends Component {
 
         if (fetchSuccessResponse) {
             console.log("refreshing...");
-            actions.requestFolderContent(folder.id);
+            actions.folder.requestContent(folder.id);
         }
     }
 

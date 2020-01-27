@@ -1,17 +1,9 @@
 import {DRIVE_API_BASE} from "./driveApi";
-import {callOfficeApi, defaultErrorAction, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
-import {finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
 import {fileTypes} from "./fileTypeDictionary";
-import {
-    allItemsProcessed,
-    itemFetchFailedAction,
-    itemFetchingAction,
-    itemFetchSuccessAction,
-    UPDATE_QUEUE
-} from "./itemQueueActions";
+import {UPDATE_QUEUE} from "./itemQueueActions";
 
 
-export const changeFileUploadList = (fileSource) => {
+export const enqueueFilesToUpload = (fileSource, folder) => {
     let queue = [];
 
     for (let i = 0; i < fileSource.files.length; i++) {
@@ -20,10 +12,10 @@ export const changeFileUploadList = (fileSource) => {
         const extension = filename.split(".").pop();
 
         queue.push({
-            filename: filename,
             file: fileSource.files[i],
+            folder : folder,
             mimeType: fileTypes.find(item => item.extension === extension.toLowerCase()).mimeType,
-            uploading: false,
+            fetching: false,
             success: false,
         });
     }
@@ -34,40 +26,17 @@ export const changeFileUploadList = (fileSource) => {
     }
 };
 
-export const uploadFileToFolder = (folder, file, isLast, inherit) => {
+export const mapItemToUploadParams = (item) => {
 
     const uploadBody = new FormData();
-    uploadBody.append("fileItem", file);
-    uploadBody.append("inheritPermissions", inherit);
+    uploadBody.append("fileItem", item.file);
+    uploadBody.append("inheritPermissions", item.inheritPermissions);
 
-    let params = {
+    return {
         method: "POST",
-        uri: DRIVE_API_BASE + "/folder/" + folder.id + "/file",
+        uri: DRIVE_API_BASE + "/folder/" + item.folder + "/file",
         body: uploadBody,
-        errorMsg: "Cannot upload " + file.name + "."
+        errorMsg: "Cannot upload " + item.file.name + "."
     };
-
-    const fetchActions = [
-        startItemDialogFetch,
-        itemFetchingAction(file)
-    ];
-
-    const successActions = [
-        defaultSuccessWithResponse,
-        itemFetchSuccessAction(file),
-    ];
-
-    const errorActions = [
-        defaultErrorAction,
-        itemFetchFailedAction(file),
-    ];
-
-    if (isLast) {
-        successActions.push(finishItemDialogFetch);
-        successActions.push(allItemsProcessed);
-        errorActions.push(finishItemDialogFetch);
-    }
-
-    return callOfficeApi(params, successActions, errorActions, fetchActions);
 };
 

@@ -45,25 +45,27 @@ class UploadFileDialog extends Component {
     }
 
     handleClose() {
-        const {actions, uploadFinished} = this.props;
-        if (uploadFinished) {
-            actions.clearUploadList();
+        const {actions, itemQueueFinished} = this.props;
+        if (itemQueueFinished) {
+            actions.itemQueue.clear();
         }
-        actions.closeItemDialog();
+        actions.dialog.close();
     }
 
     updateFileNames(e) {
-        this.props.actions.enqueueFilesToUpload(e.target);
+        const {folder, actions} = this.props;
+        const {inherit} = this.state;
+        actions.itemQueue.enqueue.toUpload(e.target,folder.id, inherit);
     }
 
     uploadFiles() {
-        const {folder, actions, itemQueue} = this.props;
-        actions.uploadFiles(folder, itemQueue, this.state.inherit);
+        const {actions, itemQueue} = this.props;
+        actions.itemQueue.process.toUpload(itemQueue);
     }
 
     uploadFailedFiles() {
-        const {folder, actions, itemQueue} = this.props;
-        actions.uploadFiles(folder, itemQueue.filter(item => item.error), this.state.inherit);
+        const {actions, itemQueue} = this.props;
+        actions.itemQueue.process.toUpload(itemQueue.filter(item => item.error));
     }
 
     toggleInheritFlag(){
@@ -100,11 +102,11 @@ class UploadFileDialog extends Component {
                     </label>
                     <List>
                         {itemQueue.map(item => (
-                            <ListItem key={item.filename}>
+                            <ListItem key={item.file.name}>
                                 <ListItemAvatar>
                                     {renderItemStatus(item)}
                                 </ListItemAvatar>
-                                <ListItemText primary={item.filename}
+                                <ListItemText primary={item.file.name}
                                               secondary={textEllipsis(item.mimeType, 20)}/>
                             </ListItem>
                         ))}

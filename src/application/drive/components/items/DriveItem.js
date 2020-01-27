@@ -123,31 +123,31 @@ class DriveItem extends Component {
 
     handleItemEditClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_EDIT_DETAILS, item);
+        actions.dialog.open(CONTENT_EDIT_DETAILS, item);
         this.closeMenu();
     }
 
     handleItemShareClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_SHARE_LINK, item);
+        actions.dialog.open(CONTENT_SHARE_LINK, item);
         this.closeMenu();
     }
 
     handleItemPermissionsClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_EDIT_PERMISSIONS, item);
+        actions.dialog.open(CONTENT_EDIT_PERMISSIONS, item);
         this.closeMenu();
     }
 
     handleItemDeleteClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_DELETE_ITEM, item);
+        actions.dialog.open(CONTENT_DELETE_ITEM, item);
         this.closeMenu();
     }
 
     handleItemMoveClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_MOVE_ITEM, item);
+        actions.dialog.open(CONTENT_MOVE_ITEM, item);
         this.closeMenu();
     }
 
@@ -155,7 +155,7 @@ class DriveItem extends Component {
         const {item, actions} = this.props;
 
         if (item.mimeType.startsWith("image")) {
-            actions.openItemDialog(CONTENT_SHOW_IMAGE, item);
+            actions.dialog.open(CONTENT_SHOW_IMAGE, item);
         } else {
             window.location.href = API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data";
         }

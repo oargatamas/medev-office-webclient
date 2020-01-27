@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {getThumbnailUrl } from "../../../actions/imageActions";
+import {getThumbnailUrl} from "../../../actions/imageActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import {withStyles} from "@material-ui/styles";
@@ -26,7 +26,7 @@ class ShowImageDialog extends Component{
     }
 
     handleClose(){
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     render() {

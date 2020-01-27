@@ -27,9 +27,9 @@ class Drive extends Component {
         actions.changeAppTitle();
 
         if(match.params.id){
-            actions.requestFolderContent(match.params.id);
+            actions.folder.requestContent(match.params.id);
         }else{
-            actions.requestRootFolder();
+            actions.folder.requestRoot();
         }
     }
 

@@ -112,11 +112,11 @@ class ItemPermissionDialog extends Component {
             });
             items = items.concat(flattenRootFolder);
         }
-        this.props.actions.updateItemPermissions(items);
+        this.props.actions.itemQueue.process.toPermission(items);
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     togglePermission(event) {
@@ -150,7 +150,7 @@ class ItemPermissionDialog extends Component {
         this.setState({recursive: !recursive, editing: editing, ...item});
 
         if (!recursive) {
-            actions.requestFolderTree(dialogItem, true);
+            actions.folder.requestFolderTree(dialogItem, true);
         }
     }
 
