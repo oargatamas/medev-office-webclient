@@ -9,6 +9,7 @@ import moment from "moment";
 
 
 const styles = (theme) => ({
+    root:{},
     content:{
         display: "flex",
         flexDirection: "column",
@@ -66,7 +67,7 @@ class ItemDetailsDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Details of {item.type}</DialogTitle>
+                <DialogTitle>Details of {item.name}</DialogTitle>
                 <DialogContent className={classes.content}>
                     <TextField
                         id="name"

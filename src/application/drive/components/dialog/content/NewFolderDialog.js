@@ -40,13 +40,13 @@ class NewFolderDialog extends Component {
     }
 
     render() {
-        const {isDialogFetching} = this.props;
+        const {isDialogFetching, dialogItem} = this.props;
 
 
         return (
             <React.Fragment>
                 <form onSubmit={this.createFolder}>
-                    <DialogTitle>New folder</DialogTitle>
+                    <DialogTitle>New folder in {dialogItem.type}</DialogTitle>
                     <DialogContent>
                         <TextField
                             disabled={isDialogFetching}

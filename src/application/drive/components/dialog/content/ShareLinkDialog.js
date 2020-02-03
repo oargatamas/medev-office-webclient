@@ -14,6 +14,7 @@ import {APPLICATION_ORIGIN} from "../../../../core/action/apiCallActions";
 
 
 const styles = (theme) => ({
+    root:{},
     linkRow: {
         display: "flex",
         flexDirection: "row",
@@ -23,7 +24,10 @@ const styles = (theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 220,
+        [theme.breakpoints.down('sm')]: {
+            width: 220,
+        },
+        width: 400,
     },
 });
 
@@ -68,7 +72,7 @@ class ShareLinkDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Share {dialogItem.type}</DialogTitle>
+                <DialogTitle>Share {dialogItem.name}</DialogTitle>
                 <DialogContent>
                     <Typography>Copy this link to send to your partner.</Typography>
                     <div className={classes.linkRow}>

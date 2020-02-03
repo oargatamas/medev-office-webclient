@@ -75,13 +75,13 @@ class UploadFileDialog extends Component {
     }
 
     render() {
-        const {isDialogFetching, itemQueue, itemQueueFinished} = this.props;
+        const {isDialogFetching, itemQueue, dialogItem, itemQueueFinished} = this.props;
 
         const hasError = itemQueue.filter(item => item.error).length > 0;
 
         return (
             <React.Fragment>
-                <DialogTitle>Upload file</DialogTitle>
+                <DialogTitle>Upload file(s) {dialogItem.name}</DialogTitle>
                 <DialogContent>
                     <FormControlLabel
                         disabled={isDialogFetching}

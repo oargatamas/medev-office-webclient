@@ -22,13 +22,17 @@ class Drive extends Component {
 
 
     componentDidMount(){
-        const {actions, match} = this.props;
+        const {actions, match, rootFolder} = this.props;
 
+        console.log("drive component mount");
         actions.changeAppTitle();
-
         if(match.params.id){
+            console.log("getting content with id");
             actions.folder.requestContent(match.params.id);
-        }else{
+        }
+
+        if(Object.keys(rootFolder).length === 0){
+            console.log("getting root directory");
             actions.folder.requestRoot();
         }
     }

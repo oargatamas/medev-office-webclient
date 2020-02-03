@@ -12,12 +12,16 @@ export const driveBaseReducer = (state = initialState, action) => {
         case FETCH_PERMISSIONS_SUCCESS:
             return Object.assign({}, state, {permissionTypes: action.enumeration});
         case RECEIVED_FOLDER_TREE:
-            return Object.assign({},state, {folderTree: action.tree});
+            return Object.assign({}, state, {folderTree: action.tree});
         case RECEIVED_ROOT_FOLDER_DATA :
-            return Object.assign({}, state, {rootFolder: action.folder, currentFolderItems: action.content});
+            return Object.assign({}, state, {
+                rootFolder: action.folder,
+                parentFolder: action.folder,
+                currentFolderItems: action.content,
+            });
         case RECEIVED_FOLDER_CONTENT :
             return Object.assign({}, state, {
-                rootFolder: action.rootFolder,
+                parentFolder: action.rootFolder,
                 currentFolderItems: action.content,
                 breadCrumbs: action.parents
             });
@@ -40,6 +44,6 @@ export const driveBaseReducer = (state = initialState, action) => {
 
 
 export const driveReducer = combineReducers({
-    drive : driveBaseReducer,
-    scheduledOperations : driveItemQueueReducer,
+    drive: driveBaseReducer,
+    scheduledOperations: driveItemQueueReducer,
 });

@@ -16,6 +16,7 @@ import clsx from "clsx";
 import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Typography from "@material-ui/core/Typography";
+import {enqueueItemsToMove} from "../../../actions/itemMoveActions";
 
 
 const styles = (theme) => ({
@@ -72,13 +73,14 @@ class MoveItemDialog extends Component {
     }
 
     refreshFolderTree() {
-        const {actions, folder} = this.props;
-        actions.folder.requestFolderTree(folder);
+        const {actions, rootFolder} = this.props;
+        actions.folder.requestFolderTree(rootFolder);
     }
 
     handleClose() {
         this.setState({...this.state, target: null});
         this.props.actions.dialog.close();
+        this.props.actions.itemQueue.clear();
     }
 
     moveItem() {
@@ -93,8 +95,11 @@ class MoveItemDialog extends Component {
     }
 
     updateDestination(folder) {
+        const {actions, itemQueue} = this.props;
+
         return () => {
             this.setState({...this.state, target: folder});
+            actions.itemQueue.enqueue(enqueueItemsToMove(itemQueue, folder));
         };
     }
 
@@ -111,6 +116,7 @@ class MoveItemDialog extends Component {
         }
         return (
             <TreeItem
+                key={folderItem.id}
                 nodeId={folderItem.id}
                 label={
                     <div className={clsx(classes.folderLabel, {
@@ -127,7 +133,7 @@ class MoveItemDialog extends Component {
     }
 
     render() {
-        const {classes, dialogItem, isDialogFetching, rootFolder} = this.props;
+        const {classes, isDialogFetching, folderTree} = this.props;
 
         return (
             <React.Fragment>
@@ -135,22 +141,22 @@ class MoveItemDialog extends Component {
                     <IconButton disabled={isDialogFetching} onClick={this.refreshFolderTree}>
                         <RefreshIcon/>
                     </IconButton>
-                    Move {dialogItem.type}
+                    Move item(s)
                 </DialogTitle>
                 <DialogContent className={classes.root}>
                     <Typography variant={"body1"}>Please select a folder to move: </Typography>
                     <div className={classes.folders}>
-                        {!isDialogFetching && Object.keys(rootFolder).length > 0 ? (
+                        {isDialogFetching ? (<LinearProgress/>) : null}
+
+                        {Object.keys(folderTree).length > 0 ? (
                             <TreeView
                                 defaultCollapseIcon={<ArrowDropDownIcon/>}
                                 defaultExpandIcon={<ArrowRightIcon/>}
                                 defaultEndIcon={<div style={{width: 24}}/>}
                             >
-                                {this.renderFolderTree(rootFolder)}
+                                {this.renderFolderTree(folderTree)}
                             </TreeView>
-                        ) : (
-                            <LinearProgress/>
-                        )}
+                        ) : null}
                     </div>
                     <Divider/>
                 </DialogContent>

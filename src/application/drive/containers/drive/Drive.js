@@ -15,8 +15,9 @@ const mapStateToProps = (state) => {
     return {
         systemUsers: state.core.appUsers,
         isFetching : state.core.isFetching,
-        rootFolder: state.driveModule.drive.folderTree,
-        folder : state.driveModule.drive.rootFolder,
+        folderTree: state.driveModule.drive.folderTree,
+        rootFolder : state.driveModule.drive.rootFolder,
+        folder: state.driveModule.drive.parentFolder,
         items : state.driveModule.drive.currentFolderItems,
         navigation : state.driveModule.drive.breadCrumbs,
         permissionTypes : state.driveModule.drive.permissionTypes,
@@ -64,7 +65,7 @@ const mapDispatchToProps = (dispatch) => {
                 },
                 process:{
                     toUpload:(items) => {
-                        queueProcessor(dispatch,items,mapItemToUploadParams);
+                        queueProcessor(dispatch,items,mapItemToUploadParams,false);
                     },
                     toMove: (items) => {
                         queueProcessor(dispatch,items,mapItemToMoveParams)

@@ -45,12 +45,14 @@ class DriveItemContainer extends Component {
                 <Box className={classes.content}>
                     {items.map((item) => {
                         const checked = selectedItems.filter(queueItem => queueItem.id === item.id).length > 0;
+                        const selectedAlone = selectedItems.length <= 1;
                         return (
                             <DriveItem
                                 key={item.id}
                                 item={item}
                                 checked={checked}
                                 actions={actions}
+                                selectedAlone={selectedAlone}
                                 onSelect = {this.selectItem}
                                 onDeselect={this.deselectItem}
                             />

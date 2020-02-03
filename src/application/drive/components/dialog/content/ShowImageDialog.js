@@ -7,6 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import {withStyles} from "@material-ui/styles";
 
 const styles = () => ({
+    root:{},
     content : {
         //maxWidth: 99 + "vw",
     },

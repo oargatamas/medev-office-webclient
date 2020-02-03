@@ -46,7 +46,7 @@ const styles = (theme) => ({
         position: "absolute",
         alignSelf: "flex-start",
         backgroundColor: "white",
-        zIndex: 5000,
+        zIndex: theme.zIndex.appBar,
     },
     disabled: {
         filter: "grayscale(100%)",
@@ -190,8 +190,8 @@ class DriveItem extends Component {
     }
 
     render() {
-        const {classes, item, key, checked} = this.props;
-        const {menuAnchor, menuOpen, hovered } = this.state;
+        const {classes, item, key, checked, selectedAlone} = this.props;
+        const {menuAnchor, menuOpen, hovered} = this.state;
         const disabled = Object.keys(item.permissions).length === 0;
 
         return (
@@ -220,13 +220,19 @@ class DriveItem extends Component {
                     open={menuOpen}
                     onClose={this.closeMenu}
                 >
-                    <Link target={"_blank"} color={"inherit"}
-                          href={API_ORIGIN + DRIVE_API_BASE + "/" + item.type + "/" + item.id + "/data"}>
-                        <MenuItem key={"download"}>Download</MenuItem>
-                    </Link>
-                    <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
-                    <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
-                    <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
+                    {(selectedAlone) ? (
+                            <div>
+                                <Link target={"_blank"} color={"inherit"}
+                                      href={API_ORIGIN + DRIVE_API_BASE + "/" + item.type + "/" + item.id + "/data"}>
+                                    <MenuItem key={"download"}>Download</MenuItem>
+                                </Link>
+                                <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
+                                <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
+                                <MenuItem key={"permissions"}
+                                          onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
+                            </div>
+                        )
+                        : null}
                     <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
                     <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>
                 </Menu>

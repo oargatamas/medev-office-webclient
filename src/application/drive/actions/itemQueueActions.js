@@ -1,4 +1,4 @@
-import {finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
+import {closeItemDialog, finishItemDialogFetch, startItemDialogFetch} from "./dialogActions";
 import {callOfficeApi, defaultErrorAction, defaultSuccessWithResponse} from "../../core/action/apiCallActions";
 
 export const UPDATE_QUEUE = "driveSetItemQueue";
@@ -49,7 +49,7 @@ export const enqueueItems = (items) => {
 };
 
 
-export const queueProcessor = (dispatch, queue, paramMapper) => {
+export const queueProcessor = (dispatch, queue, paramMapper, closeDialogAfter = true) => {
     queue.forEach((item, index) => {
         const isLast = index <= queue.length;
         const params = paramMapper(item);
@@ -73,6 +73,12 @@ export const queueProcessor = (dispatch, queue, paramMapper) => {
             successActions.push(finishItemDialogFetch);
             successActions.push(allItemsProcessed);
             errorActions.push(finishItemDialogFetch);
+            if(closeDialogAfter){
+                successActions.push(clearItemQueue);
+                successActions.push(closeItemDialog);
+                errorActions.push(clearItemQueue);
+                errorActions.push(closeItemDialog);
+            }
         }
 
         dispatch(callOfficeApi(params, successActions, errorActions, fetchActions));

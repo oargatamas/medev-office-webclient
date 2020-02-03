@@ -20,7 +20,7 @@ export const driveItemQueueReducer = (state = initialState, action) => {
         case QUEUE_ITEM_FETCH:
             return Object.assign({}, state, {
                 itemQueue: state.itemQueue.map(item => {
-                        if (item.filename === action.filename) {
+                        if (item.filename === action.filename) { //Todo double check the other cases (ItemMove, Delete, etc...)
                             return {...item, fetching: true}
                         } else {
                             return item
@@ -31,7 +31,7 @@ export const driveItemQueueReducer = (state = initialState, action) => {
         case QUEUE_ITEM_SUCCESS:
             return Object.assign({}, state, {
                 itemQueue: state.itemQueue.map(item => {
-                        if (item.filename === action.filename) {
+                        if (item.filename === action.filename) { //Todo double check the other cases (ItemMove, Delete, etc...)
                             return {...item, fetching: false, success: true, error: false}
                         } else {
                             return item
@@ -42,7 +42,7 @@ export const driveItemQueueReducer = (state = initialState, action) => {
         case QUEUE_ITEM_ERROR:
             return Object.assign({}, state, {
                 itemQueue: state.itemQueue.map(item => {
-                        if (item.filename === action.filename) {
+                        if (item.filename === action.filename) { //Todo double check the other cases (ItemMove, Delete, etc...)
                             return {...item, fetching: false, success: false, error: true}
                         } else {
                             return item
