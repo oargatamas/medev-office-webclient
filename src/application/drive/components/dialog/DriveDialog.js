@@ -73,7 +73,10 @@ class DriveDialog extends Component {
 
     handleOpen(){
         const {actions, itemQueue, dialogItem} = this.props;
-        actions.itemQueue.enqueue(itemQueue.filter((item) => item.id !== dialogItem.id).concat([dialogItem]));
+        if(itemQueue.length === 0){
+            actions.itemQueue.enqueue([dialogItem]);
+        }
+
     }
 
     render() {
