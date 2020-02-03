@@ -28,7 +28,7 @@ const styles = (theme) => ({
     },
     button: {
         transform: "rotate(90deg)",
-        marginRight: theme.spacing(3),
+        marginRight: theme.spacing(1),
     },
     buttonGroup: {
         marginRight: theme.spacing(3),
