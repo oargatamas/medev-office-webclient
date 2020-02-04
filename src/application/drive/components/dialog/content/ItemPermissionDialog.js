@@ -68,17 +68,41 @@ const hasPermission = (permission, permissionTypes) => {
 
 
 const flattenItemTree = (rootItem, flatOutput = []) => {
-    const item = Object.assign({},rootItem);
+    const item = Object.assign({}, rootItem);
     delete item.content;
     delete item.permissions;
     flatOutput.push(item);
 
     if (rootItem.content && rootItem.content.length > 0) {
-        rootItem.content.forEach((item)=> {
+        rootItem.content.forEach((item) => {
             flattenItemTree(item, flatOutput);
         });
     }
     return flatOutput;
+};
+
+
+const getCommonItemPermissions = (items) => {
+    let commonPermissions = items[0].permissions;
+
+    items.forEach((item) => {
+        let itemPermissionUserIds = Object.keys(item.permissions);
+
+        console.log(itemPermissionUserIds);
+
+        itemPermissionUserIds.forEach((userId) => {
+            if(commonPermissions.hasOwnProperty(userId)) {
+                commonPermissions[userId] = Array.from(commonPermissions[userId])
+                    .filter(cp => item.permissions[userId].some(p => p.id === cp.id));
+            }
+        });
+
+        Object.keys(commonPermissions)
+            .filter(userId => !itemPermissionUserIds.some( u => u === userId))
+            .forEach( cp => delete commonPermissions[cp]);
+    });
+
+    return commonPermissions;
 };
 
 
@@ -96,7 +120,10 @@ class ItemPermissionDialog extends Component {
         this.state = {
             editing: false,
             recursive: false,
-            item: this.props.dialogItem
+            item: {
+                ...this.props.dialogItem,
+                permissions: getCommonItemPermissions(this.props.itemQueue),
+            }
         };
     }
 

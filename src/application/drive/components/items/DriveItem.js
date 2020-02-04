@@ -228,11 +228,10 @@ class DriveItem extends Component {
                                 </Link>
                                 <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
                                 <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
-                                <MenuItem key={"permissions"}
-                                          onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
                             </div>
                         )
                         : null}
+                    <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
                     <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
                     <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>
                 </Menu>
