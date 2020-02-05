@@ -16,10 +16,11 @@ import {textEllipsis} from "../../../../utils/stringUtils";
 import Divider from "@material-ui/core/Divider";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import {enqueueFilesToUpload} from "../../../actions/itemUploadActions";
 
 
 const renderItemStatus = (item) => {
-    if (item.uploading) {
+    if (item.fetching) {
         return (<CircularProgress/>);
     }
     if (item.error) {
@@ -45,25 +46,28 @@ class UploadFileDialog extends Component {
     }
 
     handleClose() {
-        const {actions, uploadFinished} = this.props;
-        if (uploadFinished) {
-            actions.clearUploadList();
+        const {actions, itemQueueFinished} = this.props;
+        if (itemQueueFinished) {
+            actions.itemQueue.clear();
         }
-        actions.closeItemDialog();
+        actions.dialog.close();
     }
 
     updateFileNames(e) {
-        this.props.actions.enqueueFilesToUpload(e.target);
+        const {folder, actions} = this.props;
+        const {inherit} = this.state;
+
+        actions.itemQueue.enqueue(enqueueFilesToUpload(e.target,folder.id, inherit));
     }
 
     uploadFiles() {
-        const {folder, actions, itemsToUpload} = this.props;
-        actions.uploadFiles(folder, itemsToUpload, this.state.inherit);
+        const {actions, itemQueue} = this.props;
+        actions.itemQueue.process.toUpload(itemQueue);
     }
 
     uploadFailedFiles() {
-        const {folder, actions, itemsToUpload} = this.props;
-        actions.uploadFiles(folder, itemsToUpload.filter(item => item.error), this.state.inherit);
+        const {actions, itemQueue} = this.props;
+        actions.itemQueue.process.toUpload(itemQueue.filter(item => item.error));
     }
 
     toggleInheritFlag(){
@@ -71,13 +75,13 @@ class UploadFileDialog extends Component {
     }
 
     render() {
-        const {isDialogFetching, itemsToUpload, uploadFinished} = this.props;
+        const {isDialogFetching, itemQueue, dialogItem, itemQueueFinished} = this.props;
 
-        const hasError = itemsToUpload.filter(item => item.error).length > 0;
+        const hasError = itemQueue.filter(item => item.error).length > 0;
 
         return (
             <React.Fragment>
-                <DialogTitle>Upload file</DialogTitle>
+                <DialogTitle>Upload file(s) {dialogItem.name}</DialogTitle>
                 <DialogContent>
                     <FormControlLabel
                         disabled={isDialogFetching}
@@ -99,12 +103,12 @@ class UploadFileDialog extends Component {
                         </Button>
                     </label>
                     <List>
-                        {itemsToUpload.map(item => (
-                            <ListItem key={item.filename}>
+                        {itemQueue.map(item => (
+                            <ListItem key={item.file.name}>
                                 <ListItemAvatar>
                                     {renderItemStatus(item)}
                                 </ListItemAvatar>
-                                <ListItemText primary={item.filename}
+                                <ListItemText primary={item.file.name}
                                               secondary={textEllipsis(item.mimeType, 20)}/>
                             </ListItem>
                         ))}
@@ -112,7 +116,7 @@ class UploadFileDialog extends Component {
                     <Divider/>
                 </DialogContent>
                 <DialogActions>
-                    {uploadFinished ? (
+                    {itemQueueFinished ? (
                             hasError ? (
                                 <Button color={"secondary"} disabled={isDialogFetching} onClick={this.uploadFailedFiles}>Retry</Button>
                             ) : (

@@ -19,7 +19,7 @@ class NewFolderDialog extends Component {
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     createFolder(e) {
@@ -32,7 +32,7 @@ class NewFolderDialog extends Component {
             inheritPermissions : this.state.inherit
         };
 
-        this.props.actions.createFolder(folder.id, body);
+        this.props.actions.folder.create(folder.id, body);
     }
 
     toggleInheritFlag(){
@@ -40,13 +40,13 @@ class NewFolderDialog extends Component {
     }
 
     render() {
-        const {isDialogFetching} = this.props;
+        const {isDialogFetching, dialogItem} = this.props;
 
 
         return (
             <React.Fragment>
                 <form onSubmit={this.createFolder}>
-                    <DialogTitle>New folder</DialogTitle>
+                    <DialogTitle>New folder in {dialogItem.type}</DialogTitle>
                     <DialogContent>
                         <TextField
                             disabled={isDialogFetching}

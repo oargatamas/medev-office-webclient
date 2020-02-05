@@ -1,23 +1,23 @@
-import {requestRootFolderData} from "../../actions/getRootFolder";
 import Drive from "../../components/drive/Drive";
 import connect from "react-redux/es/connect/connect";
-import {requestFolderItems} from "../../actions/getFolderContent";
-import {requestFolderTree, requestItemMove} from "../../actions/moveFileToFolder";
+import {requestFolderCreation, requestFolderItems, requestRootFolderData} from "../../actions/folderActions";
+import {mapItemToMoveParams, requestFolderTree} from "../../actions/itemMoveActions";
 import {closeItemDialog, openItemDialog} from "../../actions/dialogActions";
-import {requestFolderCreation} from "../../actions/createFolderActions";
-import {deleteDriveItem} from "../../actions/deleteItemActions";
-import {saveDriveItem} from "../../actions/editDriveItemActions";
-import {changeFileUploadList, clearUploadQueue, uploadFileToFolder} from "../../actions/uploadFileActions";
-import {updateItemPermissions} from "../../actions/updateItemPermissionActions";
+import {mapItemToUploadParams,} from "../../actions/itemUploadActions";
 import {switchApplication} from "../../../core/action/sideNavActions";
+import {clearItemQueue, enqueueItems, queueProcessor} from "../../actions/itemQueueActions";
+import {saveDriveItem} from "../../actions/itemUpdateActions";
+import {mapItemToPermissionChangeParams} from "../../actions/itemPermissionActions";
+import {mapItemToDeleteParams} from "../../actions/deleteItemActions";
 
 
 const mapStateToProps = (state) => {
     return {
         systemUsers: state.core.appUsers,
         isFetching : state.core.isFetching,
-        rootFolder: state.driveModule.drive.folderTree,
-        folder : state.driveModule.drive.rootFolder,
+        folderTree: state.driveModule.drive.folderTree,
+        rootFolder : state.driveModule.drive.rootFolder,
+        folder: state.driveModule.drive.parentFolder,
         items : state.driveModule.drive.currentFolderItems,
         navigation : state.driveModule.drive.breadCrumbs,
         permissionTypes : state.driveModule.drive.permissionTypes,
@@ -26,8 +26,8 @@ const mapStateToProps = (state) => {
         dialogType : state.driveModule.drive.itemDialogContentType,
         dialogItem : state.driveModule.drive.currentDialogItem,
         fetchSuccessResponse: state.core.successObject,
-        itemsToUpload: state.driveModule.uploadQueue.items,
-        uploadFinished: state.driveModule.uploadQueue.finished,
+        itemQueue: state.driveModule.scheduledOperations.itemQueue,
+        itemQueueFinished: state.driveModule.scheduledOperations.finished,
     }
 };
 
@@ -37,49 +37,55 @@ const mapDispatchToProps = (dispatch) => {
             changeAppTitle: () =>{
                 dispatch(switchApplication("Drive"));
             },
-            requestRootFolder : () => {
-                dispatch(requestRootFolderData());
+            folder:{
+                requestRoot : () => {
+                    dispatch(requestRootFolderData());
+                },
+                requestContent : (folderId) => {
+                    dispatch(requestFolderItems(folderId));
+                },
+                requestFolderTree : (rootFolder, includeFiles) =>{
+                    dispatch(requestFolderTree(rootFolder, includeFiles));
+                },
+                create: (targetFolderId, data) => {
+                    dispatch(requestFolderCreation(targetFolderId,data))
+                },
             },
-            requestFolderContent : (folderId) => {
-                dispatch(requestFolderItems(folderId));
+            item:{
+                update: (item) => {
+                    dispatch(saveDriveItem(item))
+                },
             },
-            openItemDialog:(purpose, item) =>{
-                dispatch(openItemDialog(purpose, item));
-            },
-            closeItemDialog:() => {
-                dispatch(closeItemDialog());
-            },
-            createFolder: (targetFolderId, data) => {
-                dispatch(requestFolderCreation(targetFolderId,data))
-            },
-            deleteItem: (itemId, itemType) => {
-                dispatch(deleteDriveItem(itemId, itemType));
-            },
-            saveItem: (item) => {
-                dispatch(saveDriveItem(item));
-            },
-            enqueueFilesToUpload : (fileSource) => {
-                dispatch(changeFileUploadList(fileSource));
-            },
-            uploadFiles: (folder, fileSource, inheritPermissions) => {
-                for (let i = 0; i < fileSource.length; i++) {
-                    dispatch(uploadFileToFolder(folder, fileSource[i].file, i === (fileSource.length-1),inheritPermissions));
+            itemQueue: {
+                clear: () =>{
+                    dispatch(clearItemQueue());
+                },
+                enqueue:(items) => {
+                  dispatch(enqueueItems(items))
+                },
+                process:{
+                    toUpload:(items) => {
+                        queueProcessor(dispatch,items,mapItemToUploadParams,false);
+                    },
+                    toMove: (items) => {
+                        queueProcessor(dispatch,items,mapItemToMoveParams)
+                    },
+                    toDelete : (items) =>{
+                        queueProcessor(dispatch,items,mapItemToDeleteParams)
+                    },
+                    toPermission : (items) => {
+                        queueProcessor(dispatch,items,mapItemToPermissionChangeParams);
+                    },
                 }
             },
-            clearUploadList: () =>{
-                dispatch(clearUploadQueue());
+            dialog:{
+                open:(purpose, item) =>{
+                    dispatch(openItemDialog(purpose, item));
+                },
+                close:() => {
+                    dispatch(closeItemDialog());
+                },
             },
-            updateItemPermissions: (items) => {
-                for (let i = 0; i < items.length; i++) {
-                    dispatch(updateItemPermissions(items[i],i === (items.length-1)))
-                }
-            },
-            requestFolderTree : (rootFolder, includeFiles) =>{
-                dispatch(requestFolderTree(rootFolder, includeFiles));
-            },
-            moveItemToFolder : (target, destination) => {
-                dispatch(requestItemMove(target,destination));
-            }
         }
     }
 };

@@ -1,11 +1,6 @@
 import {DRIVE_API_BASE} from "./driveApi";
 import {callOfficeApi, encodeUrlData, getApiBaseHeaders} from "../../core/action/apiCallActions";
-import {
-    defaultDialogErrorActions,
-    defaultDialogFetchActions,
-    defaultDialogSuccessActions,
-    finishItemDialogFetch
-} from "./dialogActions";
+import {defaultDialogErrorActions, defaultDialogFetchActions, finishItemDialogFetch} from "./dialogActions";
 
 
 export const RECEIVED_FOLDER_TREE = "driveFolderTreeReceived";
@@ -32,22 +27,34 @@ export const requestFolderTree = (rootFolder, includeFiles = false) => {
 };
 
 
-export const requestItemMove = (targetItem, destinationFolder) => {
-    let params = {
-        method: "POST",
-        uri: DRIVE_API_BASE + "/move/" + targetItem.id + "/to/" + destinationFolder.id,
-        headers: getApiBaseHeaders(),
-        errorMsg: "Cannot move '" + targetItem.name + "' to '" + destinationFolder.name + "'.",
-        successMsg: "'" + targetItem.name + "' successfully moved to '" + destinationFolder.name + "'."
-    };
-
-    return callOfficeApi(params, defaultDialogSuccessActions, defaultDialogErrorActions, defaultDialogFetchActions);
-};
-
-
 export const receivedFolderTree = (serverResponse) => {
     return {
         type: RECEIVED_FOLDER_TREE,
         tree: serverResponse,
     }
+};
+
+
+export const enqueueItemsToMove = (items, targetFolder) => {
+    return items.map((item) => {
+        return {
+            ...item,
+            destination: {
+                id: targetFolder.id,
+                name: targetFolder.name,
+            },
+            fetching: false,
+            success: false,
+        }
+    });
+};
+
+export const mapItemToMoveParams = (item) => {
+    return {
+        method: "POST",
+        uri: DRIVE_API_BASE + "/move/" + item.id + "/to/" + item.destination.id,
+        headers: getApiBaseHeaders(),
+        errorMsg: "Cannot move '" + item.name + "' to '" + item.destination.name + "'.",
+        successMsg: "'" + item.name + "' successfully moved to '" + item.destination.name + "'."
+    };
 };

@@ -2,9 +2,11 @@ import React, {Component} from "react";
 import {
     CONTENT_DELETE_ITEM,
     CONTENT_EDIT_DETAILS,
-    CONTENT_EDIT_PERMISSIONS, CONTENT_MOVE_ITEM,
+    CONTENT_EDIT_PERMISSIONS,
+    CONTENT_MOVE_ITEM,
     CONTENT_NEW_FOLDER,
-    CONTENT_SHARE_LINK, CONTENT_SHOW_IMAGE,
+    CONTENT_SHARE_LINK,
+    CONTENT_SHOW_IMAGE,
     CONTENT_UPLOAD_FILE
 } from "../../actions/dialogActions";
 import ItemDetailsDialog from "./content/ItemDetailsDialog";
@@ -32,7 +34,8 @@ class DriveDialog extends Component {
     constructor(props, context) {
         super(props, context);
         this.renderItemComponent = this.renderItemComponent.bind(this);
-        this.refreshFolder = this.refreshFolder.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
     }
 
     renderItemComponent() {
@@ -58,20 +61,29 @@ class DriveDialog extends Component {
         }
     }
 
-    refreshFolder() {
+    handleClose() {
         const {actions, folder, fetchSuccessResponse} = this.props;
 
         if (fetchSuccessResponse) {
             console.log("refreshing...");
-            actions.requestFolderContent(folder.id);
+            actions.folder.requestContent(folder.id);
         }
+        actions.itemQueue.clear();
+    }
+
+    handleOpen(){
+        const {actions, itemQueue, dialogItem} = this.props;
+        if(itemQueue.length === 0){
+            actions.itemQueue.enqueue([dialogItem]);
+        }
+
     }
 
     render() {
         const {classes, isDialogOpen} = this.props;
 
         return (
-            <Dialog fullWidth className={classes.root} open={isDialogOpen} onExit={this.refreshFolder}
+            <Dialog fullWidth className={classes.root} open={isDialogOpen} onEnter={this.handleOpen} onExit={this.handleClose}
                     disableBackdropClick={true}>
                 {this.renderItemComponent()}
             </Dialog>

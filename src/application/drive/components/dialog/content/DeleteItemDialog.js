@@ -7,6 +7,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 
 const styles = () =>({
+    root:{},
     content: {
         wordBreak: "break-all",
     }
@@ -21,21 +22,21 @@ class DeleteItemDialog extends Component{
     }
 
     handleClose(){
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
+        this.props.actions.itemQueue.clear();
     }
 
     handleDeleteClick(){
-        const {dialogItem, actions} = this.props;
-        actions.deleteItem(dialogItem.id, dialogItem.type);
+        const {actions, itemQueue} = this.props;
+        actions.itemQueue.process.toDelete(itemQueue);
     }
 
     render() {
-
         const {classes, dialogItem, isDialogFetching} = this.props;
 
         return (
             <React.Fragment>
-                <DialogTitle>Delete {dialogItem.type}</DialogTitle>
+                <DialogTitle>Delete item(s)</DialogTitle>
                 <DialogContent className={classes.content}>
                     Are you sure you want to delete '{dialogItem.name}'?
                 </DialogContent>

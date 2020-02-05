@@ -22,20 +22,24 @@ class Drive extends Component {
 
 
     componentDidMount(){
-        const {actions, match} = this.props;
+        const {actions, match, rootFolder} = this.props;
 
+        console.log("drive component mount");
         actions.changeAppTitle();
-
         if(match.params.id){
-            actions.requestFolderContent(match.params.id);
-        }else{
-            actions.requestRootFolder();
+            console.log("getting content with id");
+            actions.folder.requestContent(match.params.id);
+        }
+
+        if(Object.keys(rootFolder).length === 0){
+            console.log("getting root directory");
+            actions.folder.requestRoot();
         }
     }
 
 
     render() {
-        const {classes, isFetching, folder, items, navigation, actions} = this.props;
+        const {classes, isFetching, items, navigation, actions, itemQueue} = this.props;
 
         return (
             <div className={classes.root}>
@@ -48,8 +52,8 @@ class Drive extends Component {
                 ) : (
                     <React.Fragment>
                         <NavigationBar items={navigation} actions={actions}/>
-                        <DriveHeader parent={navigation.slice(-1)[0]} folder={folder} actions={actions}/>
-                        <DriveItemContainer items={items} actions={actions}/>
+                        <DriveHeader parent={navigation.slice(-1)[0]} {...this.props}/>
+                        <DriveItemContainer items={items} selectedItems={itemQueue} actions={actions}/>
                         <DriveDialog {...this.props}/>
                     </React.Fragment>
                 )}

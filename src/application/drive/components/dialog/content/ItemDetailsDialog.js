@@ -9,6 +9,7 @@ import moment from "moment";
 
 
 const styles = (theme) => ({
+    root:{},
     content:{
         display: "flex",
         flexDirection: "column",
@@ -33,7 +34,7 @@ class ItemDetailsDialog extends Component {
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     handleItemSave() {
@@ -41,9 +42,9 @@ class ItemDetailsDialog extends Component {
         const {item} = this.state;
 
         if (item !== dialogItem) {
-            actions.saveItem(item);
+            actions.item.update(item);
         } else {
-            actions.closeItemDialog();
+            actions.dialog.close();
         }
     }
 
@@ -66,7 +67,7 @@ class ItemDetailsDialog extends Component {
 
         return (
             <React.Fragment>
-                <DialogTitle>Details of {item.type}</DialogTitle>
+                <DialogTitle>Details of {item.name}</DialogTitle>
                 <DialogContent className={classes.content}>
                     <TextField
                         id="name"
