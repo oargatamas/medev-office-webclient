@@ -49,6 +49,7 @@ const styles = (theme) => ({
         zIndex: theme.zIndex.appBar,
     },
     disabled: {
+        opacity: 0.3,
         filter: "grayscale(100%)",
     }
 });
