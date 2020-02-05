@@ -128,12 +128,12 @@ class ItemPermissionDialog extends Component {
     }
 
     saveChanges() {
-        const {rootFolder} = this.props;
+        const {folderTree, itemQueue} = this.props;
         const {item, recursive} = this.state;
 
-        let items = [item];
+        let items = itemQueue.map(i => ({...i, permissions: item.permissions}));
         if (recursive) {
-            const flattenRootFolder = flattenItemTree(rootFolder).map((descendant) => {
+            const flattenRootFolder = flattenItemTree(folderTree).map((descendant) => {
                 descendant.permissions = item.permissions;
                 return descendant;
             });
@@ -194,11 +194,12 @@ class ItemPermissionDialog extends Component {
     };
 
     render() {
-        const {classes, width, permissionTypes, systemUsers, isDialogFetching} = this.props;
+        const {classes, width, permissionTypes, systemUsers, isDialogFetching, itemQueue} = this.props;
         const {editing, item, recursive} = this.state;
         const itemPermissions = item.permissions;
 
         const uiDisabled = isDialogFetching ? isDialogFetching : !editing;
+        const isSingleItem = itemQueue.length <= 1;
         const itemPermissionKeys = Object.keys(item.permissions);
         const userOptions = mapUsersToOptions(systemUsers).filter(item => !itemPermissionKeys.includes(item.value.id));
 
@@ -213,7 +214,7 @@ class ItemPermissionDialog extends Component {
                         />
                     </FormGroup>
                     {
-                        item.type === "folder" ? (
+                        item.type === "folder" && isSingleItem ? (
                             <FormGroup row>
                                 <FormControlLabel
                                     control={<Checkbox checked={recursive} onChange={this.toggleRecursiveUpdate}/>}
