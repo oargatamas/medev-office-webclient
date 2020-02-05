@@ -114,9 +114,9 @@ class DriveHeader extends Component {
                         <Tooltip title="Check or clear all items" placement="bottom">
                         <IconButton onClick={this.toggleChecks}>
                             {(itemQueue.length > 0) ? (
-                                <CheckboxIcon/>
-                            ) : (
                                 <UnCheckboxIcon/>
+                            ) : (
+                                <CheckboxIcon/>
                             )}
                         </IconButton>
                         </Tooltip>
