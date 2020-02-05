@@ -16,6 +16,7 @@ import {DRIVE_API_BASE} from "../../actions/driveApi";
 import {textEllipsis} from "../../../utils/stringUtils";
 import {fileTypes} from "../../actions/fileTypeDictionary";
 import {getThumbnailUrl, THUMB_SMALL} from "../../actions/imageActions";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const styles = (theme) => ({
@@ -41,19 +42,18 @@ const styles = (theme) => ({
         },
         cursor: "pointer",
     },
+    checkbox: {
+        position: "absolute",
+        alignSelf: "flex-start",
+        backgroundColor: "white",
+        zIndex: theme.zIndex.appBar,
+    },
     disabled: {
-        filter: "grayscale(100%)"
+        opacity: 0.3,
+        filter: "grayscale(100%)",
     }
 });
 
-
-const initialState = {
-    menuOpen: false,
-    menuAnchor: {
-        top: 0,
-        left: 0,
-    },
-};
 
 class DriveItem extends Component {
 
@@ -61,20 +61,31 @@ class DriveItem extends Component {
     constructor(props) {
         super(props);
         this.showItemOptions = this.showItemOptions.bind(this);
+        this.showItemCheckbox = this.showItemCheckbox.bind(this);
+        this.hideItemCheckbox = this.hideItemCheckbox.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
         this.renderItemIcon = this.renderItemIcon.bind(this);
+        this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
         this.handleItemEditClick = this.handleItemEditClick.bind(this);
         this.handleItemShareClick = this.handleItemShareClick.bind(this);
         this.handleItemPermissionsClick = this.handleItemPermissionsClick.bind(this);
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
         this.handleItemMoveClick = this.handleItemMoveClick.bind(this);
         this.handleFileClick = this.handleFileClick.bind(this);
-        this.state = initialState;
+        this.state = {
+            hovered: false,
+            menuOpen: false,
+            menuAnchor: {
+                top: 0,
+                left: 0,
+            },
+        };
     }
 
     showItemOptions(e) {
         e.preventDefault();
         this.setState({
+            ...this.state,
             menuOpen: true,
             menuAnchor: {
                 left: e.clientX,
@@ -83,37 +94,60 @@ class DriveItem extends Component {
         });
     }
 
+    showItemCheckbox() {
+        this.setState({
+            ...this.state,
+            hovered: true,
+        })
+    }
+
+    hideItemCheckbox() {
+        this.setState({
+            ...this.state,
+            hovered: false,
+        })
+    }
+
+    handleCheckboxClick() {
+        const {item, checked, onSelect, onDeselect} = this.props;
+        if (checked) {
+            onDeselect(item);
+        } else {
+            onSelect(item);
+        }
+    }
+
     closeMenu() {
-        this.setState(initialState);
+        this.setState({...this.state, menuOpen: false});
     }
 
     handleItemEditClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_EDIT_DETAILS, item);
+        actions.dialog.open(CONTENT_EDIT_DETAILS, item);
         this.closeMenu();
     }
 
     handleItemShareClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_SHARE_LINK, item);
+        actions.dialog.open(CONTENT_SHARE_LINK, item);
         this.closeMenu();
     }
 
     handleItemPermissionsClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_EDIT_PERMISSIONS, item);
+        actions.dialog.open(CONTENT_EDIT_PERMISSIONS, item);
         this.closeMenu();
     }
 
     handleItemDeleteClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_DELETE_ITEM, item);
+        actions.dialog.open(CONTENT_DELETE_ITEM, item);
         this.closeMenu();
     }
 
     handleItemMoveClick() {
         const {item, actions} = this.props;
-        actions.openItemDialog(CONTENT_MOVE_ITEM, item);
+        actions.dialog.open(CONTENT_MOVE_ITEM, item);
         this.closeMenu();
     }
 
@@ -121,7 +155,7 @@ class DriveItem extends Component {
         const {item, actions} = this.props;
 
         if (item.mimeType.startsWith("image")) {
-            actions.openItemDialog(CONTENT_SHOW_IMAGE, item);
+            actions.dialog.open(CONTENT_SHOW_IMAGE, item);
         } else {
             window.location.href = API_ORIGIN + DRIVE_API_BASE + "/file/" + item.id + "/data";
         }
@@ -152,20 +186,25 @@ class DriveItem extends Component {
         }
 
         return (
-            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick}
-                 onError={(e) => {
-                     e.target.src = imageSource
-                 }}/>
+            <img alt={item.name} src={imageSource} className={iconClasses.join(' ')} onClick={this.handleFileClick}/>
         );
     }
 
     render() {
-        const {classes, item, key,} = this.props;
-        const {menuAnchor, menuOpen} = this.state;
+        const {classes, item, key, checked, selectedAlone} = this.props;
+        const {menuAnchor, menuOpen, hovered} = this.state;
         const disabled = Object.keys(item.permissions).length === 0;
 
         return (
-            <Box key={key} className={classes.root} onContextMenu={this.showItemOptions}>
+            <Box key={key} className={classes.root}
+                 onContextMenu={this.showItemOptions}
+                 onMouseEnter={this.showItemCheckbox}
+                 onMouseLeave={this.hideItemCheckbox}
+            >
+                {(hovered || checked) ? (
+                    <Checkbox className={classes.checkbox} checked={checked} onChange={this.handleCheckboxClick}/>
+                ) : null}
+
                 <Tooltip title={item.name}>
                     {this.renderItemIcon(disabled)}
                 </Tooltip>
@@ -182,12 +221,17 @@ class DriveItem extends Component {
                     open={menuOpen}
                     onClose={this.closeMenu}
                 >
-                    <Link target={"_blank"} color={"inherit"}
-                          href={API_ORIGIN + DRIVE_API_BASE + "/" + item.type + "/" + item.id + "/data"}>
-                        <MenuItem key={"download"}>Download</MenuItem>
-                    </Link>
-                    <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
-                    <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
+                    {(selectedAlone) ? (
+                            <div>
+                                <Link target={"_blank"} color={"inherit"}
+                                      href={API_ORIGIN + DRIVE_API_BASE + "/" + item.type + "/" + item.id + "/data"}>
+                                    <MenuItem key={"download"}>Download</MenuItem>
+                                </Link>
+                                <MenuItem key={"edit"} onClick={this.handleItemEditClick}>Properties</MenuItem>
+                                <MenuItem key={"share"} onClick={this.handleItemShareClick}>Create share link</MenuItem>
+                            </div>
+                        )
+                        : null}
                     <MenuItem key={"permissions"} onClick={this.handleItemPermissionsClick}>Permissions</MenuItem>
                     <MenuItem key={"move"} onClick={this.handleItemMoveClick}>Move</MenuItem>
                     <MenuItem key={"delete"} onClick={this.handleItemDeleteClick}>Delete</MenuItem>

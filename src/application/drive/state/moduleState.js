@@ -1,6 +1,7 @@
 export const initialState = {
     permissionTypes: [],
     breadCrumbs: [],
+    parentFolder: {},
     rootFolder: {},
     folderTree: {},
     currentFolderItems: [],

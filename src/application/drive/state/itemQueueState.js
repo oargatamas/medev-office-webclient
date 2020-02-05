@@ -1,4 +1,4 @@
 export const initialState = {
-    items: [],
+    itemQueue: [],
     finished: false,
 };

@@ -68,17 +68,41 @@ const hasPermission = (permission, permissionTypes) => {
 
 
 const flattenItemTree = (rootItem, flatOutput = []) => {
-    const item = Object.assign({},rootItem);
+    const item = Object.assign({}, rootItem);
     delete item.content;
     delete item.permissions;
     flatOutput.push(item);
 
     if (rootItem.content && rootItem.content.length > 0) {
-        rootItem.content.forEach((item)=> {
+        rootItem.content.forEach((item) => {
             flattenItemTree(item, flatOutput);
         });
     }
     return flatOutput;
+};
+
+
+const getCommonItemPermissions = (items) => {
+    let commonPermissions = items[0].permissions;
+
+    items.forEach((item) => {
+        let itemPermissionUserIds = Object.keys(item.permissions);
+
+        console.log(itemPermissionUserIds);
+
+        itemPermissionUserIds.forEach((userId) => {
+            if(commonPermissions.hasOwnProperty(userId)) {
+                commonPermissions[userId] = Array.from(commonPermissions[userId])
+                    .filter(cp => item.permissions[userId].some(p => p.id === cp.id));
+            }
+        });
+
+        Object.keys(commonPermissions)
+            .filter(userId => !itemPermissionUserIds.some( u => u === userId))
+            .forEach( cp => delete commonPermissions[cp]);
+    });
+
+    return commonPermissions;
 };
 
 
@@ -96,27 +120,30 @@ class ItemPermissionDialog extends Component {
         this.state = {
             editing: false,
             recursive: false,
-            item: this.props.dialogItem
+            item: {
+                ...this.props.dialogItem,
+                permissions: getCommonItemPermissions(this.props.itemQueue),
+            }
         };
     }
 
     saveChanges() {
-        const {rootFolder} = this.props;
+        const {folderTree, itemQueue} = this.props;
         const {item, recursive} = this.state;
 
-        let items = [item];
+        let items = itemQueue.map(i => ({...i, permissions: item.permissions}));
         if (recursive) {
-            const flattenRootFolder = flattenItemTree(rootFolder).map((descendant) => {
+            const flattenRootFolder = flattenItemTree(folderTree).map((descendant) => {
                 descendant.permissions = item.permissions;
                 return descendant;
             });
             items = items.concat(flattenRootFolder);
         }
-        this.props.actions.updateItemPermissions(items);
+        this.props.actions.itemQueue.process.toPermission(items);
     }
 
     handleClose() {
-        this.props.actions.closeItemDialog();
+        this.props.actions.dialog.close();
     }
 
     togglePermission(event) {
@@ -150,7 +177,7 @@ class ItemPermissionDialog extends Component {
         this.setState({recursive: !recursive, editing: editing, ...item});
 
         if (!recursive) {
-            actions.requestFolderTree(dialogItem, true);
+            actions.folder.requestFolderTree(dialogItem, true);
         }
     }
 
@@ -167,11 +194,12 @@ class ItemPermissionDialog extends Component {
     };
 
     render() {
-        const {classes, width, permissionTypes, systemUsers, isDialogFetching} = this.props;
+        const {classes, width, permissionTypes, systemUsers, isDialogFetching, itemQueue} = this.props;
         const {editing, item, recursive} = this.state;
         const itemPermissions = item.permissions;
 
         const uiDisabled = isDialogFetching ? isDialogFetching : !editing;
+        const isSingleItem = itemQueue.length <= 1;
         const itemPermissionKeys = Object.keys(item.permissions);
         const userOptions = mapUsersToOptions(systemUsers).filter(item => !itemPermissionKeys.includes(item.value.id));
 
@@ -186,7 +214,7 @@ class ItemPermissionDialog extends Component {
                         />
                     </FormGroup>
                     {
-                        item.type === "folder" ? (
+                        item.type === "folder" && isSingleItem ? (
                             <FormGroup row>
                                 <FormControlLabel
                                     control={<Checkbox checked={recursive} onChange={this.toggleRecursiveUpdate}/>}
