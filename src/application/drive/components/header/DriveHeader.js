@@ -53,7 +53,8 @@ class DriveHeader extends Component {
     }
 
     createFolderClick() {
-        this.props.actions.dialog.open(CONTENT_NEW_FOLDER);
+        const {folder} = this.props;
+        this.props.actions.dialog.open(CONTENT_NEW_FOLDER, folder);
     }
 
     uploadFileClick() {
